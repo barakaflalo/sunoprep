@@ -321,11 +321,29 @@ const TEMPLATES = [
 const countSyllables = (line) => {
   const clean = line.replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").trim();
   if (!clean) return 0;
-  const heVowels = clean.match(/[ָׁאֵֶַֹוּיִ]/g);
-  if (heVowels && heVowels.length > 2) {
-    const consonants = clean.replace(/[\s\u0591-\u05C7\u200f\u200e]/g, "");
-    return Math.max(1, Math.ceil(consonants.length / 2.2));
+  // Check if Hebrew text
+  const isHeb = /[\u0590-\u05FF]/.test(clean);
+  if (isHeb) {
+    // Count nikud vowels if present
+    const nikudVowels = clean.match(/[\u05B0-\u05BB]/g);
+    if (nikudVowels && nikudVowels.length > 2) return nikudVowels.filter(n => n !== '\u05BC' && n !== '\u05C1' && n !== '\u05C2').length;
+    // No nikud: count consonants (excluding maters lectionis at word boundaries), estimate syllables
+    const words = clean.split(/\s+/).filter(w => w && !/^\[/.test(w));
+    let total = 0;
+    words.forEach(w => {
+      const stripped = w.replace(/[^\u05D0-\u05EA]/g, "");
+      if (COMMON_WORDS[stripped]) {
+        // Count vowels in the known transliteration
+        const translit = COMMON_WORDS[stripped];
+        total += (translit.match(/[aeiou]/gi) || []).length;
+      } else {
+        // Estimate: each consonant cluster = 1 syllable, minimum 1
+        total += Math.max(1, Math.round(stripped.length / 2));
+      }
+    });
+    return total;
   }
+  // Latin text: count vowel groups
   const latMatches = clean.match(/[aeiouyAEIOUY]+/g);
   return latMatches ? latMatches.length : Math.ceil(clean.length / 3);
 };
@@ -642,9 +660,7 @@ ${src}`;
   }, []);
 
   useEffect(() => {
-    if (savedSty.length > 0) {
-      (async () => { try { await localSet("saved-styles", JSON.stringify(savedSty)); } catch {} })();
-    }
+    (async () => { try { await localSet("saved-styles", JSON.stringify(savedSty)); } catch {} })();
   }, [savedSty]);
 
   const saveToHistory = async () => {
@@ -1015,7 +1031,10 @@ ${src}`;
                 {rtl ? "הברות" : "Syllables"}
               </B>
             </div>
-            <B sm onClick={() => { setSrc(""); setVCount(1); }}>🗑 {t.clear}</B>
+            <div style={{ display: "flex", gap: 4 }}>
+              <B sm onClick={() => { const inp = document.createElement("input"); inp.type = "file"; inp.accept = ".txt,.text"; inp.onchange = (e) => { const f = e.target.files?.[0]; if (f) { const r = new FileReader(); r.onload = (ev) => setSrc(ev.target.result); r.readAsText(f); } }; inp.click(); }}>📄 {rtl ? "ייבוא" : "Import"}</B>
+              <B sm onClick={() => { setSrc(""); setVCount(1); }}>🗑 {t.clear}</B>
+            </div>
           </div>
           {showSylCount && src.trim() && (
             <div style={{ marginTop: 6, padding: "6px 10px", background: `${c.a}06`, borderRadius: 6, fontSize: 10, color: sb, direction: sl.d, maxHeight: 120, overflowY: "auto" }}>
@@ -1244,6 +1263,5 @@ ${src}`;
   );
 }
 
-// Mount the app
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(React.createElement(SunoPrep));

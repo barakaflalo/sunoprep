@@ -1,11 +1,14 @@
-const CACHE_NAME = 'sunoprep-v2';
+const CACHE_NAME = 'sunoprep-v2.1';
 const ASSETS = [
   './',
   './index.html',
+  './app.jsx',
   './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   'https://unpkg.com/react@18/umd/react.production.min.js',
   'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
-  'https://unpkg.com/@babel/standalone/babel.min.js'
+  'https://unpkg.com/@babel/standalone@7/babel.min.js'
 ];
 
 self.addEventListener('install', e => {
@@ -23,9 +26,7 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  if (e.request.url.includes('api.anthropic.com')) {
-    return;
-  }
+  if (e.request.url.includes('api.anthropic.com')) return;
   e.respondWith(
     caches.match(e.request).then(r => r || fetch(e.request).then(res => {
       if (res.status === 200) {
