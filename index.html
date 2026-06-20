@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SunoPrep">
-  <meta name="description" content="Advanced song preparation tool for Suno AI">
+  <meta name="description" content="SunoPrep 2.0 - Advanced song preparation tool for Suno AI">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" href="icons/icon-192.png">
@@ -22,17 +22,18 @@
   <div id="root"><div style="display:flex;align-items:center;justify-content:center;min-height:100vh;color:#C9A84C;font-size:18px">⏳ Loading SunoPrep...</div></div>
 
   <script>
-    // LocalStorage wrapper (replaces artifact storage)
+    // LocalStorage wrapper (replaces Claude artifact storage)
     window.localGet = async (key) => {
       try { const v = localStorage.getItem('sp_' + key); return v ? { value: v } : null; } catch { return null; }
     };
     window.localSet = async (key, value) => {
       try { localStorage.setItem('sp_' + key, value); return { key, value }; } catch { return null; }
     };
+    // API key for Pro mode (stored in localStorage)
     window.getApiKey = () => localStorage.getItem('sp_api_key') || '';
     window.setApiKey = (k) => localStorage.setItem('sp_api_key', k);
 
-    // Register Service Worker
+    // Register Service Worker for PWA / offline
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     }

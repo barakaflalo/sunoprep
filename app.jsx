@@ -214,6 +214,103 @@ const TH = {
   rose: { a: "#D4637A", bg: "#100A0C", bgL: "#FAF0F2", cd: "#1A1114", cdL: "#FFF", bd: "#302028", bdL: "#E8D0D8" },
 };
 
+/* ─── RULE-BASED TRANSLITERATION ENGINE (Free/Offline) ─── */
+const COMMON_WORDS = {
+  "אני":"ani","אתה":"ata","את":"at","הוא":"hu","היא":"hi","אנחנו":"anakhnu","הם":"hem","הן":"hen",
+  "של":"shel","עם":"im","על":"al","אל":"el","מן":"min","בין":"bein","אחרי":"aharei","לפני":"lifnei",
+  "לא":"lo","כן":"ken","גם":"gam","רק":"rak","עוד":"od","כל":"kol","מה":"ma","מי":"mi","איך":"eikh",
+  "למה":"lama","כמה":"kama","איפה":"eifo","מתי":"matai","זה":"ze","זאת":"zot","הנה":"hine",
+  "יש":"yesh","אין":"ein","היה":"haya","היתה":"hayta","היו":"hayu","יהיה":"yihye",
+  "אהבה":"ahava","חיים":"haim","לב":"lev","שמש":"shemesh","ירח":"yareach","לילה":"layla",
+  "יום":"yom","שמים":"shamaim","ארץ":"eretz","מים":"maim","אור":"or","חושך":"hoshekh",
+  "שלום":"shalom","תודה":"toda","בבקשה":"bevakasha","סליחה":"sliha",
+  "ילד":"yeled","ילדה":"yalda","איש":"ish","אישה":"isha","אבא":"aba","אמא":"ima",
+  "בית":"bait","דרך":"derekh","עיר":"ir","רחוב":"rehov","שיר":"shir","מילה":"mila",
+  "טוב":"tov","רע":"ra","יפה":"yafe","גדול":"gadol","קטן":"katan","חדש":"hadash",
+  "חזק":"hazak","חלש":"halash","שמח":"sameah","עצוב":"atzuv",
+  "הלב":"halev","העיניים":"haeinayim","הלילה":"halayla","היום":"hayom","החיים":"hahaim",
+  "השמש":"hashemesh","האור":"haor","האמת":"haemet","השמים":"hashamaim",
+  "ואהבה":"veahava","ואני":"veani","והוא":"vehu","והיא":"vehi","ואת":"veat",
+  "בלב":"balev","בדרך":"baderekh","בלילה":"balayla","ביום":"bayom",
+  "לחיים":"lehaim","ללב":"lalev","לאהבה":"leahava",
+  "מאחור":"meahor","מלפנים":"milifnim",
+  "תמיד":"tamid","אולי":"ulai","פתאום":"pitom","ביחד":"beyahad","לבד":"levad",
+  "שוב":"shuv","כבר":"kvar","עכשיו":"akhshav","אתמול":"etmol","מחר":"mahar",
+  "רוצה":"rotze","יודע":"yodea","חושב":"hoshev","מרגיש":"margish","שומע":"shomea",
+  "רואה":"roe","אוהב":"ohev","שומר":"shomer","זוכר":"zokher","שוכח":"shokheah",
+  "בוכה":"bokhe","צוחק":"tzokhek","שר":"shar","רוקד":"roked",
+  "פה":"po","שם":"sham","כאן":"kan","הביתה":"habayta","החוצה":"hahutza",
+  "חבר":"haver","חברה":"havera","חברים":"haverim","משפחה":"mishpaha",
+  "עולם":"olam","נשמה":"neshama","רוח":"ruah","כוח":"koah","חלום":"halom",
+  "מוזיקה":"muzika","שירה":"shira","ריקוד":"rikud",
+  "אחד":"ehad","שניים":"shnaim","שלוש":"shalosh","ארבע":"arba","חמש":"hamesh",
+  "נתתי":"natati","הייתי":"hayiti","עשיתי":"asiti","הלכתי":"halakhti","באתי":"bati",
+  "ראיתי":"raiti","שמעתי":"shamati","אמרתי":"amarti","חשבתי":"hashavti",
+  "התעוררתי":"hitorarti","השתנתי":"hishtaneti","התחלתי":"hithalti",
+  "האמנתי":"heemanti","פתחתי":"patahti","סגרתי":"sagarti",
+  "נפלתי":"nafalti","קמתי":"kamti","רצתי":"ratzti",
+  "כולם":"kulam","משהו":"mashehu","כלום":"klum","הכל":"hakol","שום":"shum",
+};
+
+const HEB_CONS = {
+  'א':'','ב':'v','ג':'g','ד':'d','ה':'h','ו':'v','ז':'z','ח':'h','ט':'t','י':'y',
+  'כ':'kh','ך':'kh','ל':'l','מ':'m','ם':'m','נ':'n','ן':'n','ס':'s','ע':'',
+  'פ':'f','ף':'f','צ':'ts','ץ':'ts','ק':'k','ר':'r','ש':'sh','ת':'t',
+};
+
+const NIKUD = {
+  '\u05B0':'e','\u05B1':'e','\u05B2':'a','\u05B3':'o','\u05B4':'i',
+  '\u05B5':'e','\u05B6':'e','\u05B7':'a','\u05B8':'a','\u05B9':'o',
+  '\u05BA':'o','\u05BB':'u','\u05BC':'','\u05C1':'','\u05C2':'',
+};
+
+function ruleTranslit(text) {
+  return text.split('\n').map(line => {
+    if (/^\[/.test(line.trim()) || /^\(/.test(line.trim()) || !line.trim()) return line;
+    return line.split(/\s+/).map(word => {
+      const clean = word.replace(/[.,!?;:"""'']/g, '');
+      const punct = word.slice(clean.length);
+      if (/^[a-zA-Z0-9\[\(]/.test(clean)) return word;
+      const stripped = clean.replace(/[\u0591-\u05C7\u200f\u200e]/g, '');
+      if (COMMON_WORDS[stripped]) return COMMON_WORDS[stripped] + punct;
+      const hasNikud = /[\u05B0-\u05C7]/.test(clean);
+      let result = '';
+      const chars = [...clean];
+      for (let i = 0; i < chars.length; i++) {
+        const ch = chars[i];
+        if (NIKUD[ch]) { result += NIKUD[ch]; continue; }
+        if (ch === '\u05C1') continue; // shin dot
+        if (ch === '\u05C2') { // sin dot - change previous sh to s
+          if (result.endsWith('sh')) result = result.slice(0, -2) + 's';
+          continue;
+        }
+        if (ch === '\u05BC') { // dagesh
+          const prev = result.slice(-1);
+          if (result.endsWith('v') && chars[i-1] === 'ב') { result = result.slice(0, -1) + 'b'; }
+          else if (result.endsWith('kh') && (chars[i-1] === 'כ' || chars[i-1] === 'ך')) { result = result.slice(0, -2) + 'k'; }
+          else if (result.endsWith('f') && (chars[i-1] === 'פ' || chars[i-1] === 'ף')) { result = result.slice(0, -1) + 'p'; }
+          continue;
+        }
+        if (/[\u0591-\u05AF\u05BF\u05C0\u05C3-\u05C7\u200f\u200e]/.test(ch)) continue;
+        if (HEB_CONS[ch] !== undefined) {
+          result += HEB_CONS[ch];
+          if (!hasNikud && i < chars.length - 1) {
+            const next = chars[i + 1];
+            if (HEB_CONS[next] !== undefined && !/[\u05B0-\u05C7]/.test(chars[i+1])) {
+              const isEnd = i >= chars.length - 3;
+              result += isEnd ? '' : 'a';
+            }
+          }
+        } else {
+          result += ch;
+        }
+      }
+      result = result.replace(/hh/g, 'h').replace(/aa/g, 'a').replace(/ii/g, 'i');
+      return (result || clean) + punct;
+    }).join(' ');
+  }).join('\n');
+}
+
 const TEMPLATES = [
   { id: "pop", l: "🎵 פופ / Pop", t: "[Intro]\n\n[Verse 1]\n\n\n\n[Pre-Chorus]\n\n\n[Chorus]\n\n\n\n[Verse 2]\n\n\n\n[Pre-Chorus]\n\n\n[Chorus]\n\n\n\n[Bridge]\n\n\n[Chorus]\n\n\n\n[Outro]" },
   { id: "rap", l: "🎤 ראפ / Rap", t: "[Intro]\n\n[Verse 1]\n\n\n\n\n\n\n\n[Chorus]\n\n\n\n[Verse 2]\n\n\n\n\n\n\n\n[Chorus]\n\n\n\n[Verse 3]\n\n\n\n\n\n\n\n[Chorus]\n\n\n\n[Outro]" },
@@ -243,6 +340,8 @@ function SunoPrep() {
   const [err, setErr] = useState("");
   const [tMode, setTMode] = useState("full");
   const [showVoiceTip, setShowVoiceTip] = useState(true);
+  const [isPro, setIsPro] = useState(() => typeof getApiKey === "function" && getApiKey().startsWith("sk-"));
+  const [showLangMenu, setShowLangMenu] = useState(false);
   const [selSty, setSelSty] = useState([]);
   const [selVocal, setSelVocal] = useState([]);
   const [custSty, setCustSty] = useState("");
@@ -256,7 +355,6 @@ function SunoPrep() {
   const [theme, setTheme] = useState("gold");
   const [day, setDay] = useState(false);
   const [uname, setUname] = useState("");
-  const [apiKey, setApiKey] = useState(() => typeof getApiKey === "function" ? getApiKey() : "");
   const [vCount, setVCount] = useState(1);
   const [guide, setGuide] = useState(false);
   const [gStep, setGStep] = useState(0);
@@ -299,6 +397,16 @@ function SunoPrep() {
     
     if (m === "hebrew") {
       setRes(src);
+      return;
+    }
+    
+    // Free mode: use rule-based engine
+    if (!isPro) {
+      if (m === "hybrid" || m === "optimized") {
+        setErr(rtl ? "מצב היברידי ועברית מותאמת זמינים בגרסת Pro בלבד. עובר לתעתיק מלא..." : "Hybrid and Optimized modes are Pro only. Switching to full transliteration...");
+        setTimeout(() => setErr(""), 3000);
+      }
+      setRes(ruleTranslit(src));
       return;
     }
     
@@ -445,7 +553,7 @@ ${src}`;
 
     try {
       const r = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST", headers: { "Content-Type": "application/json", "x-api-key": getApiKey(), "anthropic-dangerous-direct-browser-access": "true", "anthropic-version": "2023-06-01" },
+        method: "POST", headers: { "Content-Type": "application/json", "x-api-key": (typeof getApiKey==="function"?getApiKey():""), "anthropic-dangerous-direct-browser-access": "true", "anthropic-version": "2023-06-01" },
         body: JSON.stringify({
           model: "claude-sonnet-4-6", max_tokens: 2000,
           messages: [{ role: "user", content: m === "hybrid" ? hybridPrompt : m === "optimized" ? optimizedPrompt : fullPrompt }],
@@ -741,14 +849,43 @@ ${src}`;
         <B onClick={() => setScr("home")}>{t.back}</B>
         <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>⚙ {t.settings}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 500 }}>
+          {/* Pro Upgrade */}
+          <div style={{ background: `${c.a}12`, border: `1px solid ${c.a}30`, borderRadius: 12, padding: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+              <span style={{ fontSize: 14, fontWeight: 600, color: c.a }}>{isPro ? "⭐ Pro" : "🔓 Free → Pro"}</span>
+              {isPro && <span style={{ fontSize: 10, background: "#4CAF50", color: "#fff", padding: "2px 8px", borderRadius: 4 }}>
+                {rtl ? "פעיל" : "Active"}
+              </span>}
+            </div>
+            {!isPro ? (
+              <>
+                <div style={{ fontSize: 11, color: sb, marginBottom: 8, lineHeight: 1.6 }}>
+                  {rtl ? "גרסת Free: תעתיק מבוסס חוקים (אופליין, בלי אינטרנט). מתאים לרוב השירים.\nגרסת Pro: תעתיק חכם עם בינה מלאכותית + מצב היברידי + עברית מותאמת עם ניקוד אוטומטי."
+                       : "Free: Rule-based transliteration (offline, no internet). Works for most songs.\nPro: AI-powered smart transliteration + Hybrid mode + Optimized Hebrew with auto nikud."}
+                </div>
+                <input value={isPro ? "••••••" : ""} onChange={e => {
+                  const k = e.target.value.trim();
+                  if (k.startsWith("sk-")) { setIsPro(true); if (typeof window.setApiKey==="function") window.setApiKey(k); }
+                }} type="password" placeholder={rtl ? "הכנס Anthropic API Key לשדרוג..." : "Enter Anthropic API Key to upgrade..."}
+                  style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "8px 12px", color: tx, fontSize: 13, fontFamily: "inherit", direction: "ltr", textAlign: "left" }} />
+                <div style={{ fontSize: 10, color: sb, marginTop: 4 }}>
+                  {rtl ? "מפתח חינמי ב-" : "Free key at "}<a href="https://console.anthropic.com" target="_blank" style={{ color: c.a }}>console.anthropic.com</a>
+                  {rtl ? " ($5 קרדיט לנסיון)" : " ($5 free credits)"}
+                </div>
+              </>
+            ) : (
+              <div style={{ fontSize: 11, color: sb }}>
+                {rtl ? "תעתיק חכם, מצב היברידי ועברית מותאמת פעילים." : "Smart transliteration, Hybrid and Optimized modes active."}
+                <br/><span onClick={() => setIsPro(false)} style={{ color: "#E55", cursor: "pointer", fontSize: 10 }}>
+                  {rtl ? "חזור ל-Free" : "Switch to Free"}
+                </span>
+              </div>
+            )}
+          </div>
+
           <Card label={t.uname}>
             <input value={uname} onChange={e => setUname(e.target.value)} placeholder={t.unamePh}
               style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "7px 12px", color: tx, fontSize: 14, fontFamily: "inherit" }} />
-          </Card>
-          <Card label="API Key">
-            <input value={apiKey} onChange={e => { setApiKey(e.target.value); if (typeof setApiKey === "function") window.setApiKey(e.target.value); }} type="password" placeholder="sk-ant-..."
-              style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "7px 12px", color: tx, fontSize: 14, fontFamily: "inherit", direction: "ltr", textAlign: "left" }} />
-            <div style={{ fontSize: 10, color: sb, marginTop: 4 }}>{rtl ? "נדרש לתעתיק. מפתח נשמר רק במכשיר שלך." : "Required for transliteration. Key stored locally only."}</div>
           </Card>
           <Card label={t.uiLang}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -800,28 +937,6 @@ ${src}`;
     );
   }
 
-  /* ── API KEY SETUP ── */
-  if (!apiKey && typeof getApiKey === "function" && !getApiKey()) {
-    return (
-      <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 30 }}>
-        <div style={{ fontSize: 50, marginBottom: 16 }}>🎤</div>
-        <div style={{ fontSize: 28, fontWeight: 700, color: c.a, marginBottom: 8 }}>SunoPrep</div>
-        <div style={{ fontSize: 13, color: sb, marginBottom: 30 }}>{t.appSub}</div>
-        <input value={apiKey} onChange={e => setApiKey(e.target.value)} type="password" placeholder="Anthropic API Key (sk-ant-...)" 
-          style={{ width: "100%", maxWidth: 400, padding: "12px 16px", borderRadius: 10, border: `1px solid ${bd}`, background: cd, color: tx, fontSize: 14, marginBottom: 12, direction: "ltr", textAlign: "left", fontFamily: "inherit" }} />
-        <B pri onClick={() => { if (apiKey.trim() && typeof window.setApiKey === "function") window.setApiKey(apiKey.trim()); }} sx={{ minWidth: 200 }}>
-          {rtl ? "התחל להשתמש" : "Start using SunoPrep"}
-        </B>
-        <div style={{ fontSize: 11, color: sb, maxWidth: 400, textAlign: "center", marginTop: 16, lineHeight: 1.6 }}>
-          {rtl ? "כדי להשתמש בתעתיק צריך מפתח API של Anthropic. אפשר להשיג ב-" : "Transliteration requires an Anthropic API key. Get one at "}
-          <a href="https://console.anthropic.com" target="_blank" style={{ color: c.a }}>console.anthropic.com</a>
-          <br/>{rtl ? "המפתח נשמר רק במכשיר שלך." : "Key is stored locally only."}
-          <br/><br/><span onClick={() => setApiKey("skip")} style={{ cursor: "pointer", textDecoration: "underline" }}>{rtl ? "דלג (בלי תעתיק)" : "Skip (no transliteration)"}</span>
-        </div>
-      </div>
-    );
-  }
-
   /* ── HOME ── */
   const TA = { width: "100%", minHeight: 180, background: bg, border: `1px solid ${bd}`, borderRadius: 10, padding: 14, color: tx, fontSize: 15, lineHeight: 1.8, resize: "vertical", fontFamily: "inherit" };
   return (
@@ -837,7 +952,21 @@ ${src}`;
             <div style={{ fontSize: 9, color: sb }}>{t.appSub}</div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 4 }}>
+        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+          {isPro && <span style={{ fontSize: 9, background: c.a, color: day ? "#fff" : "#0B0B0F", padding: "2px 6px", borderRadius: 4, fontWeight: 600 }}>PRO</span>}
+          <div style={{ position: "relative" }}>
+            <B sm onClick={() => setShowLangMenu(!showLangMenu)}>🌐</B>
+            {showLangMenu && (
+              <div style={{ position: "absolute", top: "100%", [rtl ? "right" : "left"]: 0, background: cd, border: `1px solid ${bd}`, borderRadius: 8, padding: 4, zIndex: 99, minWidth: 100, boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
+                {Object.entries(UI_LANGS).map(([k, v]) => (
+                  <div key={k} onClick={() => { setULang(k); setShowLangMenu(false); }}
+                    style={{ padding: "6px 10px", fontSize: 12, color: uLang === k ? c.a : tx, cursor: "pointer", borderRadius: 4, background: uLang === k ? `${c.a}15` : "transparent" }}>
+                    {v}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <B sm onClick={() => setDay(!day)}>{day ? "🌙" : "☀️"}</B>
           <B sm onClick={() => setScr("history")}>📜</B>
           <B sm onClick={() => setScr("worddict")}>📖</B>
@@ -932,10 +1061,10 @@ ${src}`;
               {rtl ? "🔤 תעתיק מלא (לטינית)" : "🔤 Full transliteration"}
             </B>
             <B sm act={tMode === "hybrid"} onClick={() => setTMode("hybrid")}>
-              {rtl ? "🔀 היברידי (עברית + לטינית)" : "🔀 Hybrid (Hebrew + Latin)"}
+              {rtl ? "🔀 היברידי" : "🔀 Hybrid"} {!isPro && <span style={{ fontSize: 9, color: "#C9A84C", marginInlineStart: 2 }}>Pro</span>}
             </B>
             <B sm act={tMode === "optimized"} onClick={() => setTMode("optimized")}>
-              {rtl ? "✨ עברית מותאמת (ניקוד + טריקים)" : "✨ Optimized Hebrew (nikud + tricks)"}
+              {rtl ? "✨ עברית מותאמת" : "✨ Optimized Hebrew"} {!isPro && <span style={{ fontSize: 9, color: "#C9A84C", marginInlineStart: 2 }}>Pro</span>}
             </B>
             <B sm act={tMode === "hebrew"} onClick={() => setTMode("hebrew")}>
               {rtl ? "🇮🇱 עברית ישירה" : "🇮🇱 Direct Hebrew"}
@@ -1115,6 +1244,6 @@ ${src}`;
   );
 }
 
-// Render the app
+// Mount the app
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(React.createElement(SunoPrep));
