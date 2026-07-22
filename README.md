@@ -6,53 +6,8 @@ Advanced song preparation tool for Suno AI - supports Hebrew, Arabic, Russian, a
 
 ---
 
-## 🚀 איך להעלות ל-GitHub ולהתקין כאפליקציה בנייד
+## 🚀 איך להעלות ולהתקין כאפליקציה בנייד
 
-### שלב 1: צור חשבון GitHub (אם אין לך)
-1. לך ל-[github.com](https://github.com) ותירשם
-2. אשר את המייל
-
-### שלב 2: צור Repository חדש
-1. לחץ על **+** למעלה ← **New repository**
-2. שם: `sunoprep`
-3. סמן **Public**
-4. לחץ **Create repository**
-
-### שלב 3: העלה את הקבצים
-1. בדף ה-repository, לחץ **uploading an existing file**
-2. גרור את כל הקבצים מהתיקייה:
-   - `index.html`
-   - `app.jsx`
-   - `manifest.json`
-   - `sw.js`
-   - `icons/icon-192.png`
-   - `icons/icon-512.png`
-3. כתוב הודעה: "SunoPrep 2.0"
-4. לחץ **Commit changes**
-
-### שלב 4: הפעל GitHub Pages
-1. לך ל-**Settings** (של ה-repository)
-2. בתפריט צד: **Pages**
-3. ב-Source בחר **Deploy from a branch**
-4. ב-Branch בחר **main** ← **/root**
-5. לחץ **Save**
-6. חכה 2-3 דקות
-7. הלינק שלך יהיה: `https://YOUR-USERNAME.github.io/sunoprep/`
-
-### שלב 5: התקן על הנייד כאפליקציה
-**אנדרואיד (Chrome):**
-1. פתח את הלינק בכרום
-2. לחץ על ⋮ (שלוש נקודות) למעלה
-3. בחר **"הוסף למסך הבית"** / **"Install app"**
-4. האפליקציה תופיע כאייקון בנייד!
-
-**אייפון (Safari):**
-1. פתח את הלינק בספארי
-2. לחץ על כפתור השיתוף (ריבוע עם חץ למעלה)
-3. גלול למטה ובחר **"הוסף למסך הבית"**
-4. לחץ **הוסף**
-
----
 
 ## 🔑 API Key
 
