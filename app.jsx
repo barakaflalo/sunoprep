@@ -214,6 +214,154 @@ const TH = {
   rose: { a: "#D4637A", bg: "#100A0C", bgL: "#FAF0F2", cd: "#1A1114", cdL: "#FFF", bd: "#302028", bdL: "#E8D0D8" },
 };
 
+/* ─── AI PROVIDERS ─── */
+const AI_PROVIDERS = [
+  { id: "gemini", icon: "✨", badge: { he: "חינם", en: "Free", ru: "Бесплатно", es: "Gratis", ar: "مجاني" }, badgeType: "free",
+    name: "Gemini (Google)",
+    desc: { he: "חינם לגמרי · בלי כרטיס אשראי", en: "Completely free · No credit card", ru: "Бесплатно · Без карты", es: "Gratis · Sin tarjeta", ar: "مجاني · بدون بطاقة" } },
+  { id: "claude", icon: "🤖", badge: { he: "בתשלום", en: "Paid", ru: "Платно", es: "Pago", ar: "مدفوع" }, badgeType: "paid",
+    name: "Claude (Anthropic)",
+    desc: { he: "הכי מדויק לעברית · ~$0.01 לשיר", en: "Most accurate for Hebrew · ~$0.01/song", ru: "Точнее всех · ~$0.01", es: "Más preciso · ~$0.01", ar: "الأدق · ~$0.01" } },
+  { id: "openai", icon: "💬", badge: { he: "בתשלום", en: "Paid", ru: "Платно", es: "Pago", ar: "مدفوع" }, badgeType: "paid",
+    name: "ChatGPT (OpenAI)",
+    desc: { he: "GPT-4o Mini · מהיר וזול", en: "GPT-4o Mini · Fast and cheap", ru: "GPT-4o Mini · Быстро", es: "GPT-4o Mini · Rápido", ar: "GPT-4o Mini · سريع" } },
+  { id: "device", icon: "📱", badge: { he: "מקומי", en: "Local", ru: "Локально", es: "Local", ar: "محلي" }, badgeType: "device",
+    name: "Ollama / LM Studio",
+    desc: { he: "רץ במחשב שלך · פרטי לחלוטין", en: "Runs on your computer · Fully private", ru: "На вашем ПК · Приватно", es: "En tu PC · Privado", ar: "على جهازك · خاص" } },
+  { id: "custom", icon: "⚙️", badge: { he: "מותאם", en: "Custom", ru: "Свой", es: "Custom", ar: "مخصص" }, badgeType: "device",
+    name: { he: "endpoint מותאם", en: "Custom endpoint", ru: "Свой эндпоинт", es: "Endpoint propio", ar: "نقطة مخصصة" },
+    desc: { he: "כל URL תואם OpenAI", en: "Any OpenAI-compatible URL", ru: "Любой OpenAI URL", es: "URL compatible OpenAI", ar: "أي URL متوافق" } },
+];
+
+const SETUP_STEPS = {
+  he: {
+    intro: "🔐 המפתח שלך נשמר רק במכשיר שלך — הוא לא נשלח לשום מקום חוץ מספק ה-AI שבחרת.",
+    gemini: { label: "מפתח Google Gemini", ph: "AIza...", note: "✅ חינם לגמרי: 15 בקשות בדקה — בלי כרטיס אשראי!",
+      steps: ["היכנס ל־aistudio.google.com", "התחבר עם חשבון Google רגיל", "לחץ Get API Key ← Create API key", "העתק את המפתח (מתחיל ב-AIza) והדבק כאן"] },
+    claude: { label: "מפתח Anthropic API", ph: "sk-ant-api03-...",
+      steps: ["היכנס ל־console.anthropic.com וצור חשבון", "הוסף אמצעי תשלום (תשלום לפי שימוש, ~$0.01 לשיר)", "בתפריט הצד לחץ API Keys", "לחץ Create Key ← העתק והדבק כאן"] },
+    openai: { label: "מפתח OpenAI API", ph: "sk-proj-...",
+      steps: ["היכנס ל־platform.openai.com", "לחץ על תמונת הפרופיל ← API Keys", "לחץ Create new secret key ← העתק מיד (מוצג פעם אחת!)", "עבור ל־Billing והוסף אמצעי תשלום"] },
+    device: { title: "📱 AI מקומי במחשב שלך", info: "מתחבר ל-AI שרץ על המחשב שלך. פרטיות מלאה — שום מידע לא יוצא מהמכשיר.",
+      urlLabel: "כתובת API מקומית", urlHint: "Ollama: פורט 11434 · LM Studio: פורט 1234",
+      steps: ["התקן Ollama (ollama.ai) או LM Studio (lmstudio.ai)", "הורד מודל: הרץ ollama pull llama3 בטרמינל", "ודא שהשרת רץ לפני שאתה מתעתק"] },
+    custom: { label1: "כתובת API", ph1: "https://your-api.com/v1/chat/completions", label2: "מפתח API (אופציונלי)", ph2: "המפתח שלך...", hint: "חייב להיות תואם OpenAI (פורמט chat/completions)." },
+    save: "✓ שמור והתחבר", test: "🔌 בדוק חיבור", testing: "בודק...", ok: "✓ החיבור תקין!", fail: "✗ נכשל: ", noSel: "בחר ספק AI קודם",
+    title: "חיבור בינה מלאכותית", connected: "מחובר", notConnected: "לא מחובר", selectProvider: "בחר ספק AI",
+  },
+  en: {
+    intro: "🔐 Your key stays on your device only — it's never sent anywhere except the AI provider you choose.",
+    gemini: { label: "Google Gemini API Key", ph: "AIza...", note: "✅ Completely free: 15 requests/min — no credit card needed!",
+      steps: ["Go to aistudio.google.com", "Sign in with any Google account", "Click Get API Key → Create API key", "Copy the key (starts with AIza) and paste here"] },
+    claude: { label: "Anthropic API Key", ph: "sk-ant-api03-...",
+      steps: ["Go to console.anthropic.com and create an account", "Add a payment method (pay per use, ~$0.01/song)", "In the sidebar click API Keys", "Click Create Key → copy and paste here"] },
+    openai: { label: "OpenAI API Key", ph: "sk-proj-...",
+      steps: ["Go to platform.openai.com", "Click your profile icon → API Keys", "Click Create new secret key → copy immediately (shown once!)", "Go to Billing and add a payment method"] },
+    device: { title: "📱 Local AI on your computer", info: "Connects to AI running locally on your machine. Full privacy — no data leaves your device.",
+      urlLabel: "Local API URL", urlHint: "Ollama: port 11434 · LM Studio: port 1234",
+      steps: ["Install Ollama (ollama.ai) or LM Studio (lmstudio.ai)", "Download a model: run ollama pull llama3 in Terminal", "Make sure the server is running before transliterating"] },
+    custom: { label1: "API Endpoint URL", ph1: "https://your-api.com/v1/chat/completions", label2: "API Key (optional)", ph2: "Your API key...", hint: "Must be OpenAI-compatible (chat/completions format)." },
+    save: "✓ Save and connect", test: "🔌 Test connection", testing: "Testing...", ok: "✓ Connected!", fail: "✗ Failed: ", noSel: "Select a provider first",
+    title: "AI Connection", connected: "Connected", notConnected: "Not connected", selectProvider: "Choose AI provider",
+  },
+  ru: {
+    intro: "🔐 Ваш ключ хранится только на устройстве.",
+    gemini: { label: "Ключ Google Gemini", ph: "AIza...", note: "✅ Бесплатно: 15 запросов/мин — без карты!",
+      steps: ["Зайдите на aistudio.google.com", "Войдите с аккаунтом Google", "Get API Key → Create API key", "Скопируйте ключ (AIza...) и вставьте"] },
+    claude: { label: "Ключ Anthropic API", ph: "sk-ant-api03-...",
+      steps: ["console.anthropic.com — создайте аккаунт", "Добавьте способ оплаты (~$0.01/песня)", "API Keys в боковой панели", "Create Key → скопируйте"] },
+    openai: { label: "Ключ OpenAI API", ph: "sk-proj-...",
+      steps: ["platform.openai.com", "Профиль → API Keys", "Create new secret key → копируйте сразу", "Billing → добавьте оплату"] },
+    device: { title: "📱 Локальный ИИ", info: "Подключается к ИИ на вашем компьютере. Полная приватность.",
+      urlLabel: "Локальный URL", urlHint: "Ollama: 11434 · LM Studio: 1234",
+      steps: ["Установите Ollama или LM Studio", "ollama pull llama3", "Запустите сервер"] },
+    custom: { label1: "URL эндпоинта", ph1: "https://your-api.com/v1/chat/completions", label2: "Ключ (опц.)", ph2: "Ваш ключ...", hint: "OpenAI-совместимый формат." },
+    save: "✓ Сохранить", test: "🔌 Проверить", testing: "Проверка...", ok: "✓ Подключено!", fail: "✗ Ошибка: ", noSel: "Выберите провайдера",
+    title: "Подключение ИИ", connected: "Подключено", notConnected: "Не подключено", selectProvider: "Выберите провайдера",
+  },
+  es: {
+    intro: "🔐 Tu clave se queda solo en tu dispositivo.",
+    gemini: { label: "Clave Google Gemini", ph: "AIza...", note: "✅ Gratis: 15 solicitudes/min — ¡sin tarjeta!",
+      steps: ["Ve a aistudio.google.com", "Inicia sesión con Google", "Get API Key → Create API key", "Copia la clave (AIza...) y pégala"] },
+    claude: { label: "Clave Anthropic API", ph: "sk-ant-api03-...",
+      steps: ["console.anthropic.com — crea cuenta", "Agrega método de pago (~$0.01/canción)", "API Keys en el panel", "Create Key → copia"] },
+    openai: { label: "Clave OpenAI API", ph: "sk-proj-...",
+      steps: ["platform.openai.com", "Perfil → API Keys", "Create new secret key → copia ya", "Billing → agrega pago"] },
+    device: { title: "📱 IA Local", info: "Se conecta a IA en tu computadora. Privacidad total.",
+      urlLabel: "URL local", urlHint: "Ollama: 11434 · LM Studio: 1234",
+      steps: ["Instala Ollama o LM Studio", "ollama pull llama3", "Inicia el servidor"] },
+    custom: { label1: "URL del endpoint", ph1: "https://your-api.com/v1/chat/completions", label2: "Clave (opcional)", ph2: "Tu clave...", hint: "Compatible con OpenAI." },
+    save: "✓ Guardar", test: "🔌 Probar", testing: "Probando...", ok: "✓ ¡Conectado!", fail: "✗ Falló: ", noSel: "Elige un proveedor",
+    title: "Conexión IA", connected: "Conectado", notConnected: "No conectado", selectProvider: "Elige proveedor",
+  },
+  ar: {
+    intro: "🔐 مفتاحك يبقى على جهازك فقط.",
+    gemini: { label: "مفتاح Google Gemini", ph: "AIza...", note: "✅ مجاني: 15 طلب/دقيقة — بدون بطاقة!",
+      steps: ["اذهب إلى aistudio.google.com", "سجّل الدخول بحساب Google", "Get API Key ← Create API key", "انسخ المفتاح (AIza...) والصقه"] },
+    claude: { label: "مفتاح Anthropic API", ph: "sk-ant-api03-...",
+      steps: ["console.anthropic.com — أنشئ حساباً", "أضف وسيلة دفع (~$0.01/أغنية)", "API Keys في الشريط", "Create Key ← انسخ"] },
+    openai: { label: "مفتاح OpenAI API", ph: "sk-proj-...",
+      steps: ["platform.openai.com", "الملف الشخصي ← API Keys", "Create new secret key ← انسخ فوراً", "Billing ← أضف دفع"] },
+    device: { title: "📱 ذكاء محلي", info: "يتصل بذكاء اصطناعي على جهازك. خصوصية تامة.",
+      urlLabel: "عنوان محلي", urlHint: "Ollama: 11434 · LM Studio: 1234",
+      steps: ["ثبّت Ollama أو LM Studio", "ollama pull llama3", "شغّل الخادم"] },
+    custom: { label1: "عنوان API", ph1: "https://your-api.com/v1/chat/completions", label2: "المفتاح (اختياري)", ph2: "مفتاحك...", hint: "متوافق مع OpenAI." },
+    save: "✓ حفظ", test: "🔌 اختبار", testing: "جارٍ...", ok: "✓ متصل!", fail: "✗ فشل: ", noSel: "اختر مزوداً",
+    title: "اتصال الذكاء", connected: "متصل", notConnected: "غير متصل", selectProvider: "اختر مزوداً",
+  },
+};
+
+const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest", "gemini-1.5-flash"];
+
+async function callGemini(keys, prompt) {
+  const keyList = Array.isArray(keys) ? keys : [keys];
+  let lastErr = null;
+  for (const key of keyList) {
+    for (const model of GEMINI_MODELS) {
+      const genCfg = { temperature: 0.3, maxOutputTokens: 6000 };
+      if (model.startsWith("gemini-2.5")) genCfg.thinkingConfig = { thinkingBudget: 0 };
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genCfg }),
+        });
+        if (res.ok) {
+          const d = await res.json();
+          return d?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        }
+        const e = await res.json().catch(() => ({}));
+        lastErr = new Error(e?.error?.message || `HTTP ${res.status}`);
+        if (![404, 429, 500, 503].includes(res.status)) throw lastErr;
+      } catch (e) { lastErr = e; }
+    }
+  }
+  throw lastErr || new Error("Gemini unavailable");
+}
+
+async function callOpenAICompat(url, key, prompt, model) {
+  const h = { "Content-Type": "application/json" };
+  if (key) h["Authorization"] = "Bearer " + key;
+  const res = await fetch(url, {
+    method: "POST", headers: h,
+    body: JSON.stringify({ model: model || "gpt-4o-mini", max_tokens: 3000, messages: [{ role: "user", content: prompt }] }),
+  });
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
+  const d = await res.json();
+  return d?.choices?.[0]?.message?.content || "";
+}
+
+async function callClaude(key, prompt) {
+  const h = { "Content-Type": "application/json" };
+  if (key) { h["x-api-key"] = key; h["anthropic-version"] = "2023-06-01"; h["anthropic-dangerous-direct-browser-access"] = "true"; }
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST", headers: h,
+    body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 3000, messages: [{ role: "user", content: prompt }] }),
+  });
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
+  const d = await res.json();
+  return d?.content?.[0]?.text || "";
+}
+
 /* ─── RULE-BASED TRANSLITERATION ENGINE (Free/Offline) ─── */
 const COMMON_WORDS = {
   "אני":"ani","אתה":"ata","את":"at","הוא":"hu","היא":"hi","אנחנו":"anakhnu","הם":"hem","הן":"hen",
@@ -358,8 +506,11 @@ function SunoPrep() {
   const [err, setErr] = useState("");
   const [tMode, setTMode] = useState("full");
   const [showVoiceTip, setShowVoiceTip] = useState(true);
-  const [isPro, setIsPro] = useState(() => typeof getApiKey === "function" && getApiKey().startsWith("sk-"));
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const [aiProvider, setAiProvider] = useState(null);
+  const [aiKeys, setAiKeys] = useState({ gemini: "", claude: "", openai: "", deviceUrl: "http://localhost:11434/v1", customUrl: "", customKey: "" });
+  const [selProvider, setSelProvider] = useState(null);
+  const [testState, setTestState] = useState(null);
   const [selSty, setSelSty] = useState([]);
   const [selVocal, setSelVocal] = useState([]);
   const [custSty, setCustSty] = useState("");
@@ -418,11 +569,11 @@ function SunoPrep() {
       return;
     }
     
-    // Free mode: use rule-based engine
-    if (!isPro) {
+    // No AI connected: use offline rule-based engine
+    if (!aiProvider) {
       if (m === "hybrid" || m === "optimized") {
-        setErr(rtl ? "מצב היברידי ועברית מותאמת זמינים בגרסת Pro בלבד. עובר לתעתיק מלא..." : "Hybrid and Optimized modes are Pro only. Switching to full transliteration...");
-        setTimeout(() => setErr(""), 3000);
+        setErr(rtl ? "המצב הזה דורש חיבור AI. עובר לתעתיק מקומי..." : "This mode requires an AI connection. Using offline engine...");
+        setTimeout(() => setErr(""), 3500);
       }
       setRes(ruleTranslit(src));
       return;
@@ -569,19 +720,77 @@ EXAMPLE OUTPUT:
 Optimize these lyrics:
 ${src}`;
 
+    const prompt = m === "hybrid" ? hybridPrompt : m === "optimized" ? optimizedPrompt : fullPrompt;
+
     try {
-      const r = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST", headers: { "Content-Type": "application/json", "x-api-key": (typeof getApiKey==="function"?getApiKey():""), "anthropic-dangerous-direct-browser-access": "true", "anthropic-version": "2023-06-01" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6", max_tokens: 2000,
-          messages: [{ role: "user", content: m === "hybrid" ? hybridPrompt : m === "optimized" ? optimizedPrompt : fullPrompt }],
-        }),
-      });
-      const data = await r.json();
-      if (data.content?.[0]?.text) setRes(data.content[0].text);
-      else if (data.error) setErr(data.error.message);
-    } catch { setErr(t.errCon); }
+      const out = await callAI(prompt);
+      if (out?.trim()) setRes(out.trim());
+      else setErr(t.errCon);
+    } catch (e) {
+      let msg = String(e?.message || e);
+      if (msg.length > 90) msg = msg.slice(0, 90) + "...";
+      setErr(msg);
+    }
     setLoading(false);
+  };
+
+  const callAI = async (prompt) => {
+    const p = aiProvider;
+    if (p === "gemini") {
+      const keys = aiKeys.gemini.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+      return await callGemini(keys, prompt);
+    }
+    if (p === "claude") return await callClaude(aiKeys.claude, prompt);
+    if (p === "builtin") return await callClaude("", prompt);
+    if (p === "openai") return await callOpenAICompat("https://api.openai.com/v1/chat/completions", aiKeys.openai, prompt, "gpt-4o-mini");
+    if (p === "device") return await callOpenAICompat(aiKeys.deviceUrl.replace(/\/+$/, "") + "/chat/completions", "", prompt, "llama3");
+    if (p === "custom") return await callOpenAICompat(aiKeys.customUrl, aiKeys.customKey, prompt, "gpt-4o-mini");
+    throw new Error("No provider");
+  };
+
+  const testConnection = async () => {
+    const st = SETUP_STEPS[uLang] || SETUP_STEPS.en;
+    if (!selProvider) { setTestState({ ok: false, msg: st.noSel }); setTimeout(() => setTestState(null), 2500); return; }
+    setTestState({ testing: true, msg: st.testing });
+    try {
+      const testPrompt = "Reply with exactly: OK";
+      if (selProvider === "gemini") {
+        const keys = aiKeys.gemini.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+        if (!keys.length) throw new Error("No key");
+        await callGemini(keys, testPrompt);
+      } else if (selProvider === "claude") {
+        if (!aiKeys.claude.trim()) throw new Error("No key");
+        await callClaude(aiKeys.claude.trim(), testPrompt);
+      } else if (selProvider === "builtin") {
+        await callClaude("", testPrompt);
+      } else if (selProvider === "openai") {
+        if (!aiKeys.openai.trim()) throw new Error("No key");
+        await callOpenAICompat("https://api.openai.com/v1/chat/completions", aiKeys.openai.trim(), testPrompt, "gpt-4o-mini");
+      } else if (selProvider === "device") {
+        await callOpenAICompat((aiKeys.deviceUrl || "http://localhost:11434/v1").replace(/\/+$/, "") + "/chat/completions", "", testPrompt, "llama3");
+      } else if (selProvider === "custom") {
+        if (!aiKeys.customUrl.trim()) throw new Error("No URL");
+        await callOpenAICompat(aiKeys.customUrl.trim(), aiKeys.customKey.trim(), testPrompt, "gpt-4o-mini");
+      }
+      setTestState({ ok: true, msg: st.ok });
+    } catch (e) {
+      let m = String(e?.message || e);
+      if (m.length > 40) m = m.slice(0, 40) + "...";
+      setTestState({ ok: false, msg: st.fail + m });
+    }
+    setTimeout(() => setTestState(null), 5000);
+  };
+
+  const saveAiSetup = async () => {
+    if (!selProvider) return;
+    setAiProvider(selProvider);
+    try { await localSet("ai-config", JSON.stringify({ provider: selProvider, keys: aiKeys })); } catch {}
+    setScr("home");
+  };
+
+  const disconnectAi = async () => {
+    setAiProvider(null); setSelProvider(null);
+    try { await localSet("ai-config", JSON.stringify({ provider: null, keys: aiKeys })); } catch {}
   };
 
   const speak = (txt, isSrc) => {
@@ -655,6 +864,14 @@ ${src}`;
       try {
         const w = await localGet("word-dict");
         if (w?.value) setWordDict(JSON.parse(w.value));
+      } catch {}
+      try {
+        const a = await localGet("ai-config");
+        if (a?.value) {
+          const cfg = JSON.parse(a.value);
+          if (cfg.provider) { setAiProvider(cfg.provider); setSelProvider(cfg.provider); }
+          if (cfg.keys) setAiKeys(k => ({ ...k, ...cfg.keys }));
+        }
       } catch {}
     })();
   }, []);
@@ -776,6 +993,126 @@ ${src}`;
     );
   }
 
+  /* ── AI SETUP ── */
+  if (scr === "aisetup") {
+    const st = SETUP_STEPS[uLang] || SETUP_STEPS.en;
+    const badgeColor = (bt) => bt === "free" ? { bg: "#0F6E5622", fg: "#3DAA7D" } : bt === "paid" ? { bg: `${c.a}22`, fg: c.a } : { bg: `${sb}22`, fg: sb };
+    const Field = ({ label, value, onChange, ph, type, multiline }) => (
+      <div style={{ marginBottom: 10 }}>
+        <div style={{ fontSize: 12, color: tx, fontWeight: 500, marginBottom: 5 }}>{label}</div>
+        {multiline ? (
+          <textarea value={value} onChange={e => onChange(e.target.value)} placeholder={ph} rows={3}
+            style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "9px 12px", color: tx, fontSize: 12, fontFamily: "monospace", direction: "ltr", textAlign: "left", resize: "vertical" }} />
+        ) : (
+          <input type={type || "text"} value={value} onChange={e => onChange(e.target.value)} placeholder={ph}
+            style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "9px 12px", color: tx, fontSize: 13, fontFamily: "inherit", direction: "ltr", textAlign: "left" }} />
+        )}
+      </div>
+    );
+    const Steps = ({ items }) => (
+      <div style={{ display: "flex", flexDirection: "column", gap: 7, marginTop: 10 }}>
+        {items.map((s, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+            <span style={{ minWidth: 18, height: 18, borderRadius: "50%", background: `${c.a}20`, color: c.a, fontSize: 10, fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>{i + 1}</span>
+            <span style={{ fontSize: 12, color: sb, lineHeight: 1.55 }}>{s}</span>
+          </div>
+        ))}
+      </div>
+    );
+    return (
+      <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 20 }}>
+        <B onClick={() => setScr("home")}>{t.back}</B>
+        <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "14px 0 6px" }}>🔌 {st.title}</h2>
+
+        <div style={{ background: `${c.a}0E`, border: `1px solid ${c.a}25`, borderRadius: 10, padding: "10px 13px", fontSize: 11.5, color: sb, lineHeight: 1.65, marginBottom: 16, maxWidth: 620 }}>
+          {st.intro}
+        </div>
+
+        <div style={{ fontSize: 12, color: sb, marginBottom: 8 }}>{st.selectProvider}:</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 7, marginBottom: 16, maxWidth: 620 }}>
+          {AI_PROVIDERS.map(p => {
+            const on = selProvider === p.id;
+            const bc = badgeColor(p.badgeType);
+            const nm = typeof p.name === "string" ? p.name : (p.name[uLang] || p.name.en);
+            return (
+              <div key={p.id} onClick={() => { setSelProvider(p.id); setTestState(null); }}
+                style={{ display: "flex", alignItems: "center", gap: 11, background: on ? `${c.a}12` : cd, border: `1px solid ${on ? c.a : bd}`, borderRadius: 11, padding: "11px 13px", cursor: "pointer", transition: "all .15s" }}>
+                <div style={{ width: 36, height: 36, borderRadius: 9, background: on ? `${c.a}22` : bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>{p.icon}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13.5, fontWeight: 500, color: on ? c.a : tx }}>{nm}</div>
+                  <div style={{ fontSize: 11, color: sb, marginTop: 2 }}>{p.desc[uLang] || p.desc.en}</div>
+                </div>
+                <span style={{ fontSize: 10, padding: "3px 9px", borderRadius: 11, background: bc.bg, color: bc.fg, fontWeight: 500, flexShrink: 0 }}>{p.badge[uLang] || p.badge.en}</span>
+                {on && <span style={{ color: c.a, fontSize: 15, flexShrink: 0 }}>✓</span>}
+              </div>
+            );
+          })}
+        </div>
+
+        {selProvider && (
+          <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 12, padding: 15, maxWidth: 620, marginBottom: 14 }}>
+            {selProvider === "gemini" && (<>
+              <Field label={st.gemini.label} value={aiKeys.gemini} onChange={v => setAiKeys(k => ({ ...k, gemini: v }))} ph={st.gemini.ph} multiline />
+              <div style={{ fontSize: 10.5, color: sb, marginTop: -4, marginBottom: 8 }}>
+                {rtl ? "💡 אפשר להזין כמה מפתחות — אחד בכל שורה. כשנגמרת מכסה, האפליקציה עוברת לבא אוטומטית." : "💡 You can enter multiple keys — one per line. The app rotates automatically when a quota runs out."}
+              </div>
+              <Steps items={st.gemini.steps} />
+              <div style={{ marginTop: 11, padding: "9px 12px", background: "#0F6E5615", border: "1px solid #0F6E5635", borderRadius: 8, fontSize: 11.5, color: "#3DAA7D", lineHeight: 1.55 }}>{st.gemini.note}</div>
+              <div style={{ marginTop: 9 }}><a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: c.a, fontSize: 12 }}>→ aistudio.google.com</a></div>
+            </>)}
+
+            {selProvider === "claude" && (<>
+              <Field label={st.claude.label} value={aiKeys.claude} onChange={v => setAiKeys(k => ({ ...k, claude: v }))} ph={st.claude.ph} type="password" />
+              <Steps items={st.claude.steps} />
+              <div style={{ marginTop: 9 }}><a href="https://console.anthropic.com" target="_blank" rel="noreferrer" style={{ color: c.a, fontSize: 12 }}>→ console.anthropic.com</a></div>
+            </>)}
+
+            {selProvider === "openai" && (<>
+              <Field label={st.openai.label} value={aiKeys.openai} onChange={v => setAiKeys(k => ({ ...k, openai: v }))} ph={st.openai.ph} type="password" />
+              <Steps items={st.openai.steps} />
+              <div style={{ marginTop: 9 }}><a href="https://platform.openai.com" target="_blank" rel="noreferrer" style={{ color: c.a, fontSize: 12 }}>→ platform.openai.com</a></div>
+            </>)}
+
+            {selProvider === "device" && (<>
+              <div style={{ fontSize: 13, fontWeight: 500, color: c.a, marginBottom: 6 }}>{st.device.title}</div>
+              <div style={{ fontSize: 12, color: sb, lineHeight: 1.65, marginBottom: 4 }}>{st.device.info}</div>
+              <Steps items={st.device.steps} />
+              <div style={{ marginTop: 13 }}>
+                <Field label={st.device.urlLabel} value={aiKeys.deviceUrl} onChange={v => setAiKeys(k => ({ ...k, deviceUrl: v }))} ph="http://localhost:11434/v1" />
+                <div style={{ fontSize: 10.5, color: sb, marginTop: -5 }}>{st.device.urlHint}</div>
+              </div>
+            </>)}
+
+            {selProvider === "custom" && (<>
+              <Field label={st.custom.label1} value={aiKeys.customUrl} onChange={v => setAiKeys(k => ({ ...k, customUrl: v }))} ph={st.custom.ph1} />
+              <Field label={st.custom.label2} value={aiKeys.customKey} onChange={v => setAiKeys(k => ({ ...k, customKey: v }))} ph={st.custom.ph2} type="password" />
+              <div style={{ fontSize: 11, color: sb }}>{st.custom.hint}</div>
+            </>)}
+          </div>
+        )}
+
+        {selProvider && (
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", maxWidth: 620 }}>
+            <B pri onClick={saveAiSetup} sx={{ flex: 1, minWidth: 160 }}>{st.save}</B>
+            <B onClick={testConnection} sx={{
+              minWidth: 150,
+              color: testState?.ok === true ? "#3DAA7D" : testState?.ok === false ? "#E55" : tx,
+              borderColor: testState?.ok === true ? "#3DAA7D" : testState?.ok === false ? "#E55" : bd,
+            }}>{testState ? testState.msg : st.test}</B>
+          </div>
+        )}
+
+        {aiProvider && (
+          <div style={{ marginTop: 16, maxWidth: 620 }}>
+            <B onClick={disconnectAi} sx={{ color: "#E55", borderColor: "#E5555540", fontSize: 12 }}>
+              {rtl ? "✕ נתק AI" : "✕ Disconnect AI"}
+            </B>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   /* ── HISTORY ── */
   if (scr === "history") return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
@@ -865,39 +1202,26 @@ ${src}`;
         <B onClick={() => setScr("home")}>{t.back}</B>
         <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>⚙ {t.settings}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 500 }}>
-          {/* Pro Upgrade */}
-          <div style={{ background: `${c.a}12`, border: `1px solid ${c.a}30`, borderRadius: 12, padding: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-              <span style={{ fontSize: 14, fontWeight: 600, color: c.a }}>{isPro ? "⭐ Pro" : "🔓 Free → Pro"}</span>
-              {isPro && <span style={{ fontSize: 10, background: "#4CAF50", color: "#fff", padding: "2px 8px", borderRadius: 4 }}>
-                {rtl ? "פעיל" : "Active"}
-              </span>}
-            </div>
-            {!isPro ? (
-              <>
-                <div style={{ fontSize: 11, color: sb, marginBottom: 8, lineHeight: 1.6 }}>
-                  {rtl ? "גרסת Free: תעתיק מבוסס חוקים (אופליין, בלי אינטרנט). מתאים לרוב השירים.\nגרסת Pro: תעתיק חכם עם בינה מלאכותית + מצב היברידי + עברית מותאמת עם ניקוד אוטומטי."
-                       : "Free: Rule-based transliteration (offline, no internet). Works for most songs.\nPro: AI-powered smart transliteration + Hybrid mode + Optimized Hebrew with auto nikud."}
-                </div>
-                <input value={isPro ? "••••••" : ""} onChange={e => {
-                  const k = e.target.value.trim();
-                  if (k.startsWith("sk-")) { setIsPro(true); if (typeof window.setApiKey==="function") window.setApiKey(k); }
-                }} type="password" placeholder={rtl ? "הכנס Anthropic API Key לשדרוג..." : "Enter Anthropic API Key to upgrade..."}
-                  style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "8px 12px", color: tx, fontSize: 13, fontFamily: "inherit", direction: "ltr", textAlign: "left" }} />
-                <div style={{ fontSize: 10, color: sb, marginTop: 4 }}>
-                  {rtl ? "מפתח חינמי ב-" : "Free key at "}<a href="https://console.anthropic.com" target="_blank" style={{ color: c.a }}>console.anthropic.com</a>
-                  {rtl ? " ($5 קרדיט לנסיון)" : " ($5 free credits)"}
-                </div>
-              </>
-            ) : (
-              <div style={{ fontSize: 11, color: sb }}>
-                {rtl ? "תעתיק חכם, מצב היברידי ועברית מותאמת פעילים." : "Smart transliteration, Hybrid and Optimized modes active."}
-                <br/><span onClick={() => setIsPro(false)} style={{ color: "#E55", cursor: "pointer", fontSize: 10 }}>
-                  {rtl ? "חזור ל-Free" : "Switch to Free"}
-                </span>
+          {/* AI Connection */}
+          <div onClick={() => setScr("aisetup")} style={{ background: aiProvider ? "#0F6E5612" : `${c.a}12`, border: `1px solid ${aiProvider ? "#0F6E5640" : `${c.a}30`}`, borderRadius: 12, padding: 14, cursor: "pointer" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 34, height: 34, borderRadius: 9, background: aiProvider ? "#0F6E5622" : `${c.a}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, flexShrink: 0 }}>
+                {aiProvider ? (AI_PROVIDERS.find(p => p.id === aiProvider)?.icon || "🔌") : "🔌"}
               </div>
-            )}
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 13.5, fontWeight: 500, color: aiProvider ? "#3DAA7D" : c.a }}>
+                  {(SETUP_STEPS[uLang] || SETUP_STEPS.en).title}
+                </div>
+                <div style={{ fontSize: 11, color: sb, marginTop: 2 }}>
+                  {aiProvider
+                    ? `${(SETUP_STEPS[uLang] || SETUP_STEPS.en).connected} · ${(() => { const pr = AI_PROVIDERS.find(p => p.id === aiProvider); return pr ? (typeof pr.name === "string" ? pr.name : (pr.name[uLang] || pr.name.en)) : aiProvider; })()}`
+                    : (rtl ? "לא מחובר — לוחצים כאן לחיבור (יש אופציה חינמית!)" : "Not connected — tap to connect (free option available!)")}
+                </div>
+              </div>
+              <span style={{ color: sb, fontSize: 15 }}>{rtl ? "‹" : "›"}</span>
+            </div>
           </div>
+
 
           <Card label={t.uname}>
             <input value={uname} onChange={e => setUname(e.target.value)} placeholder={t.unamePh}
@@ -969,7 +1293,13 @@ ${src}`;
           </div>
         </div>
         <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-          {isPro && <span style={{ fontSize: 9, background: c.a, color: day ? "#fff" : "#0B0B0F", padding: "2px 6px", borderRadius: 4, fontWeight: 600 }}>PRO</span>}
+          <div onClick={() => setScr("aisetup")} title={(SETUP_STEPS[uLang] || SETUP_STEPS.en).title}
+            style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 8px", borderRadius: 8, border: `1px solid ${aiProvider ? "#0F6E5650" : bd}`, background: aiProvider ? "#0F6E5615" : "transparent", cursor: "pointer" }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: aiProvider ? "#3DAA7D" : sb, flexShrink: 0 }} />
+            <span style={{ fontSize: 10, color: aiProvider ? "#3DAA7D" : sb, whiteSpace: "nowrap" }}>
+              {aiProvider ? (AI_PROVIDERS.find(p => p.id === aiProvider)?.icon || "AI") : (rtl ? "חבר AI" : "Connect AI")}
+            </span>
+          </div>
           <div style={{ position: "relative" }}>
             <B sm onClick={() => setShowLangMenu(!showLangMenu)}>🌐</B>
             {showLangMenu && (
@@ -1052,6 +1382,25 @@ ${src}`;
           )}
         </div>
 
+        {/* CONNECT AI BANNER */}
+        {!aiProvider && (
+          <div onClick={() => setScr("aisetup")}
+            style={{ background: `${c.a}12`, border: `1px solid ${c.a}35`, borderRadius: 12, padding: "12px 14px", display: "flex", alignItems: "center", gap: 11, cursor: "pointer" }}>
+            <span style={{ fontSize: 20, flexShrink: 0 }}>🔌</span>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 13, fontWeight: 500, color: c.a, marginBottom: 3 }}>
+                {rtl ? "חבר בינה מלאכותית לתעתיק חכם" : "Connect AI for smart transliteration"}
+              </div>
+              <div style={{ fontSize: 11, color: sb, lineHeight: 1.55 }}>
+                {rtl
+                  ? "עכשיו עובד במצב מקומי (בלי אינטרנט). חבר Gemini בחינם — בלי כרטיס אשראי — ותקבל תעתיק חכם ומצבים נוספים."
+                  : "Currently in offline mode. Connect Gemini for free — no credit card — to unlock smart transliteration and extra modes."}
+              </div>
+            </div>
+            <span style={{ color: c.a, fontSize: 16, flexShrink: 0 }}>{rtl ? "‹" : "›"}</span>
+          </div>
+        )}
+
         {/* VOICE TIP */}
         {showVoiceTip && (
           <div style={{ background: `${c.a}12`, border: `1px solid ${c.a}30`, borderRadius: 12, padding: "12px 16px", display: "flex", alignItems: "flex-start", gap: 10 }}>
@@ -1080,10 +1429,10 @@ ${src}`;
               {rtl ? "🔤 תעתיק מלא (לטינית)" : "🔤 Full transliteration"}
             </B>
             <B sm act={tMode === "hybrid"} onClick={() => setTMode("hybrid")}>
-              {rtl ? "🔀 היברידי" : "🔀 Hybrid"} {!isPro && <span style={{ fontSize: 9, color: "#C9A84C", marginInlineStart: 2 }}>Pro</span>}
+              {rtl ? "🔀 היברידי" : "🔀 Hybrid"} {!aiProvider && <span style={{ fontSize: 9, color: c.a, marginInlineStart: 2 }}>AI</span>}
             </B>
             <B sm act={tMode === "optimized"} onClick={() => setTMode("optimized")}>
-              {rtl ? "✨ עברית מותאמת" : "✨ Optimized Hebrew"} {!isPro && <span style={{ fontSize: 9, color: "#C9A84C", marginInlineStart: 2 }}>Pro</span>}
+              {rtl ? "✨ עברית מותאמת" : "✨ Optimized Hebrew"} {!aiProvider && <span style={{ fontSize: 9, color: c.a, marginInlineStart: 2 }}>AI</span>}
             </B>
             <B sm act={tMode === "hebrew"} onClick={() => setTMode("hebrew")}>
               {rtl ? "🇮🇱 עברית ישירה" : "🇮🇱 Direct Hebrew"}

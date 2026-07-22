@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sunoprep-v2.1';
+const CACHE_NAME = 'sunoprep-v3';
 const ASSETS = [
   './',
   './index.html',
