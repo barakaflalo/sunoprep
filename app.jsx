@@ -1938,8 +1938,8 @@ ${ideaOut}`;
             ].map(([ok,label],i)=><div key={i} style={{display:"flex",justifyContent:"space-between",gap:8,padding:"8px 9px",borderRadius:9,background:bg,border:`1px solid ${bd}`}}><span style={{fontSize:12,color:tx}}>{ok?"✅":"⚠️"} {label}</span><span style={{fontSize:10,color:sb}}>{ok?"תקין":"דורש השלמה"}</span></div>)}
           </div>
           <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:9}}>
-            <B sm onClick={()=>{try{localStorage.setItem("sunoprep_emergency_draft",JSON.stringify({src,res,styTxt,performanceCard,savedAt:new Date().toISOString()})); alert("טיוטת חירום נשמרה במכשיר.")}catch(e){alert("לא ניתן היה לשמור טיוטת חירום.")}} dis={!src.trim()}>💾 שמור טיוטת חירום</B>
-            <B sm onClick={()=>{try{const x=JSON.parse(localStorage.getItem("sunoprep_emergency_draft")||"null"); if(!x){alert("לא נמצאה טיוטת חירום.");return;} if(window.confirm("להחזיר את טיוטת החירום? הטקסט הנוכחי יוחלף.")){setSrc(x.src||"");setRes(x.res||"");setCustSty(x.styTxt||"");if(x.performanceCard)setPerformanceCard(x.performanceCard);}}catch(e){alert("טיוטת החירום פגומה.")}}>↩️ שחזר טיוטת חירום</B>
+            <B sm onClick={()=>{try{localStorage.setItem("sunoprep_emergency_draft",JSON.stringify({src,res,styTxt,performanceCard,savedAt:new Date().toISOString()}));alert("טיוטת חירום נשמרה במכשיר.");}catch(e){alert("לא ניתן היה לשמור טיוטת חירום.");}}} dis={!src.trim()}>💾 שמור טיוטת חירום</B>
+            <B sm onClick={()=>{try{const x=JSON.parse(localStorage.getItem("sunoprep_emergency_draft")||"null");if(!x){alert("לא נמצאה טיוטת חירום.");return;}if(window.confirm("להחזיר את טיוטת החירום? הטקסט הנוכחי יוחלף.")){setSrc(x.src||"");setRes(x.res||"");setCustSty(x.styTxt||"");if(x.performanceCard){setPerformanceCard(x.performanceCard);}}}catch(e){alert("טיוטת החירום פגומה.");}}}>↩️ שחזר טיוטת חירום</B>
           </div>
         </div>
 
