@@ -519,6 +519,8 @@ function SunoPrep() {
   const [editStyId, setEditStyId] = useState(null);
   const [editStyLabel, setEditStyLabel] = useState("");
   const [rate, setRate] = useState(1.0);
+  const [voices, setVoices] = useState([]);
+  const [selectedVoice, setSelectedVoice] = useState("");
   const [speaking, setSpeaking] = useState(null);
   const [cpd, setCpd] = useState(null);
   const [theme, setTheme] = useState("gold");
@@ -793,16 +795,27 @@ ${src}`;
     try { await localSet("ai-config", JSON.stringify({ provider: null, keys: aiKeys })); } catch {}
   };
 
-  const speak = (txt, isSrc) => {
+  const cleanForSpeech = (txt) => (txt || "").replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").replace(/\s+/g, " ").trim();
+  const loadVoices = () => {
+    if (!("speechSynthesis" in window)) return;
+    const all = window.speechSynthesis.getVoices();
+    const preferred = all.filter(v => v.lang.toLowerCase().startsWith(sl.tts.slice(0,2).toLowerCase()));
+    setVoices(preferred.length ? preferred : all);
+  };
+  const speakText = (txt, key, lang) => {
+    if (!("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
-    const k = isSrc ? "s" : "r";
-    if (speaking === k) { setSpeaking(null); return; }
-    const clean = txt.replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").trim();
-    if (!clean) return;
+    if (speaking === key) { setSpeaking(null); return; }
+    const clean = cleanForSpeech(txt); if (!clean) return;
     const u = new SpeechSynthesisUtterance(clean);
-    u.lang = isSrc ? sl.tts : (tMode === "optimized" || tMode === "hebrew" || tMode === "hybrid") ? sl.tts : "en-US"; u.rate = rate;
+    const voice = voices.find(v => v.name === selectedVoice);
+    u.lang = voice?.lang || lang; if (voice) u.voice = voice; u.rate = rate;
     u.onend = () => setSpeaking(null); u.onerror = () => setSpeaking(null);
-    setSpeaking(k); window.speechSynthesis.speak(u);
+    setSpeaking(key); window.speechSynthesis.speak(u);
+  };
+  const speak = (txt, isSrc) => {
+    const lang = isSrc ? sl.tts : (tMode === "optimized" || tMode === "hebrew" || tMode === "hybrid") ? sl.tts : "en-US";
+    speakText(txt, isSrc ? "s" : "r", lang);
   };
 
   const copy = async (txt, fld) => {
@@ -849,7 +862,13 @@ ${src}`;
     r.readAsText(f);
   };
 
-  useEffect(() => () => window.speechSynthesis.cancel(), []);
+  useEffect(() => {
+    loadVoices();
+    if ("speechSynthesis" in window) window.speechSynthesis.onvoiceschanged = loadVoices;
+    return () => { if ("speechSynthesis" in window) { window.speechSynthesis.cancel(); window.speechSynthesis.onvoiceschanged = null; } };
+  }, [sLang]);
+  useEffect(() => { (async () => { try { const v = await localGet("tts-voice"); if (v?.value) setSelectedVoice(v.value); } catch {} })(); }, []);
+  useEffect(() => { (async () => { try { await localSet("tts-voice", selectedVoice); } catch {} })(); }, [selectedVoice]);
 
   useEffect(() => {
     (async () => {
@@ -1253,6 +1272,13 @@ ${src}`;
               <B sm act={day} onClick={() => setDay(true)}>☀️ {t.day}</B>
             </div>
           </Card>
+          <Card label={rtl ? "🎙️ קול להאזנה" : "🎙️ Playback voice"}>
+            <select value={selectedVoice} onChange={e => setSelectedVoice(e.target.value)} style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "8px 10px", color: tx, fontSize: 13 }}>
+              <option value="">{rtl ? "ברירת המחדל של המכשיר" : "Device default"}</option>
+              {voices.map(v => <option key={`${v.name}-${v.lang}`} value={v.name}>{v.name} — {v.lang}</option>)}
+            </select>
+            <div style={{ fontSize: 10, color: sb, marginTop: 6 }}>{rtl ? "הקולות מגיעים מהטלפון או מהדפדפן." : "Voices come from your device or browser."}</div>
+          </Card>
           <Card label={t.speed}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <input type="range" min="0.5" max="2" step="0.1" value={rate}
@@ -1456,6 +1482,18 @@ ${src}`;
         </div>
 
         {err && <div style={{ padding: "8px 12px", borderRadius: 8, background: day ? "#FEE" : "#3A1515", border: `1px solid ${day ? "#E88" : "#5A2020"}`, color: "#E55", fontSize: 12, textAlign: "center" }}>{err}</div>}
+
+        {/* ═══ PRONUNCIATION PREVIEW ═══ */}
+        {src.trim() && <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 12, padding: 14, marginBottom: 14 }}>
+          <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>🎧 {rtl ? "בדיקת הגייה לפי שורות" : "Line-by-line pronunciation check"}</div>
+          <div style={{ fontSize: 11, color: sb, marginBottom: 10 }}>{rtl ? "לחץ על שורה כדי לשמוע אותה בקול שנבחר." : "Tap a line to hear it with the selected voice."}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            {src.split(/\n/).map((line, i) => line.trim() && !/^\[.*\]$/.test(line.trim()) && <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 10px", background: bg, border: `1px solid ${bd}`, borderRadius: 8 }}>
+              <button onClick={() => speakText(line, `line-${i}`, sl.tts)} style={{ border: "none", background: `${c.a}18`, color: c.a, borderRadius: 7, padding: "6px 9px", cursor: "pointer" }}>{speaking === `line-${i}` ? "⏹" : "▶"}</button>
+              <span style={{ flex: 1, fontSize: 13, lineHeight: 1.5 }}>{line}</span>
+            </div>)}
+          </div>
+        </div>}
 
         {/* ═══ RESULT: LYRICS ═══ */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
