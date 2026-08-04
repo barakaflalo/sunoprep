@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• 5 שפות ממשק, 9 שפות מקור\n• 4 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 2.0", back: "← חזרה לדף הבית",
+    ver: "גרסה 5.1", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -533,8 +533,27 @@ function SunoPrep() {
   const [dictWord, setDictWord] = useState("");
   const [dictPron, setDictPron] = useState("");
   const [showSylCount, setShowSylCount] = useState(true);
+  const [projects, setProjects] = useState(() => { try { return JSON.parse(localStorage.getItem("sunoprep_projects") || "[]"); } catch(e){ return []; } });
+  const [projectName, setProjectName] = useState("");
+  const [health, setHealth] = useState(null);
+  const [phraseBank, setPhraseBank] = useState(() => { try { return JSON.parse(localStorage.getItem("sunoprep_phrase_bank") || "[]"); } catch(e){ return []; } });
+  const [phraseText, setPhraseText] = useState("");
+  const [phraseTag, setPhraseTag] = useState("");
   const srcRef = useRef(null);
   const fileRef = useRef(null);
+
+  const savePhrase = () => { const text=phraseText.trim(); if(!text) return; const item={id:Date.now(),text,tag:phraseTag.trim()}; const next=[item,...phraseBank.filter(x=>x.text!==text)].slice(0,100); setPhraseBank(next); localStorage.setItem("sunoprep_phrase_bank",JSON.stringify(next)); setPhraseText(""); setPhraseTag(""); };
+  const deletePhrase = (id) => { const next=phraseBank.filter(x=>x.id!==id); setPhraseBank(next); localStorage.setItem("sunoprep_phrase_bank",JSON.stringify(next)); };
+  const addPhraseToSong = (text) => setSrc(prev => prev ? prev.replace(/\s*$/,"")+"\n"+text : text);
+
+  const saveProject = () => {
+    const name = projectName.trim() || `שיר ${new Date().toLocaleString("he-IL")}`;
+    const item = { id: Date.now(), name, src, res, styTxt, sLang, updatedAt: new Date().toISOString() };
+    const next = [item, ...projects.filter(p => p.name !== name)].slice(0, 30);
+    setProjects(next); localStorage.setItem("sunoprep_projects", JSON.stringify(next)); setProjectName(name);
+  };
+  const loadProject = (p) => { setSrc(p.src || ""); setRes(p.res || ""); setProjectName(p.name || ""); if(p.sLang) setSLang(p.sLang); };
+  const deleteProject = (id) => { const next=projects.filter(p=>p.id!==id); setProjects(next); localStorage.setItem("sunoprep_projects", JSON.stringify(next)); };
 
   const c = TH[theme];
   const bg = day ? c.bgL : c.bg;
@@ -1356,6 +1375,21 @@ ${src}`;
             {VOICE_TAGS.map(vt => <B key={vt.l} sm onClick={() => insertTag(vt.l)} sx={{ fontSize: 11, borderStyle: "dashed" }}>{rtl ? vt.h : vt.l}</B>)}
           </div>
           <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => setSrc(e.target.value)} placeholder={t.srcPh} style={TA} />
+          <div style={{ marginTop: 10, padding: 12, background: `${c.a}0D`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
+            <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>💡 בנק משפטים ורעיונות</div>
+            <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>שמור שורות שאהבת והוסף אותן לכל שיר בלחיצה.</div>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+              <input value={phraseText} onChange={e=>setPhraseText(e.target.value)} placeholder="משפט או שורת השראה..." style={{ flex:"1 1 220px", minWidth:0, background:bg, border:`1px solid ${bd}`, borderRadius:8, padding:"8px 10px", color:tx, fontFamily:"inherit" }} />
+              <input value={phraseTag} onChange={e=>setPhraseTag(e.target.value)} placeholder="תגית (אהבה, פזמון...)" style={{ flex:"1 1 120px", minWidth:0, background:bg, border:`1px solid ${bd}`, borderRadius:8, padding:"8px 10px", color:tx, fontFamily:"inherit" }} />
+              <B sm onClick={savePhrase}>💾 שמור</B>
+            </div>
+            {phraseBank.length>0 && <div style={{ marginTop:8, display:"grid", gap:6 }}>
+              {phraseBank.slice(0,12).map(p=><div key={p.id} style={{ display:"flex", alignItems:"center", gap:6, padding:"7px 8px", background:bg, border:`1px solid ${bd}`, borderRadius:8 }}>
+                <span style={{ flex:1, fontSize:13 }}>{p.text} {p.tag && <small style={{color:sb}}>#{p.tag}</small>}</span>
+                <B sm onClick={()=>addPhraseToSong(p.text)}>➕ הוסף</B><B sm onClick={()=>deletePhrase(p.id)}>✕</B>
+              </div>)}
+            </div>}
+          </div>
           {src.trim() && (
             <div style={{ marginTop: 10, padding: 12, background: `${c.a}0D`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
               <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>📚 מילון הגייה אישי</div>
@@ -1614,6 +1648,28 @@ ${src}`;
         </div>
 
 
+
+        {/* RHYTHM & LINE BALANCE */}
+        {src.trim() && (() => {
+          const lines = src.split(/\n/).map((x,i)=>({text:x.trim(),i})).filter(o=>o.text && !/^\[.*\]$/.test(o.text));
+          const count = x => (x.match(/[א-ת]+/g)||[]).reduce((n,w)=>n+Math.max(1,(w.replace(/[אהוי]/g," ").trim().match(/[א-ת]+/g)||[]).length),0);
+          const vals=lines.map(o=>count(o.text));
+          const avg=vals.reduce((a,b)=>a+b,0)/Math.max(1,vals.length);
+          const max=Math.max(...vals,1);
+          return <div style={{marginTop:12,padding:14,borderRadius:12,background:`${c.a}0d`,border:`1px solid ${c.a}35`}}>
+            <div style={{fontWeight:800,fontSize:15,color:tx}}>🎵 איזון קצב ועומס שורות</div>
+            <div style={{fontSize:11,color:sb,marginTop:4}}>הערכה גסה לפי אורך ומבנה המילים — לא מדד מוזיקלי מדויק.</div>
+            <div style={{marginTop:10,display:"grid",gap:7}}>
+              {lines.map((o,j)=>{const v=vals[j], ratio=v/Math.max(avg,1), flag=ratio>1.45?"🔴":ratio>1.2?"🟡":ratio<0.65?"🟡":"🟢"; return <div key={o.i} style={{padding:"8px 9px",borderRadius:8,background:bg,border:`1px solid ${bd}`}}>
+                <div style={{display:"flex",justifyContent:"space-between",gap:8,fontSize:11}}><span style={{color:tx,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{flag} {o.text}</span><b style={{color:c.a,whiteSpace:"nowrap"}}>{v} יח׳</b></div>
+                <div style={{height:5,borderRadius:5,background:bd,marginTop:6,overflow:"hidden"}}><div style={{height:"100%",width:`${Math.min(100,(v/max)*100)}%`,background:c.a,borderRadius:5}}/></div>
+                {ratio>1.45 && <div style={{fontSize:10,color:sb,marginTop:5}}>השורה ארוכה משמעותית מהממוצע — Suno עלול לדחוס או לבלוע מילים.</div>}
+              </div>})}
+            </div>
+            <div style={{fontSize:10,color:sb,marginTop:8}}>ממוצע: {avg.toFixed(1)} יחידות לשורה. השווה בעיקר שורות בתוך אותו בית.</div>
+          </div>
+        })()}
+
         {/* FINAL SUNO CHECK */}
         {src.trim() && (() => {
           const rawLines = src.split(/\n/).map(x=>x.trim()).filter(x=>x && !/^\[.*\]$/.test(x));
@@ -1639,6 +1695,37 @@ ${src}`;
             </div>
           </div>
         })()}
+
+        {/* SUNOPREP 5.0 HEALTH CHECK */}
+        <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
+          <div style={{ fontWeight:800, color:tx }}>🧪 בדיקת תקינות — SunoPrep 5.0</div>
+          <div style={{ fontSize:11, color:sb, marginTop:4 }}>בדיקה מהירה של החלקים החשובים לפני שמתחילים לעבוד על שיר.</div>
+          <div style={{display:"flex",gap:7,marginTop:9,flexWrap:"wrap"}}>
+            <B sm onClick={()=>{ const checks=[
+              ["טקסט מקור", !!src.trim()], ["גרסת Suno", !!(res||src).trim()],
+              ["הקראה במכשיר", "speechSynthesis" in window], ["שמירה מקומית", (()=>{try{localStorage.setItem("sunoprep_health_test","1");localStorage.removeItem("sunoprep_health_test");return true}catch(e){return false}})()],
+              ["פרויקטים", Array.isArray(projects)]
+            ]; setHealth(checks); }}>▶️ הרץ בדיקה</B>
+            {health && <B sm onClick={()=>setHealth(null)}>נקה תוצאה</B>}
+          </div>
+          {health && <div style={{marginTop:9,display:"grid",gap:5}}>{health.map(([n,ok])=><div key={n} style={{fontSize:12,color:ok?"#4caf50":"#e57373"}}>{ok?"✅":"❌"} {n}: {ok?"תקין":"דורש בדיקה"}</div>)}</div>}
+        </div>
+
+        {/* PROJECTS */}
+        <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
+          <div style={{ fontWeight:800, color:tx }}>💾 פרויקטים — שמור וחזור לשיר</div>
+          <div style={{ fontSize:11, color:sb, marginTop:4 }}>נשמרים במכשיר הזה: טקסט המקור וגרסת Suno. אפשר לחזור לשיר בלי לאבד עבודה.</div>
+          <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>
+            <input value={projectName} onChange={e=>setProjectName(e.target.value)} placeholder="שם השיר" style={{flex:"1 1 160px",padding:"9px 10px",borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}} />
+            <B sm onClick={saveProject} dis={!src.trim()}>💾 שמור פרויקט</B>
+          </div>
+          {projects.length>0 && <div style={{marginTop:10,display:"grid",gap:6}}>
+            {projects.slice(0,8).map(p=><div key={p.id} style={{display:"flex",alignItems:"center",gap:6,padding:"8px",borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
+              <div style={{flex:1,minWidth:0}}><div style={{fontWeight:700,color:tx,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{p.name}</div><div style={{fontSize:10,color:sb}}>{new Date(p.updatedAt).toLocaleString("he-IL")}</div></div>
+              <B sm onClick={()=>loadProject(p)}>פתח</B><B sm onClick={()=>deleteProject(p.id)}>🗑</B>
+            </div>)}
+          </div>}
+        </div>
 
         {/* PRINT */}
         <div style={{ display: "flex", justifyContent: "center", gap: 6, flexWrap: "wrap" }}>
