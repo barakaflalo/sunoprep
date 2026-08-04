@@ -1329,7 +1329,7 @@ ${ideaOut}`;
         <B onClick={() => setScr("home")}>{t.back}</B>
         <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>⚙ {t.settings}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 500 }}>
-          {/* AI Connection */}
+          <span id="settings" style={{display:"block",scrollMarginTop:110}}></span>{/* AI Connection */}
           <div onClick={() => setScr("aisetup")} style={{ background: aiProvider ? "#0F6E5612" : `${c.a}12`, border: `1px solid ${aiProvider ? "#0F6E5640" : `${c.a}30`}`, borderRadius: 12, padding: 14, cursor: "pointer" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 34, height: 34, borderRadius: 9, background: aiProvider ? "#0F6E5622" : `${c.a}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, flexShrink: 0 }}>
@@ -1457,7 +1457,7 @@ ${ideaOut}`;
           {Object.entries(LANGS).map(([k, v]) => <B key={k} sm act={sLang === k} onClick={() => setSLang(k)}>{v.n}</B>)}
         </div>
 
-        {/* SOURCE */}
+        <span id="source" style={{display:"block",scrollMarginTop:110}}></span>{/* SOURCE */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
             <span style={{ fontSize: 14, fontWeight: 600, color: c.a }}>{t.srcTitle}</span>
@@ -1560,7 +1560,17 @@ ${ideaOut}`;
           )}
         </div>
 
-        {/* CONNECT AI BANNER */}
+        {/* QUICK TABS */}
+        <div style={{position:"sticky",top:0,zIndex:20,margin:"10px 0 12px",padding:"8px",borderRadius:12,background:cd,border:`1px solid ${bd}`,boxShadow:"0 4px 14px rgba(0,0,0,.12)"}}>
+          <div style={{display:"flex",gap:7,overflowX:"auto",paddingBottom:2,WebkitOverflowScrolling:"touch"}}>
+            {[
+              ["✍️ כתיבה","source"],["✨ רעיונות","ideas"],["🎧 בדיקות","checks"],
+              ["🎙️ קול","voice"],["🎵 Suno","suno"],["🗂️ פרויקטים","projects"],["⚙️ הגדרות","settings"]
+            ].map(([label,id])=><button key={id} onClick={()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"})}
+              style={{flex:"0 0 auto",border:`1px solid ${bd}`,background:bg,color:tx,borderRadius:9,padding:"8px 11px",fontSize:11,fontWeight:700,cursor:"pointer"}}>{label}</button>)}
+          </div>
+        </div>
+        <span id="ideas" style={{display:"block",scrollMarginTop:110}}></span>{/* CONNECT AI BANNER */}
         {!aiProvider && (
           <div onClick={() => setScr("aisetup")}
             style={{ background: `${c.a}12`, border: `1px solid ${c.a}35`, borderRadius: 12, padding: "12px 14px", display: "flex", alignItems: "center", gap: 11, cursor: "pointer" }}>
@@ -1776,7 +1786,7 @@ ${ideaOut}`;
 
 
 
-        {/* RHYTHM & LINE BALANCE */}
+        <span id="checks" style={{display:"block",scrollMarginTop:110}}></span>{/* RHYTHM & LINE BALANCE */}
         {src.trim() && (() => {
           const lines = src.split(/\n/).map((x,i)=>({text:x.trim(),i})).filter(o=>o.text && !/^\[.*\]$/.test(o.text));
           const count = x => (x.match(/[א-ת]+/g)||[]).reduce((n,w)=>n+Math.max(1,(w.replace(/[אהוי]/g," ").trim().match(/[א-ת]+/g)||[]).length),0);
@@ -1823,7 +1833,7 @@ ${ideaOut}`;
           </div>
         })()}
 
-        {/* AI IDEA STUDIO */}
+        <span id="ideas" style={{display:"block",scrollMarginTop:110}}></span>{/* AI IDEA STUDIO */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
           <div style={{ fontWeight:800, color:tx }}>✨ אולפן רעיונות וטיוטות AI</div>
           <div style={{ fontSize:11, color:sb, marginTop:4 }}>כתוב התחלה, רעיון או מצב. ה־AI יציע טיוטה שתוכל לקחת ממנה רק מה שאהבת.</div>
@@ -1924,7 +1934,7 @@ ${ideaOut}`;
           <div style={{marginTop:9,fontSize:11,color:sb}}>טיפ: לפני ההעתקה ל־Suno, השמע לפחות שורה אחת ובדוק את גרסת ה־Lyrics מול המקור.</div>
         </div>
 
-        {/* SUNOPREP 9.0 STABILITY */}
+        <span id="projects" style={{display:"block",scrollMarginTop:110}}></span>{/* SUNOPREP 9.0 STABILITY */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
           <div style={{ fontWeight:800, color:tx }}>🛡️ מרכז יציבות ושמירה — 9.1</div>
           <div style={{ fontSize:11, color:sb, marginTop:4 }}>מצב הנתונים החשובים כרגע. שום פעולה כאן לא משנה את המילים.</div>
@@ -1943,7 +1953,7 @@ ${ideaOut}`;
           </div>
         </div>
 
-        {/* PROJECTS */}
+        <span id="projects" style={{display:"block",scrollMarginTop:110}}></span>{/* PROJECTS */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
           <div style={{ fontWeight:800, color:tx }}>💾 פרויקטים — שמור וחזור לשיר</div>
           <div style={{ fontSize:11, color:sb, marginTop:4 }}>נשמרים במכשיר הזה: טקסט המקור וגרסת Suno. אפשר לחזור לשיר בלי לאבד עבודה.</div>
@@ -1967,7 +1977,7 @@ ${ideaOut}`;
         </div>
 
 
-        {/* PERFORMANCE CARD → STYLE PROMPT */}
+        <span id="voice" style={{display:"block",scrollMarginTop:110}}></span>{/* PERFORMANCE CARD → STYLE PROMPT */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: c.a }}>🎭 {rtl ? "כרטיס ביצוע → Style Prompt" : "Performance Card → Style Prompt"}</div>
           <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 9 }}>{rtl ? "הגדר איך כל חלק אמור להתבצע. הכפתור יוסיף את התיאור ל־Style Prompt בלי לשנות את מילות השיר." : "Describe how each section should be performed. The button adds it to the Style Prompt without changing lyrics."}</div>
@@ -1980,7 +1990,7 @@ ${ideaOut}`;
           </div>
         </div>
 
-        {/* SUNO STYLE PROMPT */}
+        <span id="suno" style={{display:"block",scrollMarginTop:110}}></span>{/* SUNO STYLE PROMPT */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: c.a, marginBottom: 6 }}>✨ {rtl ? "Style Prompt מוכן ל־Suno" : "Suno-ready Style Prompt"}</div>
           <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>{rtl ? "נוצר מהסגנון, הקול וה־BPM שבחרת. אפשר לערוך לפני ההעתקה." : "Built from your selected style, vocal and BPM. Edit before copying."}</div>
@@ -1992,7 +2002,7 @@ ${ideaOut}`;
         </div>
 
 
-        {/* SUNO PACKAGE */}
+        <span id="suno" style={{display:"block",scrollMarginTop:110}}></span>{/* SUNO PACKAGE */}
         <div style={{ background: cd, border: `2px solid ${c.a}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
           <div style={{ fontSize: 16, fontWeight: 800, color: c.a }}>📦 {rtl ? "חבילת Suno — הכול במקום אחד" : "Suno Package — everything in one place"}</div>
           <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 10 }}>{rtl ? "בדיקה אחרונה והעתקה נפרדת של המילים, ה־Style Prompt ותיאור הביצוע." : "Final check and separate copy buttons for lyrics, style and performance."}</div>
@@ -2018,7 +2028,7 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
 
         {/* FOOTER */}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: `${sb}88` }}>
-          SunoPrep 9.1 by Barak Aflalo — © AppNest 2026
+          SunoPrep 9.1.7 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
