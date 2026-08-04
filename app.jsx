@@ -497,36 +497,6 @@ const countSyllables = (line) => {
 };
 
 function SunoPrep() {
-  const [voiceSamples, setVoiceSamples] = useState(() => { try{return JSON.parse(localStorage.getItem("sunoprep_voice_samples")||"[]")}catch(e){return []} });
-  const [voiceName, setVoiceName] = useState("");
-  const [voiceProfile, setVoiceProfile] = useState("חם ורך");
-  const [selectedVoiceId, setSelectedVoiceId] = useState(() => localStorage.getItem("sunoprep_selected_voice")||"");
-  const [compareVoiceA, setCompareVoiceA] = useState("");
-  const [compareVoiceB, setCompareVoiceB] = useState("");
-  const voiceFileRef = useRef(null);
-  const [isRecording, setIsRecording] = useState(false);
-  const mediaRecorderRef = useRef(null);
-  const recordedChunksRef = useRef([]);
-  const startVoiceRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-      const rec = new MediaRecorder(stream);
-      recordedChunksRef.current=[];
-      rec.ondataavailable=e=>{if(e.data.size) recordedChunksRef.current.push(e.data)};
-      rec.onstop=()=>{
-        const blob=new Blob(recordedChunksRef.current,{type:rec.mimeType||"audio/webm"});
-        const file=new File([blob],(voiceName.trim()||"הקלטה חדשה")+".webm",{type:blob.type});
-        addVoiceSample(file); stream.getTracks().forEach(t=>t.stop()); setIsRecording(false);
-      };
-      mediaRecorderRef.current=rec; rec.start(); setIsRecording(true);
-    } catch(e) { alert("לא ניתן לגשת למיקרופון. בדוק שהרשאת המיקרופון מאושרת."); }
-  };
-  const stopVoiceRecording = () => { if(mediaRecorderRef.current?.state==="recording") mediaRecorderRef.current.stop(); };
-
-  const addVoiceSample = (file) => { if(!file) return; const r=new FileReader(); r.onload=()=>{const x=[...voiceSamples,{id:Date.now(),name:voiceName.trim()||file.name.replace(/\.[^.]+$/,""),profile:voiceProfile,url:r.result,type:file.type,createdAt:Date.now(),favorite:false}]; setVoiceSamples(x); localStorage.setItem("sunoprep_voice_samples",JSON.stringify(x)); setVoiceName("");}; r.readAsDataURL(file); };
-  const removeVoiceSample = (id) => { const x=voiceSamples.filter(v=>v.id!==id); setVoiceSamples(x); localStorage.setItem("sunoprep_voice_samples",JSON.stringify(x)); if(String(id)===selectedVoiceId){setSelectedVoiceId("");localStorage.removeItem("sunoprep_selected_voice")}};
-  const selectVoiceSample=(id)=>{setSelectedVoiceId(String(id));localStorage.setItem("sunoprep_selected_voice",String(id))};
-  const toggleVoiceFavorite=(id)=>{const x=voiceSamples.map(v=>v.id===id?{...v,favorite:!v.favorite}:v);setVoiceSamples(x);localStorage.setItem("sunoprep_voice_samples",JSON.stringify(x))};
   const [scr, setScr] = useState("home");
   const [src, setSrc] = useState("");
   const [res, setRes] = useState("");
@@ -560,6 +530,7 @@ function SunoPrep() {
   const [selSty, setSelSty] = useState([]);
   const [selVocal, setSelVocal] = useState([]);
   const [custSty, setCustSty] = useState("");
+  const [performanceCard, setPerformanceCard] = useState({verse:"soft and intimate", chorus:"powerful and open", bridge:"emotional and rising", outro:"gentle and fading"});
   const [bpmVal, setBpmVal] = useState(0);
   const [savedSty, setSavedSty] = useState([]);
   const [editStyId, setEditStyId] = useState(null);
@@ -983,7 +954,7 @@ ${ideaOut}`;
   };
 
   const expBk = () => {
-    const d = JSON.stringify({ backupVersion: "7.1", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, uname, sLang, uLang, theme, day }, null, 2);
+    const d = JSON.stringify({ backupVersion: "9.0", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, uname, sLang, uLang, theme, day }, null, 2);
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([d], { type: "application/json" }));
     a.download = `sunoprep-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click();
@@ -1891,13 +1862,13 @@ ${ideaOut}`;
 
         {/* SUNOPREP 5.0 HEALTH CHECK */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
-          <div style={{ fontWeight:800, color:tx }}>🧪 בדיקת תקינות — SunoPrep 5.0</div>
-          <div style={{ fontSize:11, color:sb, marginTop:4 }}>בדיקה מהירה של החלקים החשובים לפני שמתחילים לעבוד על שיר.</div>
+          <div style={{ fontWeight:800, color:tx }}>🧪 בדיקת תקינות ויציבות — SunoPrep 9.0</div>
+          <div style={{ fontSize:11, color:sb, marginTop:4 }}>בדיקה מרוכזת של שמירה, הקראה, נתוני פרויקט וחבילת Suno — בלי לשנות את השיר.</div>
           <div style={{display:"flex",gap:7,marginTop:9,flexWrap:"wrap"}}>
             <B sm onClick={()=>{ const checks=[
               ["טקסט מקור", !!src.trim()], ["גרסת Suno", !!(res||src).trim()],
               ["הקראה במכשיר", "speechSynthesis" in window], ["שמירה מקומית", (()=>{try{localStorage.setItem("sunoprep_health_test","1");localStorage.removeItem("sunoprep_health_test");return true}catch(e){return false}})()],
-              ["פרויקטים", Array.isArray(projects)]
+              ["פרויקטים", Array.isArray(projects)], ["Style Prompt", !!styTxt.trim()], ["כרטיס ביצוע", !!(performanceCard.verse||performanceCard.chorus||performanceCard.bridge||performanceCard.outro)], ["חבילת Suno", !!(res||src).trim() && !!styTxt.trim()]
             ]; setHealth(checks); }}>▶️ הרץ בדיקה</B>
             {health && <B sm onClick={()=>setHealth(null)}>נקה תוצאה</B>}
           </div>
@@ -1953,6 +1924,25 @@ ${ideaOut}`;
           <div style={{marginTop:9,fontSize:11,color:sb}}>טיפ: לפני ההעתקה ל־Suno, השמע לפחות שורה אחת ובדוק את גרסת ה־Lyrics מול המקור.</div>
         </div>
 
+        {/* SUNOPREP 9.0 STABILITY */}
+        <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
+          <div style={{ fontWeight:800, color:tx }}>🛡️ מרכז יציבות ושמירה — 9.0</div>
+          <div style={{ fontSize:11, color:sb, marginTop:4 }}>מצב הנתונים החשובים כרגע. שום פעולה כאן לא משנה את המילים.</div>
+          <div style={{display:"grid",gap:6,marginTop:9}}>
+            {[
+              [!!src.trim(),"טקסט המקור קיים"],
+              [!!(res||src).trim(),"Lyrics זמינים לחבילת Suno"],
+              [!!styTxt.trim(),"Style Prompt מוכן"],
+              [projects.length>0,"לפחות פרויקט אחד שמור"],
+              [typeof localStorage!=="undefined","שמירה מקומית זמינה"]
+            ].map(([ok,label],i)=><div key={i} style={{display:"flex",justifyContent:"space-between",gap:8,padding:"8px 9px",borderRadius:9,background:bg,border:`1px solid ${bd}`}}><span style={{fontSize:12,color:tx}}>{ok?"✅":"⚠️"} {label}</span><span style={{fontSize:10,color:sb}}>{ok?"תקין":"דורש השלמה"}</span></div>)}
+          </div>
+          <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:9}}>
+            <B sm onClick={()=>{try{localStorage.setItem("sunoprep_emergency_draft",JSON.stringify({src,res,styTxt,performanceCard,savedAt:new Date().toISOString()})); alert("טיוטת חירום נשמרה במכשיר.")}catch(e){alert("לא ניתן היה לשמור טיוטת חירום.")}} dis={!src.trim()}>💾 שמור טיוטת חירום</B>
+            <B sm onClick={()=>{try{const x=JSON.parse(localStorage.getItem("sunoprep_emergency_draft")||"null"); if(!x){alert("לא נמצאה טיוטת חירום.");return;} if(window.confirm("להחזיר את טיוטת החירום? הטקסט הנוכחי יוחלף.")){setSrc(x.src||"");setRes(x.res||"");setCustSty(x.styTxt||"");if(x.performanceCard)setPerformanceCard(x.performanceCard);}}catch(e){alert("טיוטת החירום פגומה.")}}>↩️ שחזר טיוטת חירום</B>
+          </div>
+        </div>
+
         {/* PROJECTS */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
           <div style={{ fontWeight:800, color:tx }}>💾 פרויקטים — שמור וחזור לשיר</div>
@@ -1969,45 +1959,6 @@ ${ideaOut}`;
           </div>}
         </div>
 
-        {/* VOICE LIBRARY */}
-        <div style={{padding:12,borderRadius:12,border:`1px solid ${bd}`,background:card}}>
-          <div style={{fontWeight:800,color:tx}}>🎙️ ספריית דגימות קולות</div>
-          <div style={{fontSize:11,color:sb,marginTop:4}}>שמור דגימות שלך או קבצים שיש לך רשות להשתמש בהם, ותוכל להשמיע ולהשוות ביניהן. הדגימה לא מחקה קול ולא גורמת לו לשיר טקסט חדש.</div>
-          <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>
-            <input value={voiceName} onChange={e=>setVoiceName(e.target.value)} placeholder="שם הדגימה (למשל: קול חם)" style={{flex:"1 1 160px",padding:"9px 10px",borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}} />
-            <select value={voiceProfile} onChange={e=>setVoiceProfile(e.target.value)} style={{padding:"9px",borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>חם ורך</option><option>חזק ועוצמתי</option><option>בהיר וצעיר</option><option>נמוך ועמוק</option><option>עדין ואינטימי</option></select>
-            <input ref={voiceFileRef} type="file" accept="audio/*" style={{display:"none"}} onChange={e=>addVoiceSample(e.target.files[0])}/>
-            <B sm onClick={()=>voiceFileRef.current?.click()}>📁 הוסף דגימה</B>
-            {!isRecording ? <B sm onClick={startVoiceRecording}>🎙️ הקלט</B> : <B sm onClick={stopVoiceRecording}>⏹️ עצור ושמור</B>
-          </div>
-          <div style={{fontSize:10,color:sb,marginTop:6}}>אפשר להקליט ישירות: תן שם, לחץ 🎙️ הקלט, דבר כמה שניות ואז לחץ ⏹️ עצור ושמור. אפשר גם להעלות קובץ קיים.</div>
-          {voiceSamples.length>0 && <div style={{display:"grid",gap:7,marginTop:10}}>{voiceSamples.map(v=><div key={v.id} style={{padding:8,borderRadius:9,background:bg,border:`1px solid ${bd}`}}><div style={{display:"flex",justifyContent:"space-between",gap:8}}><div><b style={{color:tx}}>{v.name}</b><div style={{fontSize:10,color:sb}}>{v.profile||"ללא תיאור"}{String(v.id)===selectedVoiceId?" • נבחר לבדיקה": ""}</div></div><div style={{display:"flex",gap:4}}><B sm onClick={()=>selectVoiceSample(v.id)}>{String(v.id)===selectedVoiceId?"✓ נבחר":"בחר"}</B><B sm onClick={()=>toggleVoiceFavorite(v.id)}>{v.favorite?"⭐":"☆"}</B><B sm onClick={()=>removeVoiceSample(v.id)}>🗑 מחק</B></div><audio controls src={v.url} style={{width:"100%",marginTop:6}} /></div>)}</div>}
-        </div>
-
-        {/* VOICE MATCH */}
-        <div style={{padding:12,borderRadius:12,border:`1px solid ${bd}`,background:card}}>
-          <div style={{fontWeight:800,color:tx}}>🎵 התאמת קול לשיר</div>
-          <div style={{fontSize:11,color:sb,marginTop:4}}>המלצה לפי הסגנון והמילים שכתבת. זו הערכת התאמה בלבד — לא חיקוי קול.</div>
-          {(()=>{const q=((styTxt||"")+" "+(src||"")).toLowerCase(); const energetic=/dance|edm|club|afro|latin|קצבי|דאנס|אנרגטי|מסיבה/.test(q); const intimate=/ballad|acoustic|romantic|רגש|אהבה|בלדה|אינטימי|געגוע/.test(q); const wanted=energetic?"חזק ועוצמתי":intimate?"חם ורך":"עדין ואינטימי"; const ranked=[...voiceSamples].sort((a,b)=>((b.profile===wanted)?2:0)+((b.favorite)?1:0)-(((a.profile===wanted)?2:0)+((a.favorite)?1:0))); const best=ranked[0]; return <div style={{marginTop:9,padding:10,borderRadius:9,background:bg,border:`1px solid ${bd}`}}>{best?<><div style={{fontWeight:800,color:tx}}>⭐ מומלץ: {best.name}</div><div style={{fontSize:11,color:sb,marginTop:3}}>אופי: {best.profile||"ללא תיאור"} • התאמה משוערת לשיר {energetic?"קצבי ואנרגטי":intimate?"רגשי ואינטימי":"בעל אופי מאוזן"}.</div><div style={{marginTop:7}}><B sm onClick={()=>selectVoiceSample(best.id)}>בחר לבדיקה</B></div></>:<div style={{fontSize:11,color:sb}}>עדיין אין דגימות. הוסף או הקלט דגימה בספריית הקולות כדי לקבל המלצה.</div>}</div>})()}
-        </div>
-
-
-
-        {/* VOICE COMPARISON */}
-        <div style={{padding:12,borderRadius:12,border:`1px solid ${bd}`,background:card}}>
-          <div style={{fontWeight:800,color:tx}}>🔄 השוואת קולות לשיר</div>
-          <div style={{fontSize:11,color:sb,marginTop:4}}>בחר שתי דגימות, השמע אותן זו אחרי זו, ובחר איזו מהן מתאימה יותר לאופי השיר.</div>
-          {voiceSamples.length>=2 ? <div style={{display:"grid",gap:8,marginTop:9}}>
-            <select value={compareVoiceA} onChange={e=>setCompareVoiceA(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}>
-              <option value="">קול A...</option>{voiceSamples.map(v=><option key={v.id} value={v.id}>{v.name} — {v.profile||"ללא תיאור"}</option>)}
-            </select>
-            <select value={compareVoiceB} onChange={e=>setCompareVoiceB(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}>
-              <option value="">קול B...</option>{voiceSamples.map(v=><option key={v.id} value={v.id}>{v.name} — {v.profile||"ללא תיאור"}</option>)}
-            </select>
-            {[compareVoiceA,compareVoiceB].map((id,i)=>{const v=voiceSamples.find(x=>String(x.id)===String(id)); return v?<div key={i} style={{padding:8,borderRadius:8,background:bg}}><b style={{color:tx}}>{i===0?"A":"B"} — {v.name}</b><audio controls src={v.url} style={{width:"100%",marginTop:5}}/><div style={{marginTop:5}}><B sm onClick={()=>selectVoiceSample(v.id)}>✓ בחר את הקול הזה לשיר</B></div></div>:null})}
-          </div> : <div style={{fontSize:11,color:sb,marginTop:8}}>הוסף לפחות שתי דגימות כדי לבצע השוואה.</div>}
-        </div>
-
         {/* PRINT */}
         <div style={{ display: "flex", justifyContent: "center", gap: 6, flexWrap: "wrap" }}>
           <B sm onClick={() => print("lyrics")} dis={!res}>🖨 {t.prtLyr}</B>
@@ -2015,9 +1966,59 @@ ${ideaOut}`;
           <B sm onClick={() => print("both")} dis={!res && !styTxt}>🖨 {t.prtAll}</B>
         </div>
 
+
+        {/* PERFORMANCE CARD → STYLE PROMPT */}
+        <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: c.a }}>🎭 {rtl ? "כרטיס ביצוע → Style Prompt" : "Performance Card → Style Prompt"}</div>
+          <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 9 }}>{rtl ? "הגדר איך כל חלק אמור להתבצע. הכפתור יוסיף את התיאור ל־Style Prompt בלי לשנות את מילות השיר." : "Describe how each section should be performed. The button adds it to the Style Prompt without changing lyrics."}</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
+            {[['verse','🎵 בית'],['chorus','🎶 פזמון'],['bridge','🌉 גשר'],['outro','🌅 סיום']].map(([k,label])=><label key={k} style={{fontSize:11,color:sb}}>{label}<input dir="ltr" value={performanceCard[k]} onChange={e=>setPerformanceCard(x=>({...x,[k]:e.target.value}))} style={{width:"100%",boxSizing:"border-box",marginTop:4,padding:"8px 9px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}} /></label>)}
+          </div>
+          <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:9}}>
+            <B sm onClick={()=>{const x=`Performance: ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`; setCustSty(prev=>prev.trim()?prev.trim()+", "+x:x)}}>✨ {rtl ? "הוסף ל־Style Prompt" : "Add to Style Prompt"}</B>
+            <B sm onClick={()=>navigator.clipboard?.writeText(`Performance: ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`)}>📋 {rtl ? "העתק תיאור ביצוע" : "Copy performance"}</B>
+          </div>
+        </div>
+
+        {/* SUNO STYLE PROMPT */}
+        <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: c.a, marginBottom: 6 }}>✨ {rtl ? "Style Prompt מוכן ל־Suno" : "Suno-ready Style Prompt"}</div>
+          <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>{rtl ? "נוצר מהסגנון, הקול וה־BPM שבחרת. אפשר לערוך לפני ההעתקה." : "Built from your selected style, vocal and BPM. Edit before copying."}</div>
+          <textarea value={styTxt} onChange={e=>setCustSty(e.target.value)} dir="ltr" style={{width:"100%",minHeight:100,resize:"vertical",padding:10,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,fontSize:12,lineHeight:1.5}} />
+          <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:8}}>
+            <B sm onClick={()=>navigator.clipboard?.writeText(styTxt)} dis={!styTxt}>📋 {rtl ? "העתק Style Prompt" : "Copy Style Prompt"}</B>
+            <B sm onClick={()=>setCustSty("")}>↺ {rtl ? "אפס עריכה ידנית" : "Reset manual edit"}</B>
+          </div>
+        </div>
+
+
+        {/* SUNO PACKAGE */}
+        <div style={{ background: cd, border: `2px solid ${c.a}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
+          <div style={{ fontSize: 16, fontWeight: 800, color: c.a }}>📦 {rtl ? "חבילת Suno — הכול במקום אחד" : "Suno Package — everything in one place"}</div>
+          <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 10 }}>{rtl ? "בדיקה אחרונה והעתקה נפרדת של המילים, ה־Style Prompt ותיאור הביצוע." : "Final check and separate copy buttons for lyrics, style and performance."}</div>
+          <div style={{display:"grid",gap:7,fontSize:12,color:tx}}>
+            <div>🎵 Lyrics: { (res||src).trim() ? "✅" : "⚠️" } {rtl ? ((res||src).trim()?"מוכנים":"חסרים") : ((res||src).trim()?"Ready":"Missing")}</div>
+            <div>✨ Style Prompt: {styTxt.trim()?"✅":"⚠️"} {styTxt.trim()?(rtl?"מוכן":"Ready"):(rtl?"חסר":"Missing")}</div>
+            <div>🎭 Performance: {performanceCard.verse||performanceCard.chorus||performanceCard.bridge||performanceCard.outro?"✅":"⚠️"} {rtl?"כרטיס ביצוע":"Performance card"}</div>
+          </div>
+          <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:10}}>
+            <B sm onClick={()=>navigator.clipboard?.writeText(res||src)} dis={!(res||src).trim()}>📋 {rtl?"העתק Lyrics":"Copy Lyrics"}</B>
+            <B sm onClick={()=>navigator.clipboard?.writeText(styTxt)} dis={!styTxt.trim()}>✨ {rtl?"העתק Style":"Copy Style"}</B>
+            <B sm onClick={()=>navigator.clipboard?.writeText(`Performance: ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`)}>🎭 {rtl?"העתק ביצוע":"Copy Performance"}</B>
+            <B sm onClick={()=>navigator.clipboard?.writeText(`LYRICS:
+${res||src}
+
+STYLE PROMPT:
+${styTxt}
+
+PERFORMANCE:
+${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`)} dis={!(res||src).trim()}>📦 {rtl?"העתק הכול":"Copy All"}</B>
+          </div>
+        </div>
+
         {/* FOOTER */}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: `${sb}88` }}>
-          SunoPrep 8.11 by Barak Aflalo — © AppNest 2026
+          SunoPrep 9.0 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
