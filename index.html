@@ -525,7 +525,6 @@ function SunoPrep() {
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [aiProvider, setAiProvider] = useState(null);
   const [aiKeys, setAiKeys] = useState({ gemini: "", claude: "", openai: "", deviceUrl: "http://localhost:11434/v1", customUrl: "", customKey: "" });
-  const aiConfigHydrated = useRef(false);
   const [selProvider, setSelProvider] = useState(null);
   const [testState, setTestState] = useState(null);
   const [selSty, setSelSty] = useState([]);
@@ -995,14 +994,12 @@ ${ideaOut}`;
       } catch {}
       try {
         const a = await localGet("ai-config");
-        const rawAiConfig = a?.value || localStorage.getItem("sunoprep_ai_config_backup");
-        if (rawAiConfig) {
-          const cfg = JSON.parse(rawAiConfig);
+        if (a?.value) {
+          const cfg = JSON.parse(a.value);
           if (cfg.provider) { setAiProvider(cfg.provider); setSelProvider(cfg.provider); }
           if (cfg.keys) setAiKeys(k => ({ ...k, ...cfg.keys }));
         }
       } catch {}
-      aiConfigHydrated.current = true;
     })();
   }, []);
 
@@ -1012,15 +1009,7 @@ ${ideaOut}`;
 
   // Keep AI configuration (including Gemini key) across refreshes.
   useEffect(() => {
-    if (!aiConfigHydrated.current) return;
-    (async () => {
-      try {
-        const payload = JSON.stringify({ provider: selProvider || aiProvider, keys: aiKeys });
-        await localSet("ai-config", payload);
-        // Backup the AI configuration under a stable direct key as well.
-        localStorage.setItem("sunoprep_ai_config_backup", payload);
-      } catch {}
-    })();
+    (async () => { try { await localSet("ai-config", JSON.stringify({ provider: selProvider || aiProvider, keys: aiKeys })); } catch {} })();
   }, [aiKeys, selProvider, aiProvider]);
 
   const saveToHistory = async () => {

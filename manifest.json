@@ -7,11 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SunoPrep">
-  <meta name="description" content="SunoPrep 9.1.6 - Advanced song preparation tool for Suno AI">
+  <meta name="description" content="SunoPrep 9.1.5 - Advanced song preparation tool for Suno AI">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" href="icons/icon-192.png">
-  <title>SunoPrep 9.1.6</title>
+  <title>SunoPrep 9.1.5</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0B0B0F; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -40,7 +40,7 @@
     window.addEventListener('error', (e) => {
       const root = document.getElementById('root');
       if (root && root.textContent.includes('Loading')) {
-        root.innerHTML = '<div style="padding:24px;color:#fff;font-family:sans-serif;direction:rtl"><h2>שגיאה בטעינת SunoPrep 9.1.6</h2><p>הדפדפן לא הצליח לטעון את קוד האפליקציה. נסה לסגור את הלשונית ולפתוח מחדש את index.html מהתיקייה החדשה.</p><pre style="white-space:pre-wrap;color:#f8c">${String(e.message || e.error || 'Unknown error')}</pre></div>';
+        root.innerHTML = '<div style="padding:24px;color:#fff;font-family:sans-serif;direction:rtl"><h2>שגיאה בטעינת SunoPrep 9.1.5</h2><p>הדפדפן לא הצליח לטעון את קוד האפליקציה. נסה לסגור את הלשונית ולפתוח מחדש את index.html מהתיקייה החדשה.</p><pre style="white-space:pre-wrap;color:#f8c">${String(e.message || e.error || 'Unknown error')}</pre></div>';
       }
     });
   </script>
@@ -48,6 +48,6 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
-  <script type="text/babel" src="app.jsx?v=9.1.6"></script>
+  <script type="text/babel" src="app.jsx?v=9.1.5"></script>
 </body>
 </html>
