@@ -499,6 +499,8 @@ const countSyllables = (line) => {
 function SunoPrep() {
   const [scr, setScr] = useState("home");
   const [src, setSrc] = useState("");
+  const [pronWord, setPronWord] = useState("");
+  const [pronVariant, setPronVariant] = useState("");
   const [res, setRes] = useState("");
   const [sLang, setSLang] = useState("he");
   const [uLang, setULang] = useState("he");
@@ -531,7 +533,6 @@ function SunoPrep() {
   const [history, setHistory] = useState([]);
   const [wordDict, setWordDict] = useState({});
   const [showSylCount, setShowSylCount] = useState(true);
-  const [selectedLine, setSelectedLine] = useState(0);
   const srcRef = useRef(null);
   const fileRef = useRef(null);
 
@@ -549,17 +550,6 @@ function SunoPrep() {
   const bpmText = bpmVal > 0 ? `${bpmVal} BPM` : "";
   const allStyles = [...STYLES, ...savedSty.map(s => ({ id: s.id, p: s.prompt }))];
   const styTxt = [...selSty.map(id => allStyles.find(s => s.id === id)?.p).filter(Boolean), ...selVocal.map(id => VOCAL_STYLES.find(s => s.id === id)?.p).filter(Boolean), bpmText, custSty.trim(), accentHint].filter(Boolean).join(", ");
-
-
-  const lyricLines = src.split("\n").filter(l => l.trim() && !/^\s*[\[(]/.test(l));
-  const speakLine = (line, slow=false) => {
-    window.speechSynthesis.cancel();
-    if (!line) return;
-    const u = new SpeechSynthesisUtterance(line.trim());
-    u.lang = sl.tts; u.rate = slow ? Math.max(0.55, rate - 0.3) : rate;
-    u.onend = () => setSpeaking(null); u.onerror = () => setSpeaking(null);
-    setSpeaking("line"); window.speechSynthesis.speak(u);
-  };
 
   const insertTag = useCallback((tag) => {
     const el = srcRef.current; if (!el) return;
@@ -1365,23 +1355,7 @@ ${src}`;
             <span style={{ fontSize: 10, color: sb, display: "flex", alignItems: "center" }}>{rtl ? "קולות:" : "Vocals:"}</span>
             {VOICE_TAGS.map(vt => <B key={vt.l} sm onClick={() => insertTag(vt.l)} sx={{ fontSize: 11, borderStyle: "dashed" }}>{rtl ? vt.h : vt.l}</B>)}
           </div>
-          <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => { setSrc(e.target.value); setSelectedLine(0); }} placeholder={t.srcPh} style={TA} />
-          {src.trim() && (
-            <div style={{marginTop:12,padding:12,borderRadius:12,border:`1px solid ${c.a}55`,background:`${c.a}0d`}}>
-              <div style={{fontWeight:700,color:c.a,marginBottom:5}}>🎧 אולפן בדיקת הגייה</div>
-              <div style={{fontSize:11,color:sb,marginBottom:10}}>בחר שורה, שמע אותה רגיל או לאט, ובדוק אם המילים זורמות לפני ההמרה ל־Suno.</div>
-              <div style={{display:"flex",flexDirection:"column",gap:6,maxHeight:230,overflowY:"auto"}}>
-                {lyricLines.map((line,i)=><div key={i} onClick={()=>setSelectedLine(i)} style={{padding:"8px 9px",borderRadius:9,cursor:"pointer",background:selectedLine===i?`${c.a}22`:bg,border:`1px solid ${selectedLine===i?c.a:bd}`}}>
-                  <div style={{fontSize:13,marginBottom:6}}>{line}</div>
-                  <div style={{display:"flex",gap:6}}>
-                    <B sm onClick={(e)=>{e.stopPropagation();speakLine(line)}}>▶️ שמע</B>
-                    <B sm onClick={(e)=>{e.stopPropagation();speakLine(line,true)}}>🐢 לאט</B>
-                  </div>
-                </div>)}
-              </div>
-              {lyricLines[selectedLine] && <div style={{marginTop:9,fontSize:11,color:sb}}>שורה נבחרת: {selectedLine+1} • {countSyllables(lyricLines[selectedLine])} הברות משוערות</div>}
-            </div>
-          )}
+          <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => setSrc(e.target.value)} placeholder={t.srcPh} style={TA} />
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4, fontSize: 11, color: sb }}>
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <span>{src.split("\n").filter(l => l.trim()).length} {t.lines}</span>
@@ -1394,6 +1368,60 @@ ${src}`;
               <B sm onClick={() => { setSrc(""); setVCount(1); }}>🗑 {t.clear}</B>
             </div>
           </div>
+
+          {/* PRONUNCIATION STUDIO — visible, practical workflow */}
+          {src.trim() && (
+            <div style={{ marginTop: 14, padding: 12, border: `1px solid ${c.a}55`, borderRadius: 12, background: `${c.a}08` }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+                <div>
+                  <div style={{ fontWeight:700, color:c.a, fontSize:15 }}>🎧 אולפן בדיקת הגייה</div>
+                  <div style={{ fontSize:10, color:sb }}>בדוק שורה, האט, ובודד מילים לפני ההמרה ל‑Suno</div>
+                </div>
+                <B sm onClick={() => speak(src, true)}>{speaking === "s" ? "⏹ עצור" : "▶ השמע הכול"}</B>
+              </div>
+              <div style={{ maxHeight:260, overflowY:"auto", display:"grid", gap:7 }}>
+                {src.split("\n").map((line,i) => {
+                  const clean=line.trim();
+                  if(!clean || /^\[.*\]$/.test(clean)) return null;
+                  const words=clean.replace(/[^\u0590-\u05FFA-Za-z0-9'’\- ]/g,"").split(/\s+/).filter(Boolean);
+                  return <div key={i} style={{ padding:9, borderRadius:9, background:cd, border:`1px solid ${bd}` }}>
+                    <div style={{ display:"flex", gap:5, marginBottom:6, flexWrap:"wrap" }}>
+                      <B sm onClick={() => speak(clean, true)} sx={{fontSize:10}}>▶ שמע שורה</B>
+                      <B sm onClick={() => { const old=rate; setRate(0.65); setTimeout(()=>speak(clean,true),30); setTimeout(()=>setRate(old),100); }} sx={{fontSize:10}}>🐢 לאט</B>
+                      <span style={{fontSize:10,color:sb,alignSelf:"center"}}>{countSyllables(clean)} הברות</span>
+                    </div>
+                    <div style={{fontSize:14,lineHeight:1.7,marginBottom:5}}>{clean}</div>
+                    <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+                      {words.map((w,j)=><button key={j} onClick={()=>{setPronWord(w);setPronVariant(w);speak(w,true)}} title="בחר ושמע מילה" style={{cursor:"pointer",border:`1px solid ${bd}`,background:bg,color:tx,borderRadius:6,padding:"3px 6px",fontSize:11,fontFamily:"inherit"}}>🔊 {w}</button>)}
+                    </div>
+                  </div>
+                })}
+              </div>
+              {pronWord && (() => {
+                const dotted = pronWord; // ניקוד אוטומטי יתווסף בשלב הבא; כרגע לא משנים את המקור
+                const syll = pronWord.split("").join("־");
+                const variants = [pronWord, dotted, syll].filter((v,i,a)=>a.indexOf(v)===i);
+                return <div style={{marginTop:10,padding:10,borderRadius:10,background:bg,border:`1px solid ${c.a}66`}}>
+                  <div style={{fontWeight:700,color:c.a,marginBottom:6}}>🔎 תיקון והכנת מילה: {pronWord}</div>
+                  <div style={{fontSize:10,color:sb,marginBottom:7}}>בחר גרסה, שמע אותה, ואם היא מתאימה — העתק אותה לגרסת Suno. המקור לא משתנה.</div>
+                  <div style={{display:"grid",gap:6}}>
+                    {variants.map((v,i)=><div key={i} style={{display:"flex",gap:6,alignItems:"center",padding:6,borderRadius:7,border:`1px solid ${pronVariant===v?c.a:bd}`}}>
+                      <button onClick={()=>setPronVariant(v)} style={{cursor:"pointer",border:0,background:"transparent",color:tx,fontFamily:"inherit",flex:1,textAlign:"right"}}>{i===0?"מקור":i===1?"הגייה": "פירוק חזותי"}: {v}</button>
+                      <B sm onClick={()=>speak(v,true)}>▶ שמע</B>
+                    </div>)}
+                  </div>
+                  <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+                    <input value={pronVariant} onChange={e=>setPronVariant(e.target.value)} style={{flex:1,minWidth:120,padding:7,borderRadius:7,border:`1px solid ${bd}`,background:cd,color:tx,fontFamily:"inherit"}} />
+                    <B sm onClick={()=>{ const escaped=pronWord.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); setRes((res||src).replace(new RegExp(escaped,"g"),pronVariant)); }}>✓ החל לגרסת Suno</B>
+                  </div>
+                </div>
+              })()}
+              <div style={{marginTop:9,paddingTop:8,borderTop:`1px solid ${bd}`,fontSize:10,color:sb}}>
+                🛡️ הטקסט המקורי נשמר. האולפן לא משנה אותו; השינויים נשלחים רק לתיבת “תוצאה — Lyrics לסונו”.
+              </div>
+            </div>
+          )}
+
           {showSylCount && src.trim() && (
             <div style={{ marginTop: 6, padding: "6px 10px", background: `${c.a}06`, borderRadius: 6, fontSize: 10, color: sb, direction: sl.d, maxHeight: 120, overflowY: "auto" }}>
               {src.split("\n").map((line, i) => {
