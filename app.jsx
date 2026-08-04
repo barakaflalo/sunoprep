@@ -1862,7 +1862,7 @@ ${ideaOut}`;
 
         {/* SUNOPREP 5.0 HEALTH CHECK */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
-          <div style={{ fontWeight:800, color:tx }}>🧪 בדיקת תקינות ויציבות — SunoPrep 9.0</div>
+          <div style={{ fontWeight:800, color:tx }}>🧪 בדיקה אמיתית עם שיר — SunoPrep 9.1</div>
           <div style={{ fontSize:11, color:sb, marginTop:4 }}>בדיקה מרוכזת של שמירה, הקראה, נתוני פרויקט וחבילת Suno — בלי לשנות את השיר.</div>
           <div style={{display:"flex",gap:7,marginTop:9,flexWrap:"wrap"}}>
             <B sm onClick={()=>{ const checks=[
@@ -1870,7 +1870,7 @@ ${ideaOut}`;
               ["הקראה במכשיר", "speechSynthesis" in window], ["שמירה מקומית", (()=>{try{localStorage.setItem("sunoprep_health_test","1");localStorage.removeItem("sunoprep_health_test");return true}catch(e){return false}})()],
               ["פרויקטים", Array.isArray(projects)], ["Style Prompt", !!styTxt.trim()], ["כרטיס ביצוע", !!(performanceCard.verse||performanceCard.chorus||performanceCard.bridge||performanceCard.outro)], ["חבילת Suno", !!(res||src).trim() && !!styTxt.trim()]
             ]; setHealth(checks); }}>▶️ הרץ בדיקה</B>
-            {health && <B sm onClick={()=>setHealth(null)}>נקה תוצאה</B>}
+            {health && <><B sm onClick={()=>setHealth(null)}>נקה תוצאה</B><B sm onClick={()=>{const report=health.map(([n,ok])=>`${ok?"✅":"❌"} ${n}: ${ok?"תקין":"דורש בדיקה"}`).join("\n"); navigator.clipboard?.writeText(`דוח בדיקה — SunoPrep 9.1\n${report}`).then(()=>alert("דוח הבדיקה הועתק."));}}>📋 העתק דוח</B></>}
           </div>
           {health && <div style={{marginTop:9,display:"grid",gap:5}}>{health.map(([n,ok])=><div key={n} style={{fontSize:12,color:ok?"#4caf50":"#e57373"}}>{ok?"✅":"❌"} {n}: {ok?"תקין":"דורש בדיקה"}</div>)}</div>}
         </div>
@@ -1926,7 +1926,7 @@ ${ideaOut}`;
 
         {/* SUNOPREP 9.0 STABILITY */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
-          <div style={{ fontWeight:800, color:tx }}>🛡️ מרכז יציבות ושמירה — 9.0</div>
+          <div style={{ fontWeight:800, color:tx }}>🛡️ מרכז יציבות ושמירה — 9.1</div>
           <div style={{ fontSize:11, color:sb, marginTop:4 }}>מצב הנתונים החשובים כרגע. שום פעולה כאן לא משנה את המילים.</div>
           <div style={{display:"grid",gap:6,marginTop:9}}>
             {[
@@ -2018,7 +2018,7 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
 
         {/* FOOTER */}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: `${sb}88` }}>
-          SunoPrep 9.0 by Barak Aflalo — © AppNest 2026
+          SunoPrep 9.1 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
