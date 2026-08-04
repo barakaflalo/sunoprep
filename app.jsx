@@ -522,6 +522,7 @@ function SunoPrep() {
   const [voices, setVoices] = useState([]);
   const [selectedVoice, setSelectedVoice] = useState("");
   const [speaking, setSpeaking] = useState(null);
+  const [selectedWord, setSelectedWord] = useState("");
   const [cpd, setCpd] = useState(null);
   const [theme, setTheme] = useState("gold");
   const [day, setDay] = useState(false);
@@ -1493,6 +1494,21 @@ ${src}`;
               <span style={{ flex: 1, fontSize: 13, lineHeight: 1.5 }}>{line}</span>
             </div>)}
           </div>
+        </div>}
+
+        {/* ═══ WORD PRONUNCIATION LAB ═══ */}
+        {src.trim() && <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 12, padding: 14, marginBottom: 14 }}>
+          <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>🔎 {rtl ? "מעבדת מילים והגייה" : "Word pronunciation lab"}</div>
+          <div style={{ fontSize: 11, color: sb, marginBottom: 10 }}>{rtl ? "לחץ על מילה כדי לשמוע אותה לבד. אפשר גם להקליד מילה ולבדוק אותה." : "Tap a word to hear it alone, or type any word to test it."}</div>
+          <input value={selectedWord} onChange={e => setSelectedWord(e.target.value)} placeholder={rtl ? "הקלד מילה לבדיקה..." : "Type a word to test..."} style={{ width: "100%", boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, border: `1px solid ${bd}`, background: bg, color: tx, marginBottom: 9, fontFamily: "inherit" }} />
+          {selectedWord.trim() && <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 10 }}>
+            <button onClick={() => speakText(selectedWord, "word-original", sl.tts)} style={{ border: "none", background: `${c.a}18`, color: c.a, borderRadius: 7, padding: "7px 10px", cursor: "pointer" }}>▶ {rtl ? "שמע מקור" : "Hear original"}</button>
+            <button onClick={() => speakText(selectedWord.split("").join(" "), "word-slow", sl.tts)} style={{ border: "none", background: `${c.a}18`, color: c.a, borderRadius: 7, padding: "7px 10px", cursor: "pointer" }}>🐢 {rtl ? "שמע לאט" : "Hear slowly"}</button>
+          </div>}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, maxHeight: 115, overflowY: "auto" }}>
+            {Array.from(new Set((src.match(/[\u0590-\u05FF]+/g) || []).filter(w => w.length > 1))).slice(0, 80).map((word, i) => <button key={`${word}-${i}`} onClick={() => setSelectedWord(word)} style={{ border: `1px solid ${selectedWord === word ? c.a : bd}`, background: selectedWord === word ? `${c.a}18` : bg, color: tx, borderRadius: 999, padding: "5px 9px", cursor: "pointer", fontFamily: "inherit", fontSize: 12 }}>{word}</button>)}
+          </div>
+          <div style={{ fontSize: 10.5, color: sb, marginTop: 9, lineHeight: 1.5 }}>{rtl ? "הכלי הזה בודק את ההגייה של הקול במכשיר. הוא עדיין לא יכול להבטיח שסונו ישיר בדיוק באותה צורה." : "This checks your device voice; it cannot yet guarantee Suno will sing the same way."}</div>
         </div>}
 
         {/* ═══ RESULT: LYRICS ═══ */}
