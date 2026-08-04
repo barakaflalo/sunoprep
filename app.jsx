@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• 5 שפות ממשק, 9 שפות מקור\n• 4 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 5.1", back: "← חזרה לדף הבית",
+    ver: "גרסה 5.5", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -539,6 +539,27 @@ function SunoPrep() {
   const [phraseBank, setPhraseBank] = useState(() => { try { return JSON.parse(localStorage.getItem("sunoprep_phrase_bank") || "[]"); } catch(e){ return []; } });
   const [phraseText, setPhraseText] = useState("");
   const [phraseTag, setPhraseTag] = useState("");
+  const [pronFeedback, setPronFeedback] = useState(() => { try { return JSON.parse(localStorage.getItem("sunoprep_pron_feedback") || "[]"); } catch(e){ return []; } });
+  const [feedbackWord, setFeedbackWord] = useState("");
+  const [feedbackPron, setFeedbackPron] = useState("");
+  const [feedbackNote, setFeedbackNote] = useState("");
+
+  const savePronFeedback = (status) => {
+    const word=feedbackWord.trim(), pron=feedbackPron.trim();
+    if(!word || !pron) return;
+    const item={id:Date.now(),word,pron,status,note:feedbackNote.trim(),updatedAt:new Date().toISOString()};
+    const next=[item,...pronFeedback].slice(0,100);
+    setPronFeedback(next); localStorage.setItem("sunoprep_pron_feedback",JSON.stringify(next));
+    if(status==="good") {
+      const nextDict={...wordDict,[word]:pron};
+      setWordDict(nextDict); localStorage.setItem("sunoprep_pron_dict",JSON.stringify(nextDict));
+    }
+    setFeedbackNote("");
+  };
+  const deletePronFeedback = (id) => {
+    const next=pronFeedback.filter(x=>x.id!==id); setPronFeedback(next);
+    localStorage.setItem("sunoprep_pron_feedback",JSON.stringify(next));
+  };
   const srcRef = useRef(null);
   const fileRef = useRef(null);
 
@@ -1709,6 +1730,48 @@ ${src}`;
             {health && <B sm onClick={()=>setHealth(null)}>נקה תוצאה</B>}
           </div>
           {health && <div style={{marginTop:9,display:"grid",gap:5}}>{health.map(([n,ok])=><div key={n} style={{fontSize:12,color:ok?"#4caf50":"#e57373"}}>{ok?"✅":"❌"} {n}: {ok?"תקין":"דורש בדיקה"}</div>)}</div>}
+        </div>
+
+        {/* SUNOPREP 5.2 LEARNING FEEDBACK */}
+        <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
+          <div style={{ fontWeight:800, color:tx }}>🎯 למידה אחרי Suno — מה באמת עבד?</div>
+          <div style={{ fontSize:11, color:sb, marginTop:4 }}>אחרי ששמעת את השיר ב־Suno, שמור כאן את המילה, צורת ההגייה והתוצאה. רק סימון “יצא טוב” יעדכן את מילון ההגייה המועדף.</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7,marginTop:10}}>
+            <input value={feedbackWord} onChange={e=>setFeedbackWord(e.target.value)} placeholder="המילה המקורית, למשל: אלייך" style={{padding:"9px 10px",borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}} />
+            <input value={feedbackPron} onChange={e=>setFeedbackPron(e.target.value)} placeholder="הגרסה שניסית ב־Suno" style={{padding:"9px 10px",borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}} />
+          </div>
+          <input value={feedbackNote} onChange={e=>setFeedbackNote(e.target.value)} placeholder="הערה אופציונלית: מה בדיוק קרה בשירה?" style={{width:"100%",boxSizing:"border-box",marginTop:7,padding:"9px 10px",borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}} />
+          <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+            <B sm onClick={()=>savePronFeedback("good")} dis={!feedbackWord.trim()||!feedbackPron.trim()}>✅ יצא טוב — שמור כמועדף</B>
+            <B sm onClick={()=>savePronFeedback("bad")} dis={!feedbackWord.trim()||!feedbackPron.trim()}>❌ Suno טעה</B>
+            <B sm onClick={()=>savePronFeedback("retry")} dis={!feedbackWord.trim()||!feedbackPron.trim()}>🔁 צריך לנסות שוב</B>
+          </div>
+          {pronFeedback.length>0 && <div style={{marginTop:10,display:"grid",gap:6}}>
+            {pronFeedback.slice(0,8).map(x=>{const icon=x.status==="good"?"✅":x.status==="bad"?"❌":"🔁"; const label=x.status==="good"?"עבד טוב":x.status==="bad"?"לא עבד":"לניסיון נוסף"; return <div key={x.id} style={{display:"flex",gap:7,alignItems:"center",padding:"8px",borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
+              <div style={{flex:1,minWidth:0}}><div style={{fontSize:12,fontWeight:700,color:tx}}>{icon} {x.word} ← {x.pron} <span style={{fontWeight:400,color:sb}}>({label})</span></div>{x.note&&<div style={{fontSize:10,color:sb,marginTop:2}}>{x.note}</div>}</div>
+              <B sm onClick={()=>deletePronFeedback(x.id)}>🗑</B>
+            </div>})}
+          </div>}
+        </div>
+
+        {/* WORKFLOW CHECKLIST */}
+        <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
+          <div style={{ fontWeight:800, color:tx }}>✅ בדיקת זרימת עבודה — לפני Suno</div>
+          <div style={{ fontSize:11, color:sb, marginTop:4 }}>רשימת בדיקה ברורה כדי לוודא שלא דילגת על שלב חשוב. הרשימה לא משנה את השיר.</div>
+          <div style={{display:"grid",gap:6,marginTop:10}}>
+            {[
+              [src.trim().length>0,"נכתב או הודבק טקסט מקור"],
+              [res.trim().length>0,"נוצרה גרסת Lyrics ל־Suno"],
+              [src.trim()===res.trim(),"גרסת Suno עדיין זהה למקור — או שנבדקו השינויים"],
+              [typeof window!=="undefined" && "speechSynthesis" in window,"מנוע הקראה זמין במכשיר"],
+              [src.split("\n").filter(x=>x.trim()&&!/^\[.*\]$/.test(x.trim())).length>0,"נמצאו שורות שיר לבדיקה"],
+              [projects.length>0,"יש לפחות פרויקט שמור"]
+            ].map((x,i)=><div key={i} style={{display:"flex",gap:8,alignItems:"center",padding:"8px 9px",borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
+              <span>{x[0]?"🟢":"🟡"}</span><span style={{fontSize:12,color:tx,flex:1}}>{x[1]}</span>
+              <span style={{fontSize:10,color:sb}}>{x[0]?"תקין":"כדאי להשלים"}</span>
+            </div>)}
+          </div>
+          <div style={{marginTop:9,fontSize:11,color:sb}}>טיפ: לפני ההעתקה ל־Suno, השמע לפחות שורה אחת ובדוק את גרסת ה־Lyrics מול המקור.</div>
         </div>
 
         {/* PROJECTS */}
