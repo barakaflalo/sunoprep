@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• 5 שפות ממשק, 9 שפות מקור\n• 4 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 5.8", back: "← חזרה לדף הבית",
+    ver: "גרסה 6.6", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• 5 UI languages, 9 source languages\n• 4 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 2.0", back: "← Back to home",
+    ver: "Version 7.0", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -521,6 +521,7 @@ function SunoPrep() {
   const [rate, setRate] = useState(1.0);
   const [speaking, setSpeaking] = useState(null);
   const [lineSpeaking, setLineSpeaking] = useState(null);
+  const [lineChecks, setLineChecks] = useState(() => { try { return JSON.parse(localStorage.getItem("sunoprep_line_checks")||"{}"); } catch(e){ return {}; } });
   const [cpd, setCpd] = useState(null);
   const [theme, setTheme] = useState("gold");
   const [day, setDay] = useState(false);
@@ -861,6 +862,26 @@ ${src}`;
     window.speechSynthesis.speak(u);
   };
 
+  const speakAllLines = () => {
+    window.speechSynthesis.cancel();
+    const lines = src.split("\n").map((x, i) => ({ text: x.trim(), i }))
+      .filter(x => x.text && !/^\[.*\]$/.test(x.text) && !/^\(.*\)$/.test(x.text));
+    if (!lines.length) return;
+    let p = 0;
+    const next = () => {
+      if (p >= lines.length) { setLineSpeaking(null); return; }
+      const current = lines[p];
+      const u = new SpeechSynthesisUtterance(current.text);
+      u.lang = sl.tts; u.rate = rate;
+      setLineSpeaking(current.i);
+      p++;
+      u.onend = next;
+      u.onerror = next;
+      window.speechSynthesis.speak(u);
+    };
+    next();
+  };
+
   const copy = async (txt, fld) => {
     if (!txt?.trim()) return;
     try { await navigator.clipboard.writeText(txt); }
@@ -883,7 +904,7 @@ ${src}`;
   };
 
   const expBk = () => {
-    const d = JSON.stringify({ src, res, selSty, selVocal, custSty, bpmVal, savedSty, uname, sLang, uLang, theme, day }, null, 2);
+    const d = JSON.stringify({ backupVersion: "7.0", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, uname, sLang, uLang, theme, day }, null, 2);
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([d], { type: "application/json" }));
     a.download = `sunoprep-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click();
@@ -1412,19 +1433,20 @@ ${src}`;
           <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => setSrc(e.target.value)} placeholder={t.srcPh} style={TA} />
           {src.trim() && <div style={{ marginTop: 10, padding: 12, background: `${c.a}0A`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,marginBottom:7}}>
-              <div style={{fontWeight:800,color:c.a}}>🎧 בדיקת השיר לפי שורה</div>
+              <div style={{fontWeight:800,color:c.a}}>🎧 בדיקת השיר לפי שורה</div><B sm act={lineSpeaking===-2} onClick={()=>lineSpeaking!==null?(window.speechSynthesis.cancel(),setLineSpeaking(null)):speakAllLines()}>{lineSpeaking!==null?"⏹ עצור הכל":"▶️ השמע הכל"}</B>
               <div style={{fontSize:10,color:sb}}>מהירות: {rate.toFixed(1)}×</div>
             </div>
-            <div style={{fontSize:11,color:sb,marginBottom:9}}>לחץ על ▶️ ליד כל שורה כדי לשמוע אותה בנפרד. תגיות כמו [Verse] ו־[Chorus] לא יוקראו.</div>
+            <div style={{fontSize:11,color:sb,marginBottom:9}}>לחץ על ▶️ ליד כל שורה כדי לשמוע אותה בנפרד. אפשר גם לסמן: ✅ תקינה, 🟡 לבדיקה או 🔴 בעייתית. תגיות כמו [Verse] ו־[Chorus] לא יוקראו.</div>
             <div style={{display:"grid",gap:6,maxHeight:300,overflowY:"auto"}}>
               {src.split("\n").map((line,i)=>{
                 const text=line.trim(); const isTag=/^\[.*\]$/.test(text)||/^\(.*\)$/.test(text);
                 if(!text) return null;
                 if(isTag) return <div key={i} style={{fontSize:10,color:sb,padding:"4px 7px",opacity:.8}}>{text}</div>;
-                return <div key={i} style={{display:"flex",alignItems:"center",gap:7,padding:"8px 9px",background:bg,border:`1px solid ${lineSpeaking===i?c.a:bd}`,borderRadius:9}}>
+                const status=lineChecks[`${i}:${text}`]||""; const setStatus=(v)=>{const n={...lineChecks,[`${i}:${text}`]:v};setLineChecks(n);localStorage.setItem("sunoprep_line_checks",JSON.stringify(n));};
+                return <div key={i} style={{display:"flex",alignItems:"center",gap:7,padding:"8px 9px",background:bg,border:`1px solid ${lineSpeaking===i?c.a:bd}`,borderRadius:9,flexWrap:"wrap"}}>
                   <span style={{fontSize:10,color:sb,minWidth:20}}>{i+1}</span>
-                  <span style={{flex:1,fontSize:13,lineHeight:1.45}}>{text}</span>
-                  <B sm act={lineSpeaking===i} onClick={()=>speakLine(text,i)}>{lineSpeaking===i?"⏹ עצור":"▶️ השמע"}</B>
+                  <span style={{flex:1,fontSize:13,lineHeight:1.45}}>{lineSpeaking===i ? "🔊 " : ""}{text}</span>
+                  <B sm act={lineSpeaking===i} onClick={()=>speakLine(text,i)}>{lineSpeaking===i?"⏹ עצור":"▶️ השמע"}</B><B sm onClick={()=>speakLine(text,i)}>🔁</B><B sm act={status==="good"} onClick={()=>setStatus(status==="good"?"":"good")}>✅</B><B sm act={status==="check"} onClick={()=>setStatus(status==="check"?"":"check")}>🟡</B><B sm act={status==="bad"} onClick={()=>setStatus(status==="bad"?"":"bad")}>🔴</B>
                 </div>
               })}
             </div>
@@ -1779,12 +1801,19 @@ ${src}`;
             <B sm onClick={()=>savePronFeedback("bad")} dis={!feedbackWord.trim()||!feedbackPron.trim()}>❌ Suno טעה</B>
             <B sm onClick={()=>savePronFeedback("retry")} dis={!feedbackWord.trim()||!feedbackPron.trim()}>🔁 צריך לנסות שוב</B>
           </div>
-          {pronFeedback.length>0 && <div style={{marginTop:10,display:"grid",gap:6}}>
+          {pronFeedback.length>0 && <>
+            <div style={{marginTop:10,padding:"9px",borderRadius:9,background:bg,border:`1px solid ${bd}`,fontSize:11,color:sb}}>
+              ⭐ למידה חכמה: האפליקציה סופרת הצלחות וכישלונות לכל צורת הגייה. גרסה עם יותר הצלחות תיחשב מועדפת; גרסה עם יותר כישלונות תסומן כלא מומלצת.
+              <div style={{marginTop:6,display:"grid",gap:4}}>
+                {Object.entries(pronFeedback.reduce((a,x)=>{const k=x.word+"|"+x.pron; if(!a[k])a[k]={word:x.word,pron:x.pron,good:0,bad:0,retry:0}; a[k][x.status]++; return a;},{})).sort((a,b)=>(b[1].good-b[1].bad)-(a[1].good-a[1].bad)).slice(0,5).map(([k,v])=>{const score=v.good-v.bad; const icon=score>0?"⭐":score<0?"⚠️":"🔁"; const label=score>0?"מומלצת":score<0?"לא מומלצת":"עדיין בבדיקה"; return <div key={k}>{icon} <b>{v.word} → {v.pron}</b> — {label} (✅ {v.good} | ❌ {v.bad} | 🔁 {v.retry})</div>})}
+              </div>
+            </div>
+            <div style={{marginTop:10,display:"grid",gap:6}}>
             {pronFeedback.slice(0,8).map(x=>{const icon=x.status==="good"?"✅":x.status==="bad"?"❌":"🔁"; const label=x.status==="good"?"עבד טוב":x.status==="bad"?"לא עבד":"לניסיון נוסף"; return <div key={x.id} style={{display:"flex",gap:7,alignItems:"center",padding:"8px",borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
               <div style={{flex:1,minWidth:0}}><div style={{fontSize:12,fontWeight:700,color:tx}}>{icon} {x.word} ← {x.pron} <span style={{fontWeight:400,color:sb}}>({label})</span></div>{x.note&&<div style={{fontSize:10,color:sb,marginTop:2}}>{x.note}</div>}</div>
               <B sm onClick={()=>deletePronFeedback(x.id)}>🗑</B>
             </div>})}
-          </div>}
+          </div></>}
         </div>
 
         {/* WORKFLOW CHECKLIST */}
