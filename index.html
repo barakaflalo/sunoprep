@@ -7,11 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SunoPrep">
-  <meta name="description" content="SunoPrep 2.0 - Advanced song preparation tool for Suno AI">
+  <meta name="description" content="SunoPrep 9.1 - Advanced song preparation studio for Suno AI">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" href="icons/icon-192.png">
-  <title>SunoPrep 2.0</title>
+  <title>SunoPrep 9.1</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0B0B0F; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -35,7 +35,7 @@
 
     // Register Service Worker for PWA / offline
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
+      navigator.serviceWorker.register('sw.js?v=9.1.1').catch(() => {});
     }
   </script>
 

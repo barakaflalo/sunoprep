@@ -1,8 +1,8 @@
-const CACHE_NAME = 'sunoprep-v3';
+const CACHE_NAME = 'sunoprep-v9.1.1';
 const ASSETS = [
   './',
-  './index.html',
-  './app.jsx',
+  './index.html?v=9.1.1',
+  './app.jsx?v=9.1.1',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
@@ -28,12 +28,12 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.url.includes('api.anthropic.com')) return;
   e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).then(res => {
+    fetch(e.request).then(res => {
       if (res.status === 200) {
         const clone = res.clone();
         caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
       }
       return res;
-    }).catch(() => caches.match('./index.html')))
+    }).catch(() => caches.match(e.request).then(r => r || caches.match('./index.html'))))
   );
 });
