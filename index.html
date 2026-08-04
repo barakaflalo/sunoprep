@@ -7,11 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SunoPrep">
-  <meta name="description" content="SunoPrep 9.1 - Advanced song preparation studio for Suno AI">
+  <meta name="description" content="SunoPrep 9.1.2 - Advanced song preparation tool for Suno AI">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" href="icons/icon-192.png">
-  <title>SunoPrep 9.1</title>
+  <title>SunoPrep 9.1.2</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0B0B0F; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -33,15 +33,21 @@
     window.getApiKey = () => localStorage.getItem('sp_api_key') || '';
     window.setApiKey = (k) => localStorage.setItem('sp_api_key', k);
 
-    // Register Service Worker for PWA / offline
+    // Disable old service workers so stale versions cannot take over.
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=9.1.1').catch(() => {});
+      navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister())).catch(() => {});
     }
+    window.addEventListener('error', (e) => {
+      const root = document.getElementById('root');
+      if (root && root.textContent.includes('Loading')) {
+        root.innerHTML = '<div style="padding:24px;color:#fff;font-family:sans-serif;direction:rtl"><h2>שגיאה בטעינת SunoPrep 9.1.2</h2><p>הדפדפן לא הצליח לטעון את קוד האפליקציה. נסה לסגור את הלשונית ולפתוח מחדש את index.html מהתיקייה החדשה.</p><pre style="white-space:pre-wrap;color:#f8c">${String(e.message || e.error || 'Unknown error')}</pre></div>';
+      }
+    });
   </script>
 
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
-  <script type="text/babel" src="app.jsx"></script>
+  <script type="text/babel" src="app.jsx?v=9.1.2"></script>
 </body>
 </html>

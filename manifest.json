@@ -1,7 +1,7 @@
 {
   "name": "SunoPrep - Song Prep for Suno AI",
   "short_name": "SunoPrep",
-  "description": "Advanced song preparation tool for Suno AI",
+  "description": "SunoPrep 9.1.2 - Song preparation tool for Suno AI",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0B0B0F",
@@ -21,7 +21,10 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["music", "utilities"],
+  "categories": [
+    "music",
+    "utilities"
+  ],
   "lang": "he",
   "dir": "rtl"
 }
