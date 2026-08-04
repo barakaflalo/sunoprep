@@ -499,8 +499,6 @@ const countSyllables = (line) => {
 function SunoPrep() {
   const [scr, setScr] = useState("home");
   const [src, setSrc] = useState("");
-  const [pronWord, setPronWord] = useState("");
-  const [pronVariant, setPronVariant] = useState("");
   const [res, setRes] = useState("");
   const [sLang, setSLang] = useState("he");
   const [uLang, setULang] = useState("he");
@@ -531,7 +529,9 @@ function SunoPrep() {
   const [gStep, setGStep] = useState(0);
   const [delSt, setDelSt] = useState(0);
   const [history, setHistory] = useState([]);
-  const [wordDict, setWordDict] = useState({});
+  const [wordDict, setWordDict] = useState(() => { try { return JSON.parse(localStorage.getItem("sunoprep_pron_dict") || "{}"); } catch(e){ return {}; } });
+  const [dictWord, setDictWord] = useState("");
+  const [dictPron, setDictPron] = useState("");
   const [showSylCount, setShowSylCount] = useState(true);
   const srcRef = useRef(null);
   const fileRef = useRef(null);
@@ -1356,6 +1356,21 @@ ${src}`;
             {VOICE_TAGS.map(vt => <B key={vt.l} sm onClick={() => insertTag(vt.l)} sx={{ fontSize: 11, borderStyle: "dashed" }}>{rtl ? vt.h : vt.l}</B>)}
           </div>
           <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => setSrc(e.target.value)} placeholder={t.srcPh} style={TA} />
+          {src.trim() && (
+            <div style={{ marginTop: 10, padding: 12, background: `${c.a}0D`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
+              <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>📚 מילון הגייה אישי</div>
+              <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>שמור צורת הגייה שעבדה לך. בפעם הבאה שהמילה תופיע, תוכל להשתמש בה שוב בלי לתקן מחדש.</div>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                <input value={dictWord} onChange={e=>setDictWord(e.target.value)} placeholder="המילה המקורית" style={{ flex: "1 1 120px", minWidth: 0, background:bg, border:`1px solid ${bd}`, borderRadius:8, padding:"8px 10px", color:tx, fontFamily:"inherit" }} />
+                <input value={dictPron} onChange={e=>setDictPron(e.target.value)} placeholder="צורת ההגייה ל-Suno" style={{ flex: "1 1 150px", minWidth: 0, background:bg, border:`1px solid ${bd}`, borderRadius:8, padding:"8px 10px", color:tx, fontFamily:"inherit" }} />
+                <B sm onClick={() => { if(!dictWord.trim() || !dictPron.trim()) return; const n={...wordDict,[dictWord.trim()]:dictPron.trim()}; setWordDict(n); localStorage.setItem("sunoprep_pron_dict",JSON.stringify(n)); setDictWord(""); setDictPron(""); }}>💾 שמור</B>
+              </div>
+              {Object.keys(wordDict).length > 0 && <div style={{ marginTop:8, display:"flex", flexWrap:"wrap", gap:5 }}>
+                {Object.entries(wordDict).map(([w,p]) => <span key={w} style={{ padding:"5px 7px", border:`1px solid ${bd}`, borderRadius:8, fontSize:11, background:bg }}>{w} → <b>{p}</b> <button onClick={()=>{const n={...wordDict};delete n[w];setWordDict(n);localStorage.setItem("sunoprep_pron_dict",JSON.stringify(n));}} style={{ marginInlineStart:5, border:0, background:"transparent", color:"#d66", cursor:"pointer" }}>×</button></span>)}
+              </div>}
+              {Object.keys(wordDict).length > 0 && <B sm onClick={() => { let out=src; Object.entries(wordDict).forEach(([w,p])=>{out=out.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g"),p)}); setRes(out); }} sx={{ marginTop:8 }}>✨ החל את המילון על גרסת Suno</B>}
+            </div>
+          )}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4, fontSize: 11, color: sb }}>
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <span>{src.split("\n").filter(l => l.trim()).length} {t.lines}</span>
@@ -1368,60 +1383,6 @@ ${src}`;
               <B sm onClick={() => { setSrc(""); setVCount(1); }}>🗑 {t.clear}</B>
             </div>
           </div>
-
-          {/* PRONUNCIATION STUDIO — visible, practical workflow */}
-          {src.trim() && (
-            <div style={{ marginTop: 14, padding: 12, border: `1px solid ${c.a}55`, borderRadius: 12, background: `${c.a}08` }}>
-              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
-                <div>
-                  <div style={{ fontWeight:700, color:c.a, fontSize:15 }}>🎧 אולפן בדיקת הגייה</div>
-                  <div style={{ fontSize:10, color:sb }}>בדוק שורה, האט, ובודד מילים לפני ההמרה ל‑Suno</div>
-                </div>
-                <B sm onClick={() => speak(src, true)}>{speaking === "s" ? "⏹ עצור" : "▶ השמע הכול"}</B>
-              </div>
-              <div style={{ maxHeight:260, overflowY:"auto", display:"grid", gap:7 }}>
-                {src.split("\n").map((line,i) => {
-                  const clean=line.trim();
-                  if(!clean || /^\[.*\]$/.test(clean)) return null;
-                  const words=clean.replace(/[^\u0590-\u05FFA-Za-z0-9'’\- ]/g,"").split(/\s+/).filter(Boolean);
-                  return <div key={i} style={{ padding:9, borderRadius:9, background:cd, border:`1px solid ${bd}` }}>
-                    <div style={{ display:"flex", gap:5, marginBottom:6, flexWrap:"wrap" }}>
-                      <B sm onClick={() => speak(clean, true)} sx={{fontSize:10}}>▶ שמע שורה</B>
-                      <B sm onClick={() => { const old=rate; setRate(0.65); setTimeout(()=>speak(clean,true),30); setTimeout(()=>setRate(old),100); }} sx={{fontSize:10}}>🐢 לאט</B>
-                      <span style={{fontSize:10,color:sb,alignSelf:"center"}}>{countSyllables(clean)} הברות</span>
-                    </div>
-                    <div style={{fontSize:14,lineHeight:1.7,marginBottom:5}}>{clean}</div>
-                    <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
-                      {words.map((w,j)=><button key={j} onClick={()=>{setPronWord(w);setPronVariant(w);speak(w,true)}} title="בחר ושמע מילה" style={{cursor:"pointer",border:`1px solid ${bd}`,background:bg,color:tx,borderRadius:6,padding:"3px 6px",fontSize:11,fontFamily:"inherit"}}>🔊 {w}</button>)}
-                    </div>
-                  </div>
-                })}
-              </div>
-              {pronWord && (() => {
-                const dotted = pronWord; // ניקוד אוטומטי יתווסף בשלב הבא; כרגע לא משנים את המקור
-                const syll = pronWord.split("").join("־");
-                const variants = [pronWord, dotted, syll].filter((v,i,a)=>a.indexOf(v)===i);
-                return <div style={{marginTop:10,padding:10,borderRadius:10,background:bg,border:`1px solid ${c.a}66`}}>
-                  <div style={{fontWeight:700,color:c.a,marginBottom:6}}>🔎 תיקון והכנת מילה: {pronWord}</div>
-                  <div style={{fontSize:10,color:sb,marginBottom:7}}>בחר גרסה, שמע אותה, ואם היא מתאימה — העתק אותה לגרסת Suno. המקור לא משתנה.</div>
-                  <div style={{display:"grid",gap:6}}>
-                    {variants.map((v,i)=><div key={i} style={{display:"flex",gap:6,alignItems:"center",padding:6,borderRadius:7,border:`1px solid ${pronVariant===v?c.a:bd}`}}>
-                      <button onClick={()=>setPronVariant(v)} style={{cursor:"pointer",border:0,background:"transparent",color:tx,fontFamily:"inherit",flex:1,textAlign:"right"}}>{i===0?"מקור":i===1?"הגייה": "פירוק חזותי"}: {v}</button>
-                      <B sm onClick={()=>speak(v,true)}>▶ שמע</B>
-                    </div>)}
-                  </div>
-                  <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
-                    <input value={pronVariant} onChange={e=>setPronVariant(e.target.value)} style={{flex:1,minWidth:120,padding:7,borderRadius:7,border:`1px solid ${bd}`,background:cd,color:tx,fontFamily:"inherit"}} />
-                    <B sm onClick={()=>{ const escaped=pronWord.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); setRes((res||src).replace(new RegExp(escaped,"g"),pronVariant)); }}>✓ החל לגרסת Suno</B>
-                  </div>
-                </div>
-              })()}
-              <div style={{marginTop:9,paddingTop:8,borderTop:`1px solid ${bd}`,fontSize:10,color:sb}}>
-                🛡️ הטקסט המקורי נשמר. האולפן לא משנה אותו; השינויים נשלחים רק לתיבת “תוצאה — Lyrics לסונו”.
-              </div>
-            </div>
-          )}
-
           {showSylCount && src.trim() && (
             <div style={{ marginTop: 6, padding: "6px 10px", background: `${c.a}06`, borderRadius: 6, fontSize: 10, color: sb, direction: sl.d, maxHeight: 120, overflowY: "auto" }}>
               {src.split("\n").map((line, i) => {
@@ -1651,6 +1612,33 @@ ${src}`;
             → {rtl ? "הדבק בתיבת Styles בסונו" : "Paste into Suno's Styles box"}
           </div>
         </div>
+
+
+        {/* FINAL SUNO CHECK */}
+        {src.trim() && (() => {
+          const rawLines = src.split(/\n/).map(x=>x.trim()).filter(x=>x && !/^\[.*\]$/.test(x));
+          const issues = [];
+          const mixed = rawLines.filter(x => /[א-ת][A-Za-z]|[A-Za-z][א-ת]/.test(x));
+          if (mixed.length) issues.push(`נמצא ערבוב עברית/אנגלית ב־${mixed.length} שורות`);
+          const stretched = rawLines.filter(x => /(.)\1\1\1/.test(x));
+          if (stretched.length) issues.push(`נמצאו אותיות שחוזרות יותר מדי ב־${stretched.length} שורות`);
+          const longLines = rawLines.filter(x => (x.match(/[א-ת]+/g)||[]).length > 14);
+          if (longLines.length) issues.push(`${longLines.length} שורות ארוכות שעלולות להיות צפופות לשירה`);
+          const changed = res && src.trim() !== res.trim();
+          if (changed) issues.push("גרסת Suno שונה מהטקסט המקורי — כדאי לעבור על השינויים");
+          const status = issues.length === 0 ? "ready" : issues.length <= 2 ? "check" : "warn";
+          const icon = status==="ready" ? "🟢" : status==="check" ? "🟡" : "🔴";
+          const title = status==="ready" ? "מוכן לבדיקה ב־Suno" : status==="check" ? "כדאי לבדוק כמה דברים" : "נמצאו דברים שדורשים בדיקה";
+          return <div style={{ marginTop:12, padding:14, borderRadius:12, background: status==="ready" ? "#2e7d3212" : status==="check" ? "#f9a82512" : "#c6282812", border:`1px solid ${status==="ready"?"#2e7d3260":status==="check"?"#f9a82570":"#c6282860"}` }}>
+            <div style={{ fontWeight:800, fontSize:15, color:tx }}>{icon} בדיקה סופית לפני Suno — {title}</div>
+            <div style={{ fontSize:11, color:sb, marginTop:5 }}>הבדיקה לא משנה את המילים. היא רק מסמנת דברים שכדאי לעבור עליהם לפני ההעתקה.</div>
+            {issues.length ? <div style={{ marginTop:9, display:"grid", gap:5 }}>{issues.map((x,i)=><div key={i} style={{ fontSize:12, color:tx }}>⚠️ {x}</div>)}</div> : <div style={{ marginTop:9, fontSize:12, color:tx }}>✓ לא נמצאו תווים מעורבים, מתיחות חריגות או שורות ארוכות במיוחד.</div>}
+            <div style={{ marginTop:10, display:"flex", gap:6, flexWrap:"wrap" }}>
+              <B sm onClick={() => { const el=document.getElementById("lyrics-output"); if(el) el.scrollIntoView({behavior:"smooth",block:"center"}); }}>🔍 בדוק את גרסת Suno</B>
+              <B sm onClick={() => copy(res || src, "final")} dis={!(res||src)}>📋 העתק גרסה ל־Suno</B>
+            </div>
+          </div>
+        })()}
 
         {/* PRINT */}
         <div style={{ display: "flex", justifyContent: "center", gap: 6, flexWrap: "wrap" }}>

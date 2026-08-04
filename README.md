@@ -100,3 +100,11 @@ sunoprep/
 ---
 
 **SunoPrep by Barak Aflalo — © AppNest 2026**
+
+
+## SunoPrep 4.3
+Added personal pronunciation dictionary with local persistence and one-click application to Suno output.
+
+
+## Version 4.4
+Added a visible final pre-Suno readiness check with warnings for mixed scripts, stretched letters, long lines, and source/output differences.
