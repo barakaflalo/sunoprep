@@ -1007,6 +1007,11 @@ ${ideaOut}`;
     (async () => { try { await localSet("saved-styles", JSON.stringify(savedSty)); } catch {} })();
   }, [savedSty]);
 
+  // Keep AI configuration (including Gemini key) across refreshes.
+  useEffect(() => {
+    (async () => { try { await localSet("ai-config", JSON.stringify({ provider: selProvider || aiProvider, keys: aiKeys })); } catch {} })();
+  }, [aiKeys, selProvider, aiProvider]);
+
   const saveToHistory = async () => {
     const entry = { id: Date.now(), date: new Date().toLocaleDateString(), srcLang: sLang, mode: tMode, src, res, style: styTxt, title: src.split("\n").find(l => l.trim() && !l.startsWith("["))?.trim().slice(0, 40) || "Untitled" };
     const newH = [entry, ...history].slice(0, 50);
