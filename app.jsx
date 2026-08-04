@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• 5 שפות ממשק, 9 שפות מקור\n• 4 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 5.5", back: "← חזרה לדף הבית",
+    ver: "גרסה 5.8", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -520,6 +520,7 @@ function SunoPrep() {
   const [editStyLabel, setEditStyLabel] = useState("");
   const [rate, setRate] = useState(1.0);
   const [speaking, setSpeaking] = useState(null);
+  const [lineSpeaking, setLineSpeaking] = useState(null);
   const [cpd, setCpd] = useState(null);
   const [theme, setTheme] = useState("gold");
   const [day, setDay] = useState(false);
@@ -845,6 +846,19 @@ ${src}`;
     u.lang = isSrc ? sl.tts : (tMode === "optimized" || tMode === "hebrew" || tMode === "hybrid") ? sl.tts : "en-US"; u.rate = rate;
     u.onend = () => setSpeaking(null); u.onerror = () => setSpeaking(null);
     setSpeaking(k); window.speechSynthesis.speak(u);
+  };
+
+  const speakLine = (txt, i) => {
+    window.speechSynthesis.cancel();
+    if (lineSpeaking === i) { setLineSpeaking(null); return; }
+    const clean = txt.replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").trim();
+    if (!clean) return;
+    const u = new SpeechSynthesisUtterance(clean);
+    u.lang = sl.tts; u.rate = rate;
+    u.onend = () => setLineSpeaking(null);
+    u.onerror = () => setLineSpeaking(null);
+    setLineSpeaking(i);
+    window.speechSynthesis.speak(u);
   };
 
   const copy = async (txt, fld) => {
@@ -1396,6 +1410,25 @@ ${src}`;
             {VOICE_TAGS.map(vt => <B key={vt.l} sm onClick={() => insertTag(vt.l)} sx={{ fontSize: 11, borderStyle: "dashed" }}>{rtl ? vt.h : vt.l}</B>)}
           </div>
           <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => setSrc(e.target.value)} placeholder={t.srcPh} style={TA} />
+          {src.trim() && <div style={{ marginTop: 10, padding: 12, background: `${c.a}0A`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,marginBottom:7}}>
+              <div style={{fontWeight:800,color:c.a}}>🎧 בדיקת השיר לפי שורה</div>
+              <div style={{fontSize:10,color:sb}}>מהירות: {rate.toFixed(1)}×</div>
+            </div>
+            <div style={{fontSize:11,color:sb,marginBottom:9}}>לחץ על ▶️ ליד כל שורה כדי לשמוע אותה בנפרד. תגיות כמו [Verse] ו־[Chorus] לא יוקראו.</div>
+            <div style={{display:"grid",gap:6,maxHeight:300,overflowY:"auto"}}>
+              {src.split("\n").map((line,i)=>{
+                const text=line.trim(); const isTag=/^\[.*\]$/.test(text)||/^\(.*\)$/.test(text);
+                if(!text) return null;
+                if(isTag) return <div key={i} style={{fontSize:10,color:sb,padding:"4px 7px",opacity:.8}}>{text}</div>;
+                return <div key={i} style={{display:"flex",alignItems:"center",gap:7,padding:"8px 9px",background:bg,border:`1px solid ${lineSpeaking===i?c.a:bd}`,borderRadius:9}}>
+                  <span style={{fontSize:10,color:sb,minWidth:20}}>{i+1}</span>
+                  <span style={{flex:1,fontSize:13,lineHeight:1.45}}>{text}</span>
+                  <B sm act={lineSpeaking===i} onClick={()=>speakLine(text,i)}>{lineSpeaking===i?"⏹ עצור":"▶️ השמע"}</B>
+                </div>
+              })}
+            </div>
+          </div>}
           <div style={{ marginTop: 10, padding: 12, background: `${c.a}0D`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
             <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>💡 בנק משפטים ורעיונות</div>
             <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>שמור שורות שאהבת והוסף אותן לכל שיר בלחיצה.</div>
@@ -1799,7 +1832,7 @@ ${src}`;
 
         {/* FOOTER */}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: `${sb}88` }}>
-          SunoPrep by Barak Aflalo — © AppNest 2026
+          SunoPrep 5.8 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
