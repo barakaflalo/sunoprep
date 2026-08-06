@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• 5 שפות ממשק, 9 שפות מקור\n• 4 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 9.3", back: "← חזרה לדף הבית",
+    ver: "גרסה 9.4", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• 5 UI languages, 9 source languages\n• 4 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 9.3", back: "← Back to home",
+    ver: "Version 9.4", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -94,7 +94,7 @@ const TR = {
       { i: "📋", t: "Копировать", d: "Lyrics и Style отдельно" },
     ],
     skip: "Пропустить", next: "Далее", done: "Готово",
-    aboutTxt: "Продвинутый инструмент подготовки песен для Suno AI. 4 режима конвертации, построитель стилей, история песен, словарь проблемных слов.", ver: "Версия 9.3", back: "← Назад",
+    aboutTxt: "Продвинутый инструмент подготовки песен для Suno AI. 4 режима конвертации, построитель стилей, история песен, словарь проблемных слов.", ver: "Версия 9.4", back: "← Назад",
     errCon: "Ошибка.", shareMsg: "Попробуйте SunoPrep!",
     prevSty: "Style:", custLbl: "Свой стиль:",
     delAll: "Удалить всё", delConf: "Ещё раз", deleted: "Удалено",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v9.3", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v9.4", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v9.3", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v9.4", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -486,6 +486,27 @@ const TEMPLATES = [
   { id: "simple", l: "📝 פשוט / Simple", t: "[Verse 1]\n\n\n\n[Chorus]\n\n\n\n[Verse 2]\n\n\n\n[Chorus]" },
 ];
 
+function analyzeRhymes(text) {
+  const lines = text.split("\n").map((l, i) => ({ i, raw: l, clean: l.replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").trim() }))
+    .filter(l => l.clean && !/^\[/.test(l.raw.trim()));
+  const rhymeKey = (line) => {
+    const words = line.replace(/[.,!?;:"'\u05be\u05f3\u05f4]/g, "").split(/\s+/).filter(Boolean);
+    if (!words.length) return "";
+    const last = words[words.length - 1];
+    const stripped = last.replace(/[\u0591-\u05C7]/g, "");
+    return stripped.slice(-2);
+  };
+  const groups = {};
+  lines.forEach(l => {
+    const k = rhymeKey(l.clean);
+    if (!k) return;
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(l.i + 1);
+  });
+  const rhyming = Object.entries(groups).filter(([k, v]) => v.length > 1);
+  return { total: lines.length, groups: rhyming };
+}
+
 const countSyllables = (line) => {
   const clean = line.replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").trim();
   if (!clean) return 0;
@@ -640,6 +661,33 @@ function SunoPrep() {
   };
   const loadProject = (p) => { setSrc(p.src || ""); setRes(p.res || ""); setProjectName(p.name || ""); if(p.sLang) setSLang(p.sLang); };
   const deleteProject = (id) => { const next=projects.filter(p=>p.id!==id); setProjects(next); localStorage.setItem("sunoprep_projects", JSON.stringify(next)); };
+
+  const exportProject = (p) => {
+    const full = { type: "sunoprep-project", version: "9.3", exportedAt: new Date().toISOString(),
+      name: p.name, src: p.src, res: p.res, styTxt: p.styTxt, sLang: p.sLang,
+      selSty, selVocal, custSty, bpmVal, tMode };
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(full, null, 2)], { type: "application/json" }));
+    const safe = (p.name || "song").replace(/[^\w\u0590-\u05FF -]/g, "").slice(0, 40);
+    a.download = `sunoprep-${safe}.json`; a.click();
+  };
+  const importProject = (e) => {
+    const f = e.target.files?.[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = (ev) => {
+      try {
+        const d = JSON.parse(ev.target.result);
+        if (d.type !== "sunoprep-project") { setErr(rtl ? "קובץ לא תקין" : "Invalid file"); return; }
+        setSrc(d.src || ""); setRes(d.res || ""); setProjectName(d.name || "");
+        if (d.selSty) setSelSty(d.selSty); if (d.selVocal) setSelVocal(d.selVocal);
+        if (d.custSty !== undefined) setCustSty(d.custSty); if (d.bpmVal !== undefined) setBpmVal(d.bpmVal);
+        if (d.tMode) setTMode(d.tMode);
+        setActiveTab("write");
+      } catch { setErr(rtl ? "שגיאה בקריאת הקובץ" : "Error reading file"); }
+    };
+    r.readAsText(f);
+    e.target.value = "";
+  };
 
   const c = TH[theme];
   const bg = day ? c.bgL : c.bg;
@@ -1023,11 +1071,15 @@ ${ideaOut}`;
     else copy(location.href + "\n" + t.shareMsg, "share");
   };
 
+  const [showBackupReminder, setShowBackupReminder] = useState(false);
+
   const expBk = () => {
     const d = JSON.stringify({ backupVersion: "9.0", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, uname, sLang, uLang, theme, day, activeVoiceId }, null, 2);
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([d], { type: "application/json" }));
     a.download = `sunoprep-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click();
+    try { localStorage.setItem("sp_last_backup", Date.now().toString()); } catch {}
+    setShowBackupReminder(false);
   };
 
   const impBk = (e) => {
@@ -1068,6 +1120,18 @@ ${ideaOut}`;
           const cfg = JSON.parse(a.value);
           if (cfg.provider) { setAiProvider(cfg.provider); setSelProvider(cfg.provider); }
           if (cfg.keys) setAiKeys(k => ({ ...k, ...cfg.keys }));
+        }
+      } catch {}
+      try {
+        const last = localStorage.getItem("sp_last_backup");
+        const hist = await localGet("song-history");
+        const hasContent = hist?.value && JSON.parse(hist.value).length > 0;
+        if (hasContent) {
+          if (!last) { setShowBackupReminder(true); }
+          else {
+            const days = (Date.now() - parseInt(last)) / (1000 * 60 * 60 * 24);
+            if (days > 7) setShowBackupReminder(true);
+          }
         }
       } catch {}
     })();
@@ -1134,6 +1198,35 @@ ${ideaOut}`;
   const insertTemplate = (tmpl) => {
     setSrc(tmpl);
     setVCount(1);
+  };
+
+  const [autoStructuring, setAutoStructuring] = useState(false);
+  const autoDetectStructure = async () => {
+    if (!src.trim() || !aiProvider) return;
+    setAutoStructuring(true); setErr("");
+    const prompt = `You are a Hebrew song editor. The user pasted raw lyrics WITHOUT structure tags. Analyze the lyrics and add Suno structure tags: [Intro], [Verse 1], [Verse 2], [Pre-Chorus], [Chorus], [Bridge], [Outro].
+
+RULES:
+1. Detect repeated blocks — a block of lines that repeats is the [Chorus].
+2. Non-repeating story blocks are verses ([Verse 1], [Verse 2]...).
+3. A short line group before a repeating chorus may be a [Pre-Chorus].
+4. A different-feeling block near the end is often a [Bridge].
+5. Keep the EXACT original text and line order. Do NOT rewrite, translate, or change any words.
+6. Only ADD tags on their own lines above each section. Add a blank line between sections.
+7. If the lyrics already have some tags, keep them and fill in missing ones.
+8. Output ONLY the tagged lyrics. No explanations.
+
+Lyrics:
+${src}`;
+    try {
+      const out = await callAI(prompt);
+      if (out?.trim()) setSrc(out.trim());
+      else setErr(t.errCon);
+    } catch (e) {
+      let m = String(e?.message || e); if (m.length > 90) m = m.slice(0, 90) + "...";
+      setErr(m);
+    }
+    setAutoStructuring(false);
   };
 
   const addSavedStyle = () => {
@@ -1496,11 +1589,6 @@ ${ideaOut}`;
               {Object.entries(UI_LANGS).map(([k, v]) => <B key={k} sm act={uLang === k} onClick={() => setULang(k)}>{v}</B>)}
             </div>
           </Card>
-          <Card label={t.srcLang}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-              {Object.entries(LANGS).map(([k, v]) => <B key={k} sm act={sLang === k} onClick={() => setSLang(k)}>{v.n}</B>)}
-            </div>
-          </Card>
           <Card label={t.theme}>
             <div style={{ display: "flex", gap: 10 }}>
               {Object.entries(TH).map(([k, v]) => (
@@ -1578,22 +1666,30 @@ ${ideaOut}`;
             )}
           </div>
           <B sm onClick={() => setDay(!day)}>{day ? "🌙" : "☀️"}</B>
-          <B sm onClick={() => setScr("history")}>📜</B>
-          <B sm onClick={() => setScr("worddict")}>📖</B>
-          <B sm onClick={share}>📤</B>
           <B sm onClick={() => setScr("settings")}>⚙</B>
           <B sm onClick={() => setScr("about")}>ℹ️</B>
         </div>
       </div>
 
+      {/* TAB NAVIGATION — 3 per row */}
+      <div style={{ padding:"10px 12px 0", maxWidth:700, margin:"0 auto" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:8 }}>
+          {[
+            ["write","✍️ כתיבה"],
+            ["ideas","✨ רעיונות"],
+            ["voice","🎙️ קולות"],
+            ["checks","🎧 בדיקות"],
+            ["projects","🗂️ פרויקטים"],
+            ["suno","🎵 Suno"]
+          ].map(([id,label]) => (
+            <button key={id} onClick={() => setActiveTab(id)} style={{ padding:"11px 8px", borderRadius:11, border:`1.5px solid ${activeTab===id?c.a:bd}`, background:activeTab===id?`${c.a}22`:cd, color:activeTab===id?c.a:tx, fontSize:13, fontWeight:activeTab===id?700:500, cursor:"pointer", fontFamily:"inherit", textAlign:"center" }}>{label}</button>
+          ))}
+        </div>
+      </div>
+
       <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", gap: 14, maxWidth: 700, margin: "0 auto" }}>
 
-        {/* SRC LANG */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 11, color: sb }}>{t.srcLang}:</span>
-          {Object.entries(LANGS).map(([k, v]) => <B key={k} sm act={sLang === k} onClick={() => setSLang(k)}>{v.n}</B>)}
-        </div>
-
+        {activeTab === "write" && <>
         {/* SOURCE */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
@@ -1610,6 +1706,14 @@ ${ideaOut}`;
             <span style={{ fontSize: 10, color: sb, display: "flex", alignItems: "center" }}>{rtl ? "תבנית:" : "Template:"}</span>
             {TEMPLATES.map(tmpl => <B key={tmpl.id} sm onClick={() => insertTemplate(tmpl.t)} sx={{ fontSize: 11 }}>{tmpl.l}</B>)}
           </div>
+          {aiProvider && src.trim() && (
+            <div style={{ marginBottom: 6 }}>
+              <B sm onClick={autoDetectStructure} dis={autoStructuring} sx={{ fontSize: 11, background: `${c.a}15`, color: c.a, borderColor: `${c.a}50` }}>
+                {autoStructuring ? (rtl ? "⏳ מזהה מבנה..." : "⏳ Detecting...") : (rtl ? "🪄 זהה מבנה אוטומטית" : "🪄 Auto-detect structure")}
+              </B>
+              <span style={{ fontSize: 9, color: sb, marginInlineStart: 6 }}>{rtl ? "מוסיף [בית]/[פזמון] לבד" : "adds [Verse]/[Chorus] tags"}</span>
+            </div>
+          )}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 4 }}>
             {TAGS.map(tag => <B key={tag} sm onClick={() => insertTag(tag)}>{tag}</B>)}
           </div>
@@ -1619,6 +1723,7 @@ ${ideaOut}`;
           </div>
           <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => setSrc(e.target.value)} placeholder={t.srcPh} style={TA} />
           {src.trim() && (()=>{const words=src.replace(/\[[^\]]*\]/g," ").split(/\s+/).filter(Boolean);const issues=[];const ambiguous=["את","עם","על","שם","ספר","דרך","יכול","חוזר","אור","לב","שלום","מחר"];src.split("\n").forEach((ln,i)=>{const x=ln.trim();if(!x||/^\[.*\]$/.test(x))return;const wc=x.split(/\s+/).length;if(wc>14)issues.push({i,msg:`שורה ארוכה (${wc} מילים) — כדאי לבדוק זרימה`});if(/[A-Za-z]/.test(x)&&/[א-ת]/.test(x))issues.push({i,msg:"ערבוב עברית ואנגלית — כדאי לבדוק הגייה"});if(/(.)\1\1/.test(x))issues.push({i,msg:"אותיות חוזרות באופן חריג — בדוק שאין טעות"});const found=ambiguous.filter(w=>new RegExp(`(^|\\s)${w}($|\\s|[,.!?…])`).test(x));if(found.length)issues.push({i,msg:`מילים שעשויות להיות דו־משמעיות: ${found.join("، ")} — מומלץ להאזין`});const learned=Object.keys(wordDict||{}).filter(w=>x.includes(w));if(learned.length)issues.push({i,msg:`נמצאו מילים מהמילון האישי: ${learned.join("، ")} — אפשר לבדוק את ההגייה השמורה`});});return <div style={{marginTop:10,padding:12,background:cd,border:`1px solid ${c.a}`,borderRadius:12}}><div style={{fontWeight:700,color:c.a}}>🔎 בדיקת הגייה חכמה</div><div style={{fontSize:11,color:sb,marginTop:4}}>הבדיקה מציעה מה לבדוק בלבד — היא לא משנה את המילים.</div>{issues.length?<div style={{display:"grid",gap:5,marginTop:8}}>{issues.map((q,k)=><div key={k} style={{fontSize:12,color:tx}}>🟡 שורה {q.i+1}: {q.msg}</div>)}</div>:<div style={{fontSize:12,marginTop:7,color:tx}}>✅ לא נמצאו אזהרות בסיסיות. מומלץ עדיין להאזין לשורות.</div>}</div>})()}
+          {src.trim() && (()=>{const r=analyzeRhymes(src);return <div style={{marginTop:10,padding:12,background:cd,border:`1px solid ${bd}`,borderRadius:12}}><div style={{fontWeight:700,color:c.a}}>🎵 {rtl?"בדיקת חריזה":"Rhyme check"}</div><div style={{fontSize:11,color:sb,marginTop:4}}>{rtl?"מזהה שורות שנגמרות בצליל דומה (לפי סוף המילה האחרונה).":"Detects lines ending in a similar sound (by last-word ending)."}</div>{r.groups.length?<div style={{display:"grid",gap:5,marginTop:8}}>{r.groups.map(([k,lns],idx)=><div key={idx} style={{fontSize:12,color:tx}}>🎶 {rtl?"שורות":"Lines"} {lns.join(", ")} {rtl?"מתחרזות":"rhyme"} (…{k})</div>)}</div>:<div style={{fontSize:12,marginTop:7,color:sb}}>{rtl?"לא זוהו חרוזים ברורים. זה בסדר — לא כל שיר חייב חריזה.":"No clear rhymes detected. That's fine — not every song needs rhyme."}</div>}</div>})()}
           {src.trim() && <div style={{ marginTop: 10, padding: 12, background: `${c.a}0A`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,marginBottom:7}}>
               <div style={{fontWeight:800,color:c.a}}>🎧 בדיקת השיר לפי שורה</div><B sm act={lineSpeaking===-2} onClick={()=>lineSpeaking!==null?(window.speechSynthesis.cancel(),setLineSpeaking(null)):speakAllLines()}>{lineSpeaking!==null?"⏹ עצור הכל":"▶️ השמע הכל"}</B>
@@ -1697,21 +1802,19 @@ ${ideaOut}`;
           )}
         </div>
 
-        {/* REAL TAB NAVIGATION */}
-      <div style={{ position:"sticky", top:0, zIndex:20, background:bg, borderBottom:`1px solid ${bd}`, padding:"8px 12px", overflowX:"auto", display:"flex", gap:7, WebkitOverflowScrolling:"touch" }}>
-        {[
-          ["write","✍️ כתיבה"],
-          ["ideas","✨ רעיונות"],
-          ["voice","🎙️ קולות"],
-          ["checks","🎧 בדיקות"],
-          ["projects","🗂️ פרויקטים"],
-          ["suno","🎵 Suno"]
-        ].map(([id,label]) => (
-          <button key={id} onClick={() => setActiveTab(id)} style={{ flexShrink:0, padding:"8px 13px", borderRadius:10, border:`1px solid ${activeTab===id?c.a:bd}`, background:activeTab===id?`${c.a}20`:"transparent", color:activeTab===id?c.a:tx, fontSize:12, fontWeight:activeTab===id?700:500, cursor:"pointer", fontFamily:"inherit" }}>{label}</button>
-        ))}
-      </div>
-
-      {activeTab === "write" && <div>
+        <div style={{ display:"flex", justifyContent:"flex-end", padding:"0 0 8px" }}>
+          <B onClick={() => setScr("history")} sx={{ fontSize:13, padding:"8px 16px" }}>📜 {rtl ? "היסטוריה" : "History"}</B>
+        </div>
+        {showBackupReminder && (
+          <div style={{ background: `${c.a}12`, border: `1px solid ${c.a}35`, borderRadius: 10, padding: "10px 13px", display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+            <span style={{ fontSize: 18, flexShrink: 0 }}>💾</span>
+            <div style={{ flex: 1, fontSize: 11.5, color: sb, lineHeight: 1.5 }}>
+              {rtl ? "יש לך שירים שמורים — כדאי לגבות אותם למקרה שתחליף מכשיר או תנקה את הדפדפן." : "You have saved songs — back them up in case you switch device or clear the browser."}
+            </div>
+            <B sm onClick={expBk} sx={{ fontSize: 11, whiteSpace: "nowrap" }}>{rtl ? "גבה עכשיו" : "Back up"}</B>
+            <button onClick={() => setShowBackupReminder(false)} style={{ background: "transparent", border: "none", color: sb, cursor: "pointer", fontSize: 14, flexShrink: 0 }}>✕</button>
+          </div>
+        )}
       {/* CONNECT AI BANNER */}
         {!aiProvider && (
           <div onClick={() => setScr("aisetup")}
@@ -1975,7 +2078,7 @@ ${ideaOut}`;
           </div>
         })()}
 
-        </div>}
+        </>}
       {activeTab === "voice" && <div>
         <div style={{padding:"14px 12px"}}>
           <div style={{fontSize:18,fontWeight:800,marginBottom:5}}>🎙️ ספריית קולות ודוגמאות</div>
@@ -2063,6 +2166,9 @@ ${ideaOut}`;
 
         </div>}
       {activeTab === "checks" && <div>
+        <div style={{ display:"flex", justifyContent:"flex-end", padding:"0 0 8px" }}>
+          <B onClick={() => setScr("worddict")} sx={{ fontSize:13, padding:"8px 16px" }}>📖 {rtl ? "מילים בעייתיות" : "Problem words"}</B>
+        </div>
       {/* SUNOPREP 5.0 HEALTH CHECK */}
         <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
           <div style={{ fontWeight:800, color:tx }}>🧪 בדיקה אמיתית עם שיר — SunoPrep 9.2.4</div>
@@ -2155,17 +2261,22 @@ ${ideaOut}`;
           <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>
             <input value={projectName} onChange={e=>setProjectName(e.target.value)} placeholder="שם השיר" style={{flex:"1 1 160px",padding:"9px 10px",borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}} />
             <B sm onClick={saveProject} dis={!src.trim()}>💾 שמור פרויקט</B>
+            <B sm onClick={() => document.getElementById("proj-import")?.click()}>📂 {rtl ? "ייבא קובץ" : "Import file"}</B>
+            <input id="proj-import" type="file" accept=".json" onChange={importProject} style={{display:"none"}} />
           </div>
           {projects.length>0 && <div style={{marginTop:10,display:"grid",gap:6}}>
             {projects.slice(0,8).map(p=><div key={p.id} style={{display:"flex",alignItems:"center",gap:6,padding:"8px",borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
               <div style={{flex:1,minWidth:0}}><div style={{fontWeight:700,color:tx,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{p.name}</div><div style={{fontSize:10,color:sb}}>{new Date(p.updatedAt).toLocaleString("he-IL")}</div></div>
-              <B sm onClick={()=>loadProject(p)}>פתח</B><B sm onClick={()=>deleteProject(p.id)}>🗑</B>
+              <B sm onClick={()=>loadProject(p)}>פתח</B><B sm onClick={()=>exportProject(p)} sx={{fontSize:11}} title={rtl?"ייצא כקובץ":"Export as file"}>📤</B><B sm onClick={()=>deleteProject(p.id)}>🗑</B>
             </div>)}
           </div>}
         </div>
 
         </div>}
       {activeTab === "suno" && <div>
+        <div style={{ display:"flex", justifyContent:"flex-end", padding:"0 0 8px" }}>
+          <B onClick={share} sx={{ fontSize:13, padding:"8px 16px" }}>📤 {rtl ? "שתף טקסט" : "Share text"}</B>
+        </div>
       {/* PRINT */}
         <div style={{ display: "flex", justifyContent: "center", gap: 6, flexWrap: "wrap" }}>
           <B sm onClick={() => print("lyrics")} dis={!res}>🖨 {t.prtLyr}</B>
