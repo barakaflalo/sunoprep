@@ -1,7 +1,7 @@
 {
   "name": "SunoPrep - Song Prep for Suno AI",
   "short_name": "SunoPrep",
-  "description": "Advanced song preparation tool for Suno AI",
+  "description": "SunoPrep 9.3 - Song preparation tool for Suno AI",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0B0B0F",
@@ -9,19 +9,22 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["music", "utilities"],
+  "categories": [
+    "music",
+    "utilities"
+  ],
   "lang": "he",
   "dir": "rtl"
 }

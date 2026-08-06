@@ -7,11 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SunoPrep">
-  <meta name="description" content="SunoPrep 2.0 - Advanced song preparation tool for Suno AI">
+  <meta name="description" content="SunoPrep 9.3 - Advanced song preparation tool for Suno AI">
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="icon" href="icons/icon-192.png">
-  <title>SunoPrep 2.0</title>
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" href="icon-192.png">
+  <title>SunoPrep 9.3</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0B0B0F; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -22,12 +22,16 @@
   <div id="root"><div style="display:flex;align-items:center;justify-content:center;min-height:100vh;color:#C9A84C;font-size:18px">⏳ Loading SunoPrep...</div></div>
 
   <script>
-    // LocalStorage wrapper (replaces Claude artifact storage)
+    // Storage shim: localStorage with in-memory fallback (works in preview + live site)
+    window.__mem = {};
     window.localGet = async (key) => {
-      try { const v = localStorage.getItem('sp_' + key); return v ? { value: v } : null; } catch { return null; }
+      try { const v = localStorage.getItem('sp_' + key); return v != null ? { value: v } : (window.__mem[key] != null ? { value: window.__mem[key] } : null); }
+      catch { return window.__mem[key] != null ? { value: window.__mem[key] } : null; }
     };
     window.localSet = async (key, value) => {
-      try { localStorage.setItem('sp_' + key, value); return { key, value }; } catch { return null; }
+      window.__mem[key] = value;
+      try { localStorage.setItem('sp_' + key, value); } catch {}
+      return { key, value };
     };
     // API key for Pro mode (stored in localStorage)
     window.getApiKey = () => localStorage.getItem('sp_api_key') || '';
