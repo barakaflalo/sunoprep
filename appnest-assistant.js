@@ -1,0 +1,274 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   AppNest Assistant — המנוע הקבוע (זהה בכל האפליקציות)
+   ─────────────────────────────────────────────────────────────────────
+   צ'אטבוט היברידי: מדבר בשפה טבעית, עונה על שאלות, ויכול לבצע פעולות
+   באפליקציה (לכתוב לשדה, לנווט בין מסכים, להדגיש כפתור).
+
+   איך זה בנוי:
+   • המנוע (הקובץ הזה) — לא משתנה בין אפליקציות. מעתיקים אותו כמו שהוא.
+   • ה"מפה" — window.APPNEST_ASSISTANT_CONFIG, מוגדרת בכל אפליקציה בנפרד,
+     ומתארת למנוע את המסכים/השדות/הכפתורים והרקע של אותה אפליקציה.
+
+   ה-AI: משתמש ב-BYOK הקיים (המפתח שהמשתמש כבר חיבר). נקרא בשפת-האם של כל
+   ספק (Claude / Gemini / OpenAI / מקומי / מותאם) — בלי שכבות תרגום.
+   ═══════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var CFG = window.APPNEST_ASSISTANT_CONFIG;
+  if (!CFG) { console.warn('[AppNest Assistant] אין הגדרות (APPNEST_ASSISTANT_CONFIG) — המנוע לא הופעל.'); return; }
+
+  /* ─────────────── 1. קריאת ה-AI לפי הספק שהמשתמש חיבר ─────────────── */
+  // קורא את הגדרות ה-BYOK של האפליקציה. שם המפתח ב-localStorage ניתן להתאמה
+  // דרך המפה (CFG.aiConfigKey); ברירת מחדל מתאימה ל-SunoPrep/AppNest.
+  function readAiConfig() {
+    var storeKey = CFG.aiConfigKey || 'sp_ai-config';
+    try {
+      var raw = localStorage.getItem(storeKey);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) { return null; }
+  }
+
+  function clean(s) { return (s || '').replace(/[\r\n\t]/g, '').trim(); }
+
+  // מריץ prompt מול הספק המחובר, מחזיר טקסט. זורק אם אין מפתח/ספק.
+  async function callAI(prompt) {
+    var cfg = readAiConfig();
+    if (!cfg || !cfg.provider) throw new Error('NO_AI');
+    var p = cfg.provider, k = cfg.keys || {};
+
+    if (p === 'gemini') {
+      var models = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+      var cached = null;
+      try { cached = localStorage.getItem('sp_gemini_model'); } catch (e) {}
+      if (cached) models = [cached].concat(models.filter(function (m) { return m !== cached; }));
+      var key = clean(k.gemini), lastErr = null;
+      for (var i = 0; i < models.length; i++) {
+        var genCfg = { temperature: 0.5, maxOutputTokens: 4000 };
+        if (models[i].indexOf('gemini-2.5') === 0 || models[i].indexOf('gemini-3') === 0) genCfg.thinkingConfig = { thinkingBudget: 0 };
+        try {
+          var r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + models[i] + ':generateContent?key=' + encodeURIComponent(key), {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genCfg })
+          });
+          if (r.ok) {
+            var d = await r.json();
+            try { localStorage.setItem('sp_gemini_model', models[i]); } catch (e) {}
+            return (d && d.candidates && d.candidates[0] && d.candidates[0].content && d.candidates[0].content.parts[0] && d.candidates[0].content.parts[0].text) || '';
+          }
+          var ej = await r.json().catch(function () { return {}; });
+          lastErr = new Error((ej && ej.error && ej.error.message) || ('HTTP ' + r.status));
+          if ([404, 429, 500, 503].indexOf(r.status) === -1) throw lastErr;
+        } catch (e) { lastErr = e; }
+      }
+      throw lastErr || new Error('Gemini unavailable');
+    }
+
+    if (p === 'claude') {
+      var res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': clean(k.claude),
+          'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] })
+      });
+      if (!res.ok) { var ec = await res.json().catch(function () { return {}; }); throw new Error((ec.error && ec.error.message) || ('HTTP ' + res.status)); }
+      var dc = await res.json();
+      return (dc.content && dc.content[0] && dc.content[0].text) || '';
+    }
+
+    // openai / device / custom — כולם פורמט OpenAI
+    var url, okey, model;
+    if (p === 'openai') { url = 'https://api.openai.com/v1/chat/completions'; okey = clean(k.openai); model = 'gpt-4o-mini'; }
+    else if (p === 'device') { url = (k.deviceUrl || '').replace(/\/+$/, '') + '/chat/completions'; okey = ''; model = 'llama3'; }
+    else if (p === 'custom') { url = k.customUrl || ''; okey = clean(k.customKey); model = 'gpt-4o-mini'; }
+    else throw new Error('UNKNOWN_PROVIDER');
+    var h = { 'Content-Type': 'application/json' };
+    if (okey) h['Authorization'] = 'Bearer ' + okey;
+    var ro = await fetch(url, { method: 'POST', headers: h,
+      body: JSON.stringify({ model: model, max_tokens: 4000, messages: [{ role: 'user', content: prompt }] }) });
+    if (!ro.ok) { var eo = await ro.json().catch(function () { return {}; }); throw new Error((eo.error && eo.error.message) || ('HTTP ' + ro.status)); }
+    var do_ = await ro.json();
+    return (do_.choices && do_.choices[0] && do_.choices[0].message && do_.choices[0].message.content) || '';
+  }
+
+  /* ─────────────── 2. פעולות על האפליקציה (מבוססות המפה) ─────────────── */
+  // מציאת אלמנט לפי טקסט גלוי (יציב יותר מ-selectors באפליקציית React)
+  function findByText(tag, text) {
+    var els = document.querySelectorAll(tag);
+    text = text.trim();
+    for (var i = 0; i < els.length; i++) {
+      var t = (els[i].textContent || '').trim();
+      if (t === text || t.indexOf(text) !== -1) return els[i];
+    }
+    return null;
+  }
+  function findField(spec) {
+    if (spec.placeholder) {
+      var els = document.querySelectorAll('textarea, input');
+      for (var i = 0; i < els.length; i++) {
+        var ph = els[i].getAttribute('placeholder') || '';
+        if (ph.indexOf(spec.placeholder) !== -1) return els[i];
+      }
+    }
+    if (spec.selector) return document.querySelector(spec.selector);
+    return null;
+  }
+  // כתיבה לשדה בצורה ש-React "רואה" (native setter + אירוע input)
+  function setReactValue(el, value) {
+    var proto = el.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
+    var setter = Object.getOwnPropertyDescriptor(proto, 'value').set;
+    setter.call(el, value);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+  function flash(el) {
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var old = el.style.boxShadow, oldT = el.style.transition;
+    el.style.transition = 'box-shadow .3s';
+    el.style.boxShadow = '0 0 0 3px #C9A84C, 0 0 18px #C9A84C';
+    setTimeout(function () { el.style.boxShadow = old; el.style.transition = oldT; }, 2200);
+  }
+
+  // מבצע פעולה שה-AI ביקש. מחזיר טקסט-משוב קצר (או null אם נכשל).
+  function runAction(act) {
+    try {
+      if (act.action === 'navigate') {
+        var tab = (CFG.tabs || []).filter(function (t) { return t.name === act.target; })[0];
+        var btn = findByText('button', (tab && tab.match) || act.target);
+        if (btn) { btn.click(); return 'עברתי למסך "' + act.target + '".'; }
+        return null;
+      }
+      if (act.action === 'writeField') {
+        var fld = (CFG.fields || []).filter(function (f) { return f.name === act.target; })[0];
+        var el = fld && findField(fld);
+        if (el) { setReactValue(el, act.text || ''); flash(el); return 'כתבתי ל' + (fld.label || 'שדה') + '.'; }
+        return null;
+      }
+      if (act.action === 'highlight') {
+        var target = act.target;
+        var el2 = findByText('button', target) || (CFG.fields || []).filter(function (f) { return f.name === target; }).map(function (f) { return findField(f); })[0];
+        if (el2) { flash(el2); return 'הנה זה — סימנתי לך בזהב.'; }
+        return null;
+      }
+    } catch (e) { return null; }
+    return null;
+  }
+
+  /* ─────────────── 3. הנחיית ה-AI (system prompt מהמפה) ─────────────── */
+  function buildPrompt(history, userMsg) {
+    var tabNames = (CFG.tabs || []).map(function (t) { return '"' + t.name + '"'; }).join(', ');
+    var fieldList = (CFG.fields || []).map(function (f) { return '"' + f.name + '" (' + (f.label || '') + ')'; }).join(', ');
+    var convo = history.map(function (m) { return (m.role === 'user' ? 'משתמש' : 'עוזר') + ': ' + m.text; }).join('\n');
+
+    return [
+      'אתה עוזר חכם בתוך האפליקציה "' + CFG.appName + '".',
+      CFG.appDescription || '',
+      '',
+      'אתה יכול גם לבצע פעולות באפליקציה. כשמתאים, החזר בלוק פעולה בשורה נפרדת בסוף התשובה,',
+      'בפורמט הזה בדיוק (JSON בין הסימנים):',
+      '<<ACTION>>{"action":"navigate","target":"שם המסך"}<<END>>',
+      '<<ACTION>>{"action":"writeField","target":"שם השדה","text":"התוכן המלא"}<<END>>',
+      '<<ACTION>>{"action":"highlight","target":"טקסט הכפתור או שם השדה"}<<END>>',
+      '',
+      'מסכים זמינים לניווט: ' + (tabNames || '(אין)'),
+      'שדות זמינים לכתיבה: ' + (fieldList || '(אין)'),
+      '',
+      'כללים: דבר בעברית, טבעי וידידותי. תמיד כתוב קודם תשובה קצרה למשתמש, ורק אחריה (אם צריך) את בלוק הפעולה.',
+      'אם המשתמש מבקש ליצור תוכן (שיר, טקסט) — כתוב את התוכן בתוך writeField, לא בגוף הצ\'אט.',
+      'אם זו רק שאלה/שיחה — אל תחזיר בלוק פעולה בכלל.',
+      '',
+      (convo ? 'שיחה עד כה:\n' + convo + '\n' : ''),
+      'משתמש: ' + userMsg,
+      'עוזר:'
+    ].join('\n');
+  }
+
+  function parseReply(raw) {
+    var action = null, text = raw;
+    var m = raw.match(/<<ACTION>>([\s\S]*?)<<END>>/);
+    if (m) {
+      try { action = JSON.parse(m[1].trim()); } catch (e) { action = null; }
+      text = raw.replace(/<<ACTION>>[\s\S]*?<<END>>/, '').trim();
+    }
+    return { text: text, action: action };
+  }
+
+  /* ─────────────── 4. ממשק המשתמש (חלון צ'אט + כפתור) ─────────────── */
+  var history = [], panelEl = null, bodyEl = null, open = false;
+
+  function el(tag, css, txt) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (txt != null) e.textContent = txt; return e; }
+
+  function addBubble(role, text) {
+    var wrap = el('div', 'display:flex;margin:8px 0;' + (role === 'user' ? 'justify-content:flex-start;' : 'justify-content:flex-end;'));
+    var b = el('div',
+      'max-width:82%;padding:9px 13px;border-radius:14px;font:14px/1.5 "Segoe UI",sans-serif;white-space:pre-wrap;word-break:break-word;direction:rtl;' +
+      (role === 'user'
+        ? 'background:#2a2a33;color:#eee;border-top-right-radius:4px;'
+        : 'background:#C9A84C;color:#0B0B0F;border-top-left-radius:4px;'), text);
+    wrap.appendChild(b); bodyEl.appendChild(wrap); bodyEl.scrollTop = bodyEl.scrollHeight;
+    return b;
+  }
+
+  async function send(input) {
+    var msg = input.value.trim(); if (!msg) return;
+    input.value = ''; addBubble('user', msg);
+    var thinking = addBubble('bot', '…חושב');
+    try {
+      var prompt = buildPrompt(history, msg);
+      var raw = await callAI(prompt);
+      var parsed = parseReply(raw);
+      thinking.textContent = parsed.text || '✓';
+      history.push({ role: 'user', text: msg });
+      history.push({ role: 'bot', text: parsed.text });
+      if (history.length > 12) history = history.slice(-12);
+      if (parsed.action) {
+        var fb = runAction(parsed.action);
+        if (fb) addBubble('bot', fb);
+        else addBubble('bot', 'ניסיתי לבצע את הפעולה אבל לא מצאתי את היעד באפליקציה.');
+      }
+    } catch (e) {
+      if (e.message === 'NO_AI') thinking.textContent = 'כדי לדבר איתי, חבר קודם מפתח AI בהגדרות הבינה של האפליקציה 🔌';
+      else thinking.textContent = 'אופס, משהו השתבש: ' + e.message;
+    }
+  }
+
+  function buildPanel() {
+    panelEl = el('div', 'position:fixed;bottom:78px;left:16px;width:340px;max-width:calc(100vw - 32px);height:460px;max-height:calc(100vh - 120px);' +
+      'background:#141418;border:1px solid #2e2e38;border-radius:16px;z-index:100000;display:none;flex-direction:column;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.55);');
+    var head = el('div', 'padding:12px 14px;background:linear-gradient(90deg,#1a1a20,#141418);border-bottom:1px solid #2e2e38;display:flex;align-items:center;gap:8px;');
+    head.appendChild(el('span', 'font-size:17px;', '🪄'));
+    head.appendChild(el('span', 'color:#C9A84C;font:600 15px "Segoe UI",sans-serif;', 'עוזר ' + CFG.appName));
+    var x = el('span', 'margin-right:auto;cursor:pointer;color:#888;font-size:20px;line-height:1;', '×');
+    x.onclick = toggle; head.appendChild(x);
+    bodyEl = el('div', 'flex:1;overflow-y:auto;padding:12px;');
+    var foot = el('div', 'padding:10px;border-top:1px solid #2e2e38;display:flex;gap:8px;');
+    var inp = el('input', 'flex:1;background:#0d0d11;border:1px solid #2e2e38;border-radius:20px;padding:9px 14px;color:#eee;font:14px "Segoe UI",sans-serif;direction:rtl;outline:none;');
+    inp.placeholder = 'שאל אותי משהו, או בקש עזרה…';
+    inp.onkeydown = function (ev) { if (ev.key === 'Enter') send(inp); };
+    var snd = el('button', 'background:#C9A84C;color:#0B0B0F;border:none;border-radius:20px;padding:0 16px;font:600 14px "Segoe UI",sans-serif;cursor:pointer;', 'שלח');
+    snd.onclick = function () { send(inp); };
+    foot.appendChild(inp); foot.appendChild(snd);
+    panelEl.appendChild(head); panelEl.appendChild(bodyEl); panelEl.appendChild(foot);
+    document.body.appendChild(panelEl);
+    addBubble('bot', 'היי! אני העוזר של ' + CFG.appName + '. אפשר לשאול אותי כל דבר, לבקש שאכתוב תוכן ישר לאפליקציה, או לעזור לך למצוא דברים. במה אעזור?');
+  }
+
+  function toggle() {
+    if (!panelEl) buildPanel();
+    open = !open;
+    panelEl.style.display = open ? 'flex' : 'none';
+  }
+
+  function addButton() {
+    if (document.getElementById('appnest-assistant-btn')) return;
+    var b = el('button', 'position:fixed;bottom:16px;left:16px;z-index:100000;background:#C9A84C;color:#0B0B0F;border:none;' +
+      'border-radius:24px;padding:10px 18px;font:600 15px "Segoe UI",sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4);', '🪄 עוזר');
+    b.id = 'appnest-assistant-btn';
+    b.onclick = toggle;
+    document.body.appendChild(b);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', addButton);
+  else addButton();
+})();

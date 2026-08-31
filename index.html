@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#C9A84C">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SunoPrep">
   <meta name="description" content="SunoPrep 9.3 - Advanced song preparation tool for Suno AI">
@@ -48,110 +49,34 @@
   <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
   <script type="text/babel" src="app.jsx"></script>
 
-  <!-- ═══════════════ עוזר חכם (page-agent) — שכבת ניסוי ═══════════════
-       שכבה נפרדת שלא נוגעת בקוד האפליקציה (app.jsx). קוראת את המפתח והספק
-       שהמשתמש כבר חיבר (sp_ai-config), ומפעילה עליהם את page-agent.
-       page-agent הוא MIT (חינמי, קוד פתוח). המפתח נשאר במכשיר. -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/page-agent@1.12.2/dist/iife/page-agent.demo.js?autoInit=false"
-    crossorigin="anonymous"></script>
+  <!-- ═══════════ עוזר AppNest ═══════════
+       "המפה" של SunoPrep — מתארת למנוע העוזר את המסכים, השדות והרקע של
+       האפליקציה הזו. המנוע עצמו (appnest-assistant.js) זהה בכל האפליקציות;
+       רק המפה הזו משתנה לכל אפליקציה. -->
   <script>
-  (function () {
-    // fetch עוטף שמנקה ערכי headers מתווים לא-חוקיים (רווחים/שורות חדשות נסתרים
-    // שנכנסים בהעתקת מפתח) — הסיבה הנפוצה ל-"fetch: Invalid value".
-    function cleanFetch(extraHeaders) {
-      return function (url, opts) {
-        opts = opts || {};
-        var h = opts.headers || {};
-        var clean = {};
-        Object.keys(h).forEach(function (name) {
-          var v = h[name];
-          if (typeof v === 'string') v = v.replace(/[\r\n\t]/g, '').trim();
-          clean[name] = v;
-        });
-        if (extraHeaders) Object.keys(extraHeaders).forEach(function (n) { clean[n] = extraHeaders[n]; });
-        opts.headers = clean;
-        return fetch(url, opts).catch(function (e) {
-          console.error('[עוזר] קריאת רשת נכשלה →', String(url), e && e.message);
-          throw e;
-        });
-      };
-    }
-
-    // ── ממפה את הספק+המפתח שהמשתמש חיבר ב-SunoPrep לפורמט תואם-OpenAI ש-page-agent צריך ──
-    function buildAgentConfig() {
-      var raw;
-      try { raw = localStorage.getItem('sp_ai-config'); } catch (e) { raw = null; }
-      if (!raw) return { error: 'no-config' };
-      var cfg; try { cfg = JSON.parse(raw); } catch (e) { return { error: 'bad-config' }; }
-      var p = cfg.provider, k = cfg.keys || {};
-      if (!p) return { error: 'no-provider' };
-
-      // ניקוי מפתחות מתווים נסתרים
-      function clean(s) { return (s || '').replace(/[\r\n\t ]/g, ''); }
-
-      // page-agent מדבר רק "פורמט OpenAI". לכל ספק — הכתובת התואמת-OpenAI שלו.
-      if (p === 'openai')
-        return { model: 'gpt-4o-mini', baseURL: 'https://api.openai.com/v1',
-                 apiKey: clean(k.openai), customFetch: cleanFetch() };
-      if (p === 'gemini') {
-        var gModel = 'gemini-flash-latest';
-        try { var sm = localStorage.getItem('sp_gemini_model'); if (sm) gModel = sm.replace(/^"|"$/g, ''); } catch (e) {}
-        return { model: gModel,
-                 baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
-                 apiKey: clean(k.gemini), customFetch: cleanFetch() };
-      }
-      if (p === 'device')
-        return { model: 'llama3',
-                 baseURL: (k.deviceUrl || '').replace(/\/+$/, ''), apiKey: '',
-                 customFetch: cleanFetch() };
-      if (p === 'custom')
-        return { model: 'gpt-4o-mini',
-                 baseURL: (k.customUrl || '').replace(/\/(chat\/completions)?\/*$/, ''),
-                 apiKey: clean(k.customKey), customFetch: cleanFetch() };
-      if (p === 'claude')
-        return { model: 'claude-sonnet-4-6', baseURL: 'https://api.anthropic.com/v1',
-                 apiKey: clean(k.claude),
-                 // Claude דורש header מיוחד לקריאה ישירה מהדפדפן
-                 customFetch: cleanFetch({ 'anthropic-dangerous-direct-browser-access': 'true' }) };
-      return { error: 'unknown-provider', provider: p };
-    }
-
-    var agent = null;
-    function launchAgent() {
-      if (agent) { agent.panel.show(); return; }
-      if (!window.PageAgent) { alert('העוזר עדיין נטען, נסה שוב עוד רגע.'); return; }
-      var conf = buildAgentConfig();
-      if (conf.error) {
-        alert('כדי להשתמש בעוזר, חבר קודם מפתח AI בהגדרות הבינה של האפליקציה. (' + conf.error + ')');
-        return;
-      }
-      try {
-        agent = new window.PageAgent({ model: conf.model, baseURL: conf.baseURL,
-          apiKey: conf.apiKey, customFetch: conf.customFetch, language: 'en-US' });
-        agent.panel.show();
-      } catch (e) {
-        alert('שגיאה בהפעלת העוזר: ' + (e && e.message ? e.message : e));
-      }
-    }
-
-    // ── כפתור צף להפעלת העוזר ──
-    function addButton() {
-      if (document.getElementById('pa-launch')) return;
-      var b = document.createElement('button');
-      b.id = 'pa-launch';
-      b.textContent = '🪄 עוזר';
-      b.style.cssText = 'position:fixed;bottom:16px;left:16px;z-index:99999;' +
-        'background:#C9A84C;color:#0B0B0F;border:none;border-radius:24px;' +
-        'padding:10px 18px;font:600 15px/1 "Segoe UI",sans-serif;cursor:pointer;' +
-        'box-shadow:0 4px 16px rgba(0,0,0,.4);';
-      b.onclick = launchAgent;
-      document.body.appendChild(b);
-    }
-    if (document.readyState === 'loading')
-      document.addEventListener('DOMContentLoaded', addButton);
-    else addButton();
-  })();
+    window.APPNEST_ASSISTANT_CONFIG = {
+      appName: 'SunoPrep',
+      aiConfigKey: 'sp_ai-config',
+      appDescription:
+        'SunoPrep הוא כלי להכנת שירים ל-Suno AI: כתיבת מילות שיר, תגיות מבנה ([Verse], [Chorus] וכו\'), ' +
+        'המרת עברית לכתיב שסונו מבין, בחירת סגנון מוזיקלי וקול, ובנק משפטים ורעיונות. ' +
+        'עזור למשתמש לכתוב שירים טובים, להבין את התכונות, ולמצוא את דרכו באפליקציה.',
+      // מסכים שאפשר לנווט אליהם (הטקסט שמופיע על כפתור הטאב)
+      tabs: [
+        { name: 'כתיבה',    match: 'כתיבה' },
+        { name: 'רעיונות',  match: 'רעיונות' },
+        { name: 'קולות',    match: 'קולות' },
+        { name: 'בדיקות',   match: 'בדיקות' },
+        { name: 'פרויקטים', match: 'פרויקטים' },
+        { name: 'Suno',     match: 'Suno' }
+      ],
+      // שדות שאפשר לכתוב אליהם (מזוהים לפי הטקסט של ה-placeholder)
+      fields: [
+        { name: 'lyrics', label: 'שדה מילות השיר', placeholder: 'כתוב את מילות השיר כאן' },
+        { name: 'style',  label: 'שדה הסגנון המותאם', placeholder: 'הוסף סגנון מותאם' }
+      ]
+    };
   </script>
+  <script src="appnest-assistant.js"></script>
 </body>
 </html>
