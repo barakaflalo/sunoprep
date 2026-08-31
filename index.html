@@ -69,10 +69,14 @@
       // page-agent מדבר רק "פורמט OpenAI". לכל ספק — הכתובת התואמת-OpenAI שלו.
       if (p === 'openai')
         return { model: 'gpt-4o-mini', baseURL: 'https://api.openai.com/v1', apiKey: k.openai || '' };
-      if (p === 'gemini')
-        return { model: 'gemini-2.5-flash',
+      if (p === 'gemini') {
+        // משתמש במודל שהמשתמש בחר אם קיים, אחרת ב-alias שתמיד מצביע על העדכני
+        var gModel = 'gemini-flash-latest';
+        try { var sm = localStorage.getItem('sp_gemini_model'); if (sm) gModel = sm.replace(/^"|"$/g, ''); } catch (e) {}
+        return { model: gModel,
                  baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
                  apiKey: k.gemini || '' };
+      }
       if (p === 'device')
         return { model: 'llama3',
                  baseURL: (k.deviceUrl || '').replace(/\/+$/, ''), apiKey: '' };
