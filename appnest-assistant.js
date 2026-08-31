@@ -30,6 +30,12 @@
   }
 
   function clean(s) { return (s || '').replace(/[\r\n\t]/g, '').trim(); }
+  // מפצל שדה מפתחות (שיכול להכיל כמה מפתחות מופרדים בפסיק/שורה) ומחזיר את הראשון הנקי,
+  // בדיוק כמו שהאפליקציה עצמה עושה. מונע מצב של פסיקים/רווחים נסתרים שמשבשים את המפתח.
+  function firstKey(s) {
+    var arr = (s || '').split(/[\n,;]+/).map(function (x) { return x.trim(); }).filter(Boolean);
+    return arr[0] || '';
+  }
 
   // מריץ prompt מול הספק המחובר, מחזיר טקסט. זורק אם אין מפתח/ספק.
   async function callAI(prompt) {
@@ -42,7 +48,7 @@
       var cached = null;
       try { cached = localStorage.getItem('sp_gemini_model'); } catch (e) {}
       if (cached) models = [cached].concat(models.filter(function (m) { return m !== cached; }));
-      var key = clean(k.gemini), lastErr = null;
+      var key = firstKey(k.gemini), lastErr = null;
       for (var i = 0; i < models.length; i++) {
         var genCfg = { temperature: 0.5, maxOutputTokens: 4000 };
         if (models[i].indexOf('gemini-2.5') === 0 || models[i].indexOf('gemini-3') === 0) genCfg.thinkingConfig = { thinkingBudget: 0 };
@@ -67,7 +73,7 @@
     if (p === 'claude') {
       var res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': clean(k.claude),
+        headers: { 'Content-Type': 'application/json', 'x-api-key': firstKey(k.claude),
           'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
         body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] })
       });
@@ -78,9 +84,9 @@
 
     // openai / device / custom — כולם פורמט OpenAI
     var url, okey, model;
-    if (p === 'openai') { url = 'https://api.openai.com/v1/chat/completions'; okey = clean(k.openai); model = 'gpt-4o-mini'; }
+    if (p === 'openai') { url = 'https://api.openai.com/v1/chat/completions'; okey = firstKey(k.openai); model = 'gpt-4o-mini'; }
     else if (p === 'device') { url = (k.deviceUrl || '').replace(/\/+$/, '') + '/chat/completions'; okey = ''; model = 'llama3'; }
-    else if (p === 'custom') { url = k.customUrl || ''; okey = clean(k.customKey); model = 'gpt-4o-mini'; }
+    else if (p === 'custom') { url = k.customUrl || ''; okey = firstKey(k.customKey); model = 'gpt-4o-mini'; }
     else throw new Error('UNKNOWN_PROVIDER');
     var h = { 'Content-Type': 'application/json' };
     if (okey) h['Authorization'] = 'Bearer ' + okey;
