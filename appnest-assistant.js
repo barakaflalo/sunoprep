@@ -182,6 +182,7 @@
       '',
       'כללים: דבר בעברית, טבעי וידידותי. תמיד כתוב קודם תשובה קצרה למשתמש, ורק אחריה (אם צריך) את בלוק הפעולה.',
       'אם המשתמש מבקש ליצור תוכן (שיר, טקסט) — כתוב את התוכן בתוך writeField, לא בגוף הצ\'אט.',
+      'לניווט (navigate): השתמש אך ורק בשם מסך שמופיע בדיוק ברשימת המסכים למעלה. אם המשתמש מבקש מסך שלא ברשימה — אל תנחש ואל תנווט למסך אחר; במקום זה אמור לו בקצרה שאין מסך כזה, או שאל למה התכוון.',
       'אם זו רק שאלה/שיחה — אל תחזיר בלוק פעולה בכלל.',
       '',
       (convo ? 'שיחה עד כה:\n' + convo + '\n' : ''),
@@ -248,11 +249,29 @@
     var x = el('span', 'margin-right:auto;cursor:pointer;color:#888;font-size:20px;line-height:1;', '×');
     x.onclick = toggle; head.appendChild(x);
     bodyEl = el('div', 'flex:1;overflow-y:auto;padding:12px;');
-    var foot = el('div', 'padding:10px;border-top:1px solid #2e2e38;display:flex;gap:8px;');
+    var foot = el('div', 'padding:10px;border-top:1px solid #2e2e38;display:flex;gap:8px;align-items:center;');
     var inp = el('input', 'flex:1;background:#0d0d11;border:1px solid #2e2e38;border-radius:20px;padding:9px 14px;color:#eee;font:14px "Segoe UI",sans-serif;direction:rtl;outline:none;');
     inp.placeholder = 'שאל אותי משהו, או בקש עזרה…';
     inp.onkeydown = function (ev) { if (ev.key === 'Enter') send(inp); };
-    var snd = el('button', 'background:#C9A84C;color:#0B0B0F;border:none;border-radius:20px;padding:0 16px;font:600 14px "Segoe UI",sans-serif;cursor:pointer;', 'שלח');
+    // כפתור מיקרופון — דיבור לטקסט (Web Speech API, חינם, מובנה בדפדפן)
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR) {
+      var rec = new SR();
+      rec.lang = 'he-IL'; rec.interimResults = false; rec.maxAlternatives = 1;
+      var listening = false;
+      var mic = el('button', 'background:#2a2a33;color:#C9A84C;border:none;border-radius:50%;width:38px;height:38px;font-size:17px;cursor:pointer;flex-shrink:0;', '🎤');
+      mic.title = 'דבר במקום להקליד';
+      rec.onresult = function (e) { inp.value = e.results[0][0].transcript; inp.focus(); };
+      rec.onend = function () { listening = false; mic.style.background = '#2a2a33'; };
+      rec.onerror = function () { listening = false; mic.style.background = '#2a2a33'; };
+      mic.onclick = function () {
+        if (listening) { rec.stop(); return; }
+        try { rec.start(); listening = true; mic.style.background = '#C9A84C'; }
+        catch (e) {}
+      };
+      foot.appendChild(mic);
+    }
+    var snd = el('button', 'background:#C9A84C;color:#0B0B0F;border:none;border-radius:20px;padding:0 16px;height:38px;font:600 14px "Segoe UI",sans-serif;cursor:pointer;flex-shrink:0;', 'שלח');
     snd.onclick = function () { send(inp); };
     foot.appendChild(inp); foot.appendChild(snd);
     panelEl.appendChild(head); panelEl.appendChild(bodyEl); panelEl.appendChild(foot);
