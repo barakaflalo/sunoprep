@@ -57,6 +57,27 @@
     crossorigin="anonymous"></script>
   <script>
   (function () {
+    // fetch עוטף שמנקה ערכי headers מתווים לא-חוקיים (רווחים/שורות חדשות נסתרים
+    // שנכנסים בהעתקת מפתח) — הסיבה הנפוצה ל-"fetch: Invalid value".
+    function cleanFetch(extraHeaders) {
+      return function (url, opts) {
+        opts = opts || {};
+        var h = opts.headers || {};
+        var clean = {};
+        Object.keys(h).forEach(function (name) {
+          var v = h[name];
+          if (typeof v === 'string') v = v.replace(/[\r\n\t]/g, '').trim();
+          clean[name] = v;
+        });
+        if (extraHeaders) Object.keys(extraHeaders).forEach(function (n) { clean[n] = extraHeaders[n]; });
+        opts.headers = clean;
+        return fetch(url, opts).catch(function (e) {
+          console.error('[עוזר] קריאת רשת נכשלה →', String(url), e && e.message);
+          throw e;
+        });
+      };
+    }
+
     // ── ממפה את הספק+המפתח שהמשתמש חיבר ב-SunoPrep לפורמט תואם-OpenAI ש-page-agent צריך ──
     function buildAgentConfig() {
       var raw;
@@ -66,33 +87,33 @@
       var p = cfg.provider, k = cfg.keys || {};
       if (!p) return { error: 'no-provider' };
 
+      // ניקוי מפתחות מתווים נסתרים
+      function clean(s) { return (s || '').replace(/[\r\n\t ]/g, ''); }
+
       // page-agent מדבר רק "פורמט OpenAI". לכל ספק — הכתובת התואמת-OpenAI שלו.
       if (p === 'openai')
-        return { model: 'gpt-4o-mini', baseURL: 'https://api.openai.com/v1', apiKey: k.openai || '' };
+        return { model: 'gpt-4o-mini', baseURL: 'https://api.openai.com/v1',
+                 apiKey: clean(k.openai), customFetch: cleanFetch() };
       if (p === 'gemini') {
-        // משתמש במודל שהמשתמש בחר אם קיים, אחרת ב-alias שתמיד מצביע על העדכני
         var gModel = 'gemini-flash-latest';
         try { var sm = localStorage.getItem('sp_gemini_model'); if (sm) gModel = sm.replace(/^"|"$/g, ''); } catch (e) {}
         return { model: gModel,
                  baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
-                 apiKey: k.gemini || '' };
+                 apiKey: clean(k.gemini), customFetch: cleanFetch() };
       }
       if (p === 'device')
         return { model: 'llama3',
-                 baseURL: (k.deviceUrl || '').replace(/\/+$/, ''), apiKey: '' };
+                 baseURL: (k.deviceUrl || '').replace(/\/+$/, ''), apiKey: '',
+                 customFetch: cleanFetch() };
       if (p === 'custom')
         return { model: 'gpt-4o-mini',
                  baseURL: (k.customUrl || '').replace(/\/(chat\/completions)?\/*$/, ''),
-                 apiKey: k.customKey || '' };
+                 apiKey: clean(k.customKey), customFetch: cleanFetch() };
       if (p === 'claude')
         return { model: 'claude-sonnet-4-6', baseURL: 'https://api.anthropic.com/v1',
-                 apiKey: k.claude || '',
+                 apiKey: clean(k.claude),
                  // Claude דורש header מיוחד לקריאה ישירה מהדפדפן
-                 customFetch: function (url, opts) {
-                   opts = opts || {}; opts.headers = opts.headers || {};
-                   opts.headers['anthropic-dangerous-direct-browser-access'] = 'true';
-                   return fetch(url, opts);
-                 } };
+                 customFetch: cleanFetch({ 'anthropic-dangerous-direct-browser-access': 'true' }) };
       return { error: 'unknown-provider', provider: p };
     }
 
