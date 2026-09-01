@@ -207,11 +207,18 @@
   function el(tag, css, txt) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (txt != null) e.textContent = txt; return e; }
 
   // הקראת טקסט בעברית (Text-to-Speech מובנה בדפדפן)
-  function speak(text) {
+  var activePlayBtn = null;
+  function stopSpeak() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (activePlayBtn) { activePlayBtn.textContent = '🔊'; activePlayBtn = null; }
+  }
+  function speak(text, btn) {
     if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
+    stopSpeak();
     var u = new SpeechSynthesisUtterance(text);
     u.lang = 'he-IL'; u.rate = 1;
+    u.onend = function () { if (btn) btn.textContent = '🔊'; if (activePlayBtn === btn) activePlayBtn = null; };
+    if (btn) { btn.textContent = '⏹'; activePlayBtn = btn; }
     window.speechSynthesis.speak(u);
   }
 
@@ -224,8 +231,12 @@
         : 'background:#C9A84C;color:#0B0B0F;border-top-left-radius:4px;'), text);
     if (role === 'bot' && window.speechSynthesis) {
       var play = el('button', 'background:none;border:none;cursor:pointer;font-size:15px;opacity:.6;padding:2px;flex-shrink:0;', '🔊');
-      play.title = 'הקרא';
-      play.onclick = function () { speak(b.textContent); };
+      play.title = 'הקרא / עצור';
+      play.onclick = function () {
+        // אם הכפתור הזה כרגע מקריא — עצור. אחרת — התחל להקריא (ועצור כל הקראה אחרת).
+        if (activePlayBtn === play) stopSpeak();
+        else speak(b.textContent, play);
+      };
       wrap.appendChild(play);
     }
     wrap.appendChild(b); bodyEl.appendChild(wrap); bodyEl.scrollTop = bodyEl.scrollHeight;
@@ -281,25 +292,25 @@
       rec.onerror = function (ev) {
         listening = false; mic.style.background = '#2a2a33';
         if (ev && (ev.error === 'not-allowed' || ev.error === 'service-not-allowed'))
-          addBubble('bot', 'אין לי גישה למיקרופון. אשר את ההרשאה בהגדרות הדפדפן ונסה שוב 🎤');
+          addBubble('bot', 'אין לי גישה למיקרופון. אשר את ההרשאה בהגדרות הדפדפן (ליד כתובת האתר) ונסה שוב 🎤');
         else if (ev && ev.error === 'no-speech')
           addBubble('bot', 'לא שמעתי כלום — נסה לדבר קצת יותר חזק 🙂');
+        else if (ev && ev.error === 'not-supported')
+          addBubble('bot', 'זיהוי הדיבור לא נתמך בדפדפן הזה — אפשר פשוט להקליד 🙂');
       };
       mic.onclick = async function () {
         if (listening) { rec.stop(); return; }
-        // בקשת הרשאה מפורשת — קריטי בנייד (בלי זה הדפדפן לא תמיד קופץ עם הבקשה)
+        // בקשת הרשאה מפורשת — עוזרת בנייד. אם היא נכשלת, עדיין מנסים rec.start()
+        // (חלק מהדפדפנים מבקשים הרשאה דרך rec.start עצמו), וההודעה תגיע מ-onerror.
         if (!micGranted && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           try {
             var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             stream.getTracks().forEach(function (t) { t.stop(); });
             micGranted = true;
-          } catch (e) {
-            addBubble('bot', 'לא הצלחתי לקבל גישה למיקרופון. באייפון, זיהוי דיבור נתמך חלקית — אם זה לא עובד, אפשר פשוט להקליד 🙂');
-            return;
-          }
+          } catch (e) { /* לא עוצרים — נותנים ל-rec.start לנסות, ו-onerror יטפל */ }
         }
         try { rec.start(); listening = true; mic.style.background = '#C9A84C'; }
-        catch (e) { listening = false; }
+        catch (e) { listening = false; addBubble('bot', 'לא הצלחתי להפעיל את המיקרופון — אפשר פשוט להקליד 🙂'); }
       };
       foot.appendChild(mic);
     }
