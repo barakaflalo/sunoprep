@@ -183,6 +183,7 @@
       '<<ACTION>>{"action":"navigate","target":"שם המסך"}<<END>>',
       '<<ACTION>>{"action":"writeField","target":"שם השדה","text":"התוכן המלא"}<<END>>',
       '<<ACTION>>{"action":"highlight","target":"טקסט הכפתור או שם השדה"}<<END>>',
+      'אם המשתמש ביקש כמה דברים ברצף (למשל "כתוב שיר ואז עבור לקולות") — החזר כמה בלוקי פעולה, כל אחד בשורה נפרדת, בסדר שבו הם צריכים להתבצע (בדרך כלל: קודם לכתוב לשדה, ורק אחר כך לנווט למסך אחר).',
       '',
       'מסכים זמינים לניווט: ' + (tabNames || '(אין)'),
       'שדות זמינים לכתיבה: ' + (fieldList || '(אין)'),
@@ -203,13 +204,13 @@
   }
 
   function parseReply(raw) {
-    var action = null, text = raw;
-    var m = raw.match(/<<ACTION>>([\s\S]*?)<<END>>/);
-    if (m) {
-      try { action = JSON.parse(m[1].trim()); } catch (e) { action = null; }
-      text = raw.replace(/<<ACTION>>[\s\S]*?<<END>>/, '').trim();
+    var actions = [], text = raw;
+    var re = /<<ACTION>>([\s\S]*?)<<END>>/g, m;
+    while ((m = re.exec(raw)) !== null) {
+      try { actions.push(JSON.parse(m[1].trim())); } catch (e) {}
     }
-    return { text: text, action: action };
+    text = raw.replace(/<<ACTION>>[\s\S]*?<<END>>/g, '').trim();
+    return { text: text, actions: actions };
   }
 
   /* ─────────────── 4. ממשק המשתמש (חלון צ'אט + כפתור) ─────────────── */
@@ -272,10 +273,12 @@
       history.push({ role: 'bot', text: parsed.text });
       if (history.length > 30) history = history.slice(-30);
       saveHistory();
-      if (parsed.action) {
-        var fb = runAction(parsed.action);
+      // מבצע את הפעולות לפי הסדר, עם השהיה קטנה בין פעולות כדי לתת למסך להתעדכן
+      for (var ai = 0; ai < parsed.actions.length; ai++) {
+        var fb = runAction(parsed.actions[ai]);
         if (fb) addBubble('bot', fb);
-        else addBubble('bot', 'ניסיתי לבצע את הפעולה אבל לא מצאתי את היעד באפליקציה.');
+        else addBubble('bot', 'ניסיתי לבצע פעולה אבל לא מצאתי את היעד באפליקציה.');
+        if (ai < parsed.actions.length - 1) await new Promise(function (r) { setTimeout(r, 450); });
       }
     } catch (e) {
       if (e.message === 'NO_AI') thinking.textContent = 'כדי לדבר איתי, חבר קודם מפתח AI בהגדרות הבינה של האפליקציה 🔌';

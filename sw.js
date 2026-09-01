@@ -1,4 +1,4 @@
-const CACHE = 'sunoprep-v10.3';
+const CACHE = 'sunoprep-v10.4';
 const ASSETS = ['./','./index.html','./app.jsx','./appnest-assistant.js','./manifest.json','./icon-192.png','./icon-512.png',
   'https://unpkg.com/react@18/umd/react.production.min.js',
   'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
