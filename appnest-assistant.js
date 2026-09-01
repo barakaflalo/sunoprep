@@ -163,7 +163,7 @@
   function buildPrompt(history, userMsg) {
     var tabNames = (CFG.tabs || []).map(function (t) { return '"' + t.name + '"'; }).join(', ');
     var fieldList = (CFG.fields || []).map(function (f) { return '"' + f.name + '" (' + (f.label || '') + ')'; }).join(', ');
-    var convo = history.map(function (m) { return (m.role === 'user' ? 'משתמש' : 'עוזר') + ': ' + m.text; }).join('\n');
+    var convo = history.slice(-12).map(function (m) { return (m.role === 'user' ? 'משתמש' : 'עוזר') + ': ' + m.text; }).join('\n');
 
     // "עיניים" — קורא את התוכן הנוכחי של השדות, כדי שהעוזר יוכל להתייחס אליו
     // (לשפר, לתרגם, לענות על "מה כתבתי") בלי לבקש מהמשתמש להדביק.
@@ -213,7 +213,12 @@
   }
 
   /* ─────────────── 4. ממשק המשתמש (חלון צ'אט + כפתור) ─────────────── */
-  var history = [], panelEl = null, bodyEl = null, open = false;
+  // זיכרון מתמשך — השיחה נשמרת מקומית (localStorage) ונטענת בביקור הבא.
+  // מפתח ייחודי לכל אפליקציה, כדי שאפליקציות שונות לא יחלקו זיכרון.
+  var HKEY = 'appnest_asst_hist_' + (CFG.appName || 'app');
+  function loadHistory() { try { return JSON.parse(localStorage.getItem(HKEY)) || []; } catch (e) { return []; } }
+  function saveHistory() { try { localStorage.setItem(HKEY, JSON.stringify(history.slice(-30))); } catch (e) {} }
+  var history = loadHistory(), panelEl = null, bodyEl = null, panelInput = null, open = false;
 
   function el(tag, css, txt) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (txt != null) e.textContent = txt; return e; }
 
@@ -265,7 +270,8 @@
       thinking.textContent = parsed.text || '✓';
       history.push({ role: 'user', text: msg });
       history.push({ role: 'bot', text: parsed.text });
-      if (history.length > 12) history = history.slice(-12);
+      if (history.length > 30) history = history.slice(-30);
+      saveHistory();
       if (parsed.action) {
         var fb = runAction(parsed.action);
         if (fb) addBubble('bot', fb);
@@ -295,7 +301,11 @@
     var head = el('div', 'padding:12px 14px;background:linear-gradient(90deg,#1a1a20,#141418);border-bottom:1px solid #2e2e38;display:flex;align-items:center;gap:8px;');
     head.appendChild(el('span', 'font-size:17px;', '🪄'));
     head.appendChild(el('span', 'color:#C9A84C;font:600 15px "Segoe UI",sans-serif;', 'עוזר ' + CFG.appName));
-    var x = el('span', 'margin-right:auto;cursor:pointer;color:#888;font-size:20px;line-height:1;', '×');
+    var clr = el('span', 'margin-right:auto;cursor:pointer;color:#888;font-size:15px;line-height:1;', '🗑️');
+    clr.title = 'נקה שיחה';
+    clr.onclick = clearChat;
+    head.appendChild(clr);
+    var x = el('span', 'cursor:pointer;color:#888;font-size:20px;line-height:1;', '×');
     x.onclick = toggle; head.appendChild(x);
     bodyEl = el('div', 'flex:1;overflow-y:auto;padding:12px;');
     var foot = el('div', 'padding:10px;border-top:1px solid #2e2e38;display:flex;gap:8px;align-items:center;');
@@ -342,8 +352,24 @@
     foot.appendChild(inp); foot.appendChild(snd);
     panelEl.appendChild(head); panelEl.appendChild(bodyEl); panelEl.appendChild(foot);
     document.body.appendChild(panelEl);
-    addBubble('bot', 'היי! אני העוזר של ' + CFG.appName + '. אפשר לשאול אותי כל דבר, לבקש שאכתוב תוכן ישר לאפליקציה, או לעזור לך למצוא דברים. במה אעזור?');
-    addSuggestions(inp);
+    panelInput = inp;
+    renderConversation();
+  }
+
+  // מציג את השיחה בגוף החלון: היסטוריה שמורה אם יש, אחרת הודעת פתיחה + הצעות.
+  function renderConversation() {
+    bodyEl.innerHTML = '';
+    if (history.length) {
+      history.forEach(function (m) { addBubble(m.role === 'user' ? 'user' : 'bot', m.text); });
+    } else {
+      addBubble('bot', 'היי! אני העוזר של ' + CFG.appName + '. אפשר לשאול אותי כל דבר, לבקש שאכתוב תוכן ישר לאפליקציה, או לעזור לך למצוא דברים. במה אעזור?');
+      if (panelInput) addSuggestions(panelInput);
+    }
+  }
+
+  function clearChat() {
+    history = []; saveHistory(); stopSpeak();
+    renderConversation();
   }
 
   function toggle() {
