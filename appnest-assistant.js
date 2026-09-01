@@ -165,6 +165,15 @@
     var fieldList = (CFG.fields || []).map(function (f) { return '"' + f.name + '" (' + (f.label || '') + ')'; }).join(', ');
     var convo = history.map(function (m) { return (m.role === 'user' ? 'משתמש' : 'עוזר') + ': ' + m.text; }).join('\n');
 
+    // "עיניים" — קורא את התוכן הנוכחי של השדות, כדי שהעוזר יוכל להתייחס אליו
+    // (לשפר, לתרגם, לענות על "מה כתבתי") בלי לבקש מהמשתמש להדביק.
+    var fieldState = (CFG.fields || []).map(function (f) {
+      var el = findField(f);
+      var val = el ? (el.value || '') : '';
+      if (val.length > 1500) val = val.slice(0, 1500) + '…';
+      return '• ' + (f.label || f.name) + ': ' + (val ? '"' + val + '"' : '(ריק)');
+    }).join('\n');
+
     return [
       'אתה עוזר חכם בתוך האפליקציה "' + CFG.appName + '".',
       CFG.appDescription || '',
@@ -178,8 +187,12 @@
       'מסכים זמינים לניווט: ' + (tabNames || '(אין)'),
       'שדות זמינים לכתיבה: ' + (fieldList || '(אין)'),
       '',
+      'התוכן שנמצא כרגע בשדות האפליקציה (כדי שתוכל להתייחס אליו — לשפר, לתרגם, לענות עליו):',
+      (fieldState || '(אין שדות)'),
+      '',
       'כללים: דבר בעברית, טבעי וידידותי. תמיד כתוב קודם תשובה קצרה למשתמש, ורק אחריה (אם צריך) את בלוק הפעולה.',
-      'אם המשתמש מבקש ליצור תוכן (שיר, טקסט) — כתוב את התוכן בתוך writeField, לא בגוף הצ\'אט.',
+      'אם המשתמש מבקש ליצור או לשנות תוכן (שיר, טקסט) — כתוב את התוצאה המלאה בתוך writeField, לא בגוף הצ\'אט.',
+      'אם המשתמש מבקש לשפר/לשנות/לתרגם משהו "שכתבתי" — התבסס על התוכן הנוכחי של השדות למעלה.',
       'לניווט (navigate): השתמש אך ורק בשם מסך שמופיע בדיוק ברשימת המסכים למעלה. אם המשתמש מבקש מסך שלא ברשימה — אל תנחש ואל תנווט למסך אחר; במקום זה אמור לו בקצרה שאין מסך כזה, או שאל למה התכוון.',
       'אם זו רק שאלה/שיחה — אל תחזיר בלוק פעולה בכלל.',
       '',
@@ -264,6 +277,18 @@
     }
   }
 
+  function addSuggestions(inp) {
+    var sugg = CFG.suggestions || [];
+    if (!sugg.length) return;
+    var row = el('div', 'display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;margin:4px 0 8px;');
+    sugg.forEach(function (s) {
+      var chip = el('button', 'background:#1e1e26;color:#C9A84C;border:1px solid #C9A84C55;border-radius:14px;padding:6px 11px;font:13px "Segoe UI",sans-serif;cursor:pointer;direction:rtl;', s);
+      chip.onclick = function () { inp.value = s; row.remove(); send(inp); };
+      row.appendChild(chip);
+    });
+    bodyEl.appendChild(row); bodyEl.scrollTop = bodyEl.scrollHeight;
+  }
+
   function buildPanel() {
     panelEl = el('div', 'position:fixed;bottom:78px;left:16px;width:340px;max-width:calc(100vw - 32px);height:460px;max-height:calc(100vh - 120px);' +
       'background:#141418;border:1px solid #2e2e38;border-radius:16px;z-index:100000;display:none;flex-direction:column;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.55);');
@@ -318,6 +343,7 @@
     panelEl.appendChild(head); panelEl.appendChild(bodyEl); panelEl.appendChild(foot);
     document.body.appendChild(panelEl);
     addBubble('bot', 'היי! אני העוזר של ' + CFG.appName + '. אפשר לשאול אותי כל דבר, לבקש שאכתוב תוכן ישר לאפליקציה, או לעזור לך למצוא דברים. במה אעזור?');
+    addSuggestions(inp);
   }
 
   function toggle() {
