@@ -206,13 +206,28 @@
 
   function el(tag, css, txt) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (txt != null) e.textContent = txt; return e; }
 
+  // הקראת טקסט בעברית (Text-to-Speech מובנה בדפדפן)
+  function speak(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'he-IL'; u.rate = 1;
+    window.speechSynthesis.speak(u);
+  }
+
   function addBubble(role, text) {
-    var wrap = el('div', 'display:flex;margin:8px 0;' + (role === 'user' ? 'justify-content:flex-start;' : 'justify-content:flex-end;'));
+    var wrap = el('div', 'display:flex;align-items:flex-end;gap:5px;margin:8px 0;' + (role === 'user' ? 'justify-content:flex-start;' : 'justify-content:flex-end;'));
     var b = el('div',
       'max-width:82%;padding:9px 13px;border-radius:14px;font:14px/1.5 "Segoe UI",sans-serif;white-space:pre-wrap;word-break:break-word;direction:rtl;' +
       (role === 'user'
         ? 'background:#2a2a33;color:#eee;border-top-right-radius:4px;'
         : 'background:#C9A84C;color:#0B0B0F;border-top-left-radius:4px;'), text);
+    if (role === 'bot' && window.speechSynthesis) {
+      var play = el('button', 'background:none;border:none;cursor:pointer;font-size:15px;opacity:.6;padding:2px;flex-shrink:0;', '🔊');
+      play.title = 'הקרא';
+      play.onclick = function () { speak(b.textContent); };
+      wrap.appendChild(play);
+    }
     wrap.appendChild(b); bodyEl.appendChild(wrap); bodyEl.scrollTop = bodyEl.scrollHeight;
     return b;
   }
@@ -258,16 +273,33 @@
     if (SR) {
       var rec = new SR();
       rec.lang = 'he-IL'; rec.interimResults = false; rec.maxAlternatives = 1;
-      var listening = false;
+      var listening = false, micGranted = false;
       var mic = el('button', 'background:#2a2a33;color:#C9A84C;border:none;border-radius:50%;width:38px;height:38px;font-size:17px;cursor:pointer;flex-shrink:0;', '🎤');
       mic.title = 'דבר במקום להקליד';
       rec.onresult = function (e) { inp.value = e.results[0][0].transcript; inp.focus(); };
       rec.onend = function () { listening = false; mic.style.background = '#2a2a33'; };
-      rec.onerror = function () { listening = false; mic.style.background = '#2a2a33'; };
-      mic.onclick = function () {
+      rec.onerror = function (ev) {
+        listening = false; mic.style.background = '#2a2a33';
+        if (ev && (ev.error === 'not-allowed' || ev.error === 'service-not-allowed'))
+          addBubble('bot', 'אין לי גישה למיקרופון. אשר את ההרשאה בהגדרות הדפדפן ונסה שוב 🎤');
+        else if (ev && ev.error === 'no-speech')
+          addBubble('bot', 'לא שמעתי כלום — נסה לדבר קצת יותר חזק 🙂');
+      };
+      mic.onclick = async function () {
         if (listening) { rec.stop(); return; }
+        // בקשת הרשאה מפורשת — קריטי בנייד (בלי זה הדפדפן לא תמיד קופץ עם הבקשה)
+        if (!micGranted && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          try {
+            var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            stream.getTracks().forEach(function (t) { t.stop(); });
+            micGranted = true;
+          } catch (e) {
+            addBubble('bot', 'לא הצלחתי לקבל גישה למיקרופון. באייפון, זיהוי דיבור נתמך חלקית — אם זה לא עובד, אפשר פשוט להקליד 🙂');
+            return;
+          }
+        }
         try { rec.start(); listening = true; mic.style.background = '#C9A84C'; }
-        catch (e) {}
+        catch (e) { listening = false; }
       };
       foot.appendChild(mic);
     }
