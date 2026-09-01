@@ -219,7 +219,7 @@
   var HKEY = 'appnest_asst_hist_' + (CFG.appName || 'app');
   function loadHistory() { try { return JSON.parse(localStorage.getItem(HKEY)) || []; } catch (e) { return []; } }
   function saveHistory() { try { localStorage.setItem(HKEY, JSON.stringify(history.slice(-30))); } catch (e) {} }
-  var history = loadHistory(), panelEl = null, bodyEl = null, panelInput = null, open = false;
+  var history = loadHistory(), panelEl = null, bodyEl = null, panelInput = null, panelSend = null, busy = false, open = false;
 
   function el(tag, css, txt) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (txt != null) e.textContent = txt; return e; }
 
@@ -256,14 +256,33 @@
       };
       wrap.appendChild(play);
     }
+    if (role === 'bot') {
+      var copy = el('button', 'background:none;border:none;cursor:pointer;font-size:14px;opacity:.6;padding:2px;flex-shrink:0;', '📋');
+      copy.title = 'העתק';
+      copy.onclick = function () {
+        var txt = b.textContent;
+        var done = function () { copy.textContent = '✓'; setTimeout(function () { copy.textContent = '📋'; }, 1400); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function () {});
+        else { try { var ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); } catch (e) {} }
+      };
+      wrap.appendChild(copy);
+    }
     wrap.appendChild(b); bodyEl.appendChild(wrap); bodyEl.scrollTop = bodyEl.scrollHeight;
     return b;
   }
 
+  function setBusy(v) {
+    busy = v;
+    if (panelSend) { panelSend.disabled = v; panelSend.style.opacity = v ? '.5' : '1'; panelSend.textContent = v ? '…' : 'שלח'; }
+    if (panelInput) { panelInput.disabled = v; }
+  }
+
   async function send(input) {
+    if (busy) return;                          // מונע שליחה כפולה בזמן שהעוזר עונה
     var msg = input.value.trim(); if (!msg) return;
     input.value = ''; addBubble('user', msg);
     var thinking = addBubble('bot', '…חושב');
+    setBusy(true);
     try {
       var prompt = buildPrompt(history, msg);
       var raw = await callAI(prompt);
@@ -283,6 +302,9 @@
     } catch (e) {
       if (e.message === 'NO_AI') thinking.textContent = 'כדי לדבר איתי, חבר קודם מפתח AI בהגדרות הבינה של האפליקציה 🔌';
       else thinking.textContent = 'אופס, משהו השתבש: ' + e.message;
+    } finally {
+      setBusy(false);
+      if (panelInput) panelInput.focus();
     }
   }
 
@@ -355,7 +377,7 @@
     foot.appendChild(inp); foot.appendChild(snd);
     panelEl.appendChild(head); panelEl.appendChild(bodyEl); panelEl.appendChild(foot);
     document.body.appendChild(panelEl);
-    panelInput = inp;
+    panelInput = inp; panelSend = snd;
     renderConversation();
   }
 
