@@ -44,10 +44,9 @@
     var p = cfg.provider, k = cfg.keys || {};
 
     if (p === 'gemini') {
-      var models = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'];
-      var cached = null;
-      try { cached = localStorage.getItem('sp_gemini_model'); } catch (e) {}
-      if (cached) models = [cached].concat(models.filter(function (m) { return m !== cached; }));
+      // מתחיל תמיד מהמודל העדכני (alias שמצביע על הכי חדש), עם גיבויים עדכניים.
+      // לא נשען על מודל שמור — כדי לא להיתקע על גרסה שכבר לא קיימת.
+      var models = ['gemini-flash-latest', 'gemini-3.5-flash', 'gemini-2.0-flash'];
       var key = firstKey(k.gemini), lastErr = null;
       for (var i = 0; i < models.length; i++) {
         var genCfg = { temperature: 0.5, maxOutputTokens: 4000 };
@@ -59,7 +58,6 @@
           });
           if (r.ok) {
             var d = await r.json();
-            try { localStorage.setItem('sp_gemini_model', models[i]); } catch (e) {}
             return (d && d.candidates && d.candidates[0] && d.candidates[0].content && d.candidates[0].content.parts[0] && d.candidates[0].content.parts[0].text) || '';
           }
           var ej = await r.json().catch(function () { return {}; });
