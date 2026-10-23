@@ -215,6 +215,17 @@ const TH = {
   purple: { a: "#9B7FD4", bg: "#0C0A12", bgL: "#F4F1FA", cd: "#15111E", cdL: "#FFF", bd: "#28203A", bdL: "#DAD0E8" },
 };
 
+/* ─── ניגודיות צבעים: צבע הדגשה כטקסט על רקע בהיר מוכהה עד שמגיע ל-4.5:1; טקסט על רקע הדגשה נבחר לבן/שחור לפי הניגוד הטוב יותר ─── */
+const hexRgb = (h) => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const relLum = ([r, g, b]) => { const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+const contrastOf = (c1, c2) => { const a = relLum(c1), b = relLum(c2); return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); };
+const accentForText = (hex, bgHex, min = 4.5) => {
+  const bgc = hexRgb(bgHex); let rgb = hexRgb(hex);
+  for (let i = 0; i < 40 && contrastOf(rgb, bgc) < min; i++) rgb = rgb.map(v => Math.round(v * 0.93));
+  return "#" + rgb.map(v => v.toString(16).padStart(2, "0")).join("");
+};
+const textOnAccent = (hex) => contrastOf(hexRgb(hex), [11, 11, 15]) >= contrastOf(hexRgb(hex), [255, 255, 255]) ? "#0B0B0F" : "#FFFFFF";
+
 /* ─── AI PROVIDERS ─── */
 const AI_PROVIDERS = [
   { id: "gemini", icon: "✨", badge: { he: "חינם", en: "Free", ru: "Бесплатно", es: "Gratis", ar: "مجاني" }, badgeType: "free",
@@ -486,25 +497,53 @@ const TEMPLATES = [
   { id: "simple", l: "📝 פשוט / Simple", t: "[Verse 1]\n\n\n\n[Chorus]\n\n\n\n[Verse 2]\n\n\n\n[Chorus]" },
 ];
 
+/* ── בדיקת חריזה לפי הגייה (בלי בינה ובלי ניקוד): ממירים את סוף המילה האחרונה לרצף "צלילים" ──
+   חריזה חזקה = שני הצלילים האחרונים זהים (למשל לילה/חלה → לה, ים/שמיים → ים, ות/בלילות → ות).
+   חריזה חלשה = אותו צליל סיום בלבד (למשל אהבה/שמחה → a). זו הערכה: בלי ניקוד אי אפשר לדעת את ההגייה בוודאות. */
+const RHYME_MAP = { "א":"", "ע":"", "ב":"B", "ג":"G", "ד":"D", "ה":"h", "ו":"U", "ז":"Z", "ח":"X", "ט":"T", "י":"I", "כ":"K", "ך":"X", "ל":"L", "מ":"M", "ם":"M", "נ":"N", "ן":"N", "ס":"S", "פ":"P", "ף":"P", "צ":"C", "ץ":"C", "ק":"K", "ר":"R", "ש":"S", "ת":"T" };
+const rhymeSounds = (word) => {
+  const w = word.replace(/[\u0591-\u05C7]/g, "").replace(/[^\u05D0-\u05EAa-zA-Z]/g, "");
+  if (!w) return [];
+  if (!/[\u05D0-\u05EA]/.test(w)) { const l = w.toLowerCase(); return l.split("").slice(-3); }      // לועזית: האותיות האחרונות
+  const toks = [];
+  for (let i = 0; i < w.length; i++) {
+    const ch = w[i], last = i === w.length - 1;
+    let t = RHYME_MAP[ch];
+    if (t === undefined) continue;
+    if (ch === "ה") t = last ? "A" : "";          // ה בסוף מילה = תנועה (אהבה → ba), באמצע — שקטה/עיצור, מתעלמים
+    if (ch === "א" || ch === "ע") t = "";
+    if (t) toks.push(t);
+  }
+  // ״ים״ ו״ות״ הם סיומות — מאחדים לצליל אחד כדי ש״שמיים״ ו״ים״ יתחרזו
+  for (let i = toks.length - 1; i > 0; i--) if ((toks[i] === "I" || toks[i] === "U") && toks[i - 1] === toks[i]) toks.splice(i, 1);   // שמיים → שמים
+  const n = toks.length;
+  if (n >= 2 && toks[n - 2] === "I" && toks[n - 1] === "M") { toks.splice(n - 2, 2, "IM"); }
+  else if (n >= 2 && toks[n - 2] === "U" && toks[n - 1] === "T") { toks.splice(n - 2, 2, "UT"); }
+  return toks;
+};
 function analyzeRhymes(text) {
   const lines = text.split("\n").map((l, i) => ({ i, raw: l, clean: l.replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").trim() }))
     .filter(l => l.clean && !/^\[/.test(l.raw.trim()));
-  const rhymeKey = (line) => {
-    const words = line.replace(/[.,!?;:"'\u05be\u05f3\u05f4]/g, "").split(/\s+/).filter(Boolean);
-    if (!words.length) return "";
-    const last = words[words.length - 1];
-    const stripped = last.replace(/[\u0591-\u05C7]/g, "");
-    return stripped.slice(-2);
-  };
-  const groups = {};
-  lines.forEach(l => {
-    const k = rhymeKey(l.clean);
-    if (!k) return;
-    if (!groups[k]) groups[k] = [];
-    groups[k].push(l.i + 1);
-  });
-  const rhyming = Object.entries(groups).filter(([k, v]) => v.length > 1);
-  return { total: lines.length, groups: rhyming };
+  const info = lines.map(l => {
+    const words = l.clean.replace(/[.,!?;:"'\u05be\u05f3\u05f4()…–—-]/g, " ").split(/\s+/).filter(Boolean);
+    const lastWord = words[words.length - 1] || "";
+    const toks = rhymeSounds(lastWord);
+    const k1 = toks.slice(-1).join(".");
+    const suffix = k1 === "IM" || k1 === "UT";            // ים / ות — סיומות שמתחרזות בפני עצמן
+    return { n: l.i + 1, word: lastWord.replace(/[\u0591-\u05C7]/g, ""), k2: suffix ? k1 : toks.slice(-2).join("."), k1, len: suffix ? 2 : toks.length };
+  }).filter(x => x.len > 0);
+  const by = (field, items) => { const m = {}; items.forEach(x => { (m[x[field]] = m[x[field]] || []).push(x); }); return Object.values(m).filter(g => g.length > 1); };
+  const strongGroups = by("k2", info.filter(x => x.len >= 2));
+  const inStrong = new Set(strongGroups.flat().map(x => x.n));
+  // חלשות: אותו צליל סיום, רק בין שורות שלא נכנסו לחריזה חזקה
+  const weakGroups = by("k1", info.filter(x => !inStrong.has(x.n)));
+  const pack = (g) => ({ lines: g.map(x => x.n), words: [...new Set(g.map(x => x.word))].slice(0, 4), ending: g[0].word.slice(-3) });
+  const groups = strongGroups.map(pack), weak = weakGroups.map(pack);
+  // תבנית חריזה (A B A B …) — רק לשירים עד 24 שורות
+  const letterOf = {}; let nxt = 0;
+  [...strongGroups, ...weakGroups].forEach(g => { const L = String.fromCharCode(65 + (nxt++ % 26)); g.forEach(x => { letterOf[x.n] = L; }); });
+  const scheme = info.length <= 24 ? info.map(x => letterOf[x.n] || "·").join(" ") : "";
+  return { total: lines.length, groups, weak, scheme };
 }
 
 const countSyllables = (line) => {
@@ -695,7 +734,10 @@ function SunoPrep() {
   const cd = day ? c.cdL : c.cd;
   const bd = day ? c.bdL : c.bd;
   const tx = day ? "#1A1A1A" : "#E8E6E0";
-  const sb = day ? "#777" : "#888";
+  const sb = day ? "#5C5C5C" : "#9A9A9A";
+  const ca = day ? accentForText(c.a, c.bgL) : c.a;      // צבע הדגשה לטקסט
+  const onA = textOnAccent(c.a);                          // צבע טקסט על רקע הדגשה
+  const okC = day ? "#1E7A52" : "#3DAA7D";                // ירוק "תקין" קריא
   const t = TR[uLang] || TR.en;
   const rtl = ["he", "ar"].includes(uLang);
   const sl = LANGS[sLang];
@@ -1374,6 +1416,10 @@ ${src}`;
     window.addEventListener("popstate", onPop);
     return () => { window.removeEventListener("popstate", onPop); window.removeEventListener("pointerdown", onFirstTouch, true); window.removeEventListener("keydown", onFirstTouch, true); if (timer) clearTimeout(timer); };
   }, []);
+  /* ── מגבלות תווים של Suno (הפרופיל נבחר ידנית; המספרים משתנים בין גרסאות ולכן לא נעולים בקוד) ── */
+  const SUNO_LIMITS = { v4: { lyr: 3000, sty: 200, label: "v4 / v3.5" }, v45: { lyr: 5000, sty: 1000, label: "v4.5 / v5" } };
+  const [limProf, setLimProf] = useState(() => { try { return localStorage.getItem("sunoprep_limit_profile") || "v45"; } catch (e) { return "v45"; } });
+  useEffect(() => { try { localStorage.setItem("sunoprep_limit_profile", limProf); } catch (e) {} }, [limProf]);
   const PRESS_AGAIN = { he: "לחץ שוב כדי לצאת", en: "Press back again to exit", ru: "Нажмите «назад» ещё раз для выхода", es: "Pulsa atrás otra vez para salir", ar: "اضغط رجوع مرة أخرى للخروج" };
   const exitToast = exitHint ? (
     <div style={{ position: "fixed", bottom: 28, left: "50%", transform: "translateX(-50%)", background: "#222", color: "#fff", padding: "10px 18px", borderRadius: 22, fontSize: 13, zIndex: 9999, boxShadow: "0 4px 14px rgba(0,0,0,.4)", pointerEvents: "none" }}>
@@ -1384,7 +1430,7 @@ ${src}`;
   const B = ({ children, onClick, pri, act, dis, sm, sx }) => (
     <button onClick={onClick} disabled={dis} style={{
       background: pri ? c.a : act ? `${c.a}22` : "transparent",
-      color: pri ? (day ? "#fff" : "#0B0B0F") : act ? c.a : tx,
+      color: pri ? onA : act ? ca : tx,
       border: pri ? "none" : `1px solid ${act ? c.a : bd}`,
       padding: sm ? "5px 10px" : pri ? "12px 24px" : "8px 14px",
       borderRadius: 10, cursor: dis ? "not-allowed" : "pointer",
@@ -1399,7 +1445,7 @@ ${src}`;
     return (
       <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 30 }}>
         <div style={{ fontSize: 50, marginBottom: 16 }}>{s.i}</div>
-        <div style={{ fontSize: 20, fontWeight: 600, color: c.a, marginBottom: 8 }}>{s.t}</div>
+        <div style={{ fontSize: 20, fontWeight: 600, color: ca, marginBottom: 8 }}>{s.t}</div>
         <div style={{ fontSize: 14, color: sb, marginBottom: 30, textAlign: "center", maxWidth: 300 }}>{s.d}</div>
         <div style={{ display: "flex", gap: 6, marginBottom: 24 }}>
           {t.gSteps.map((_, i) => <div key={i} style={{ width: 8, height: 8, borderRadius: "50%", background: i === gStep ? c.a : bd }} />)}
@@ -1434,7 +1480,7 @@ ${src}`;
       <div style={{ display: "flex", flexDirection: "column", gap: 7, marginTop: 10 }}>
         {items.map((s, i) => (
           <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-            <span style={{ minWidth: 18, height: 18, borderRadius: "50%", background: `${c.a}20`, color: c.a, fontSize: 10, fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>{i + 1}</span>
+            <span style={{ minWidth: 18, height: 18, borderRadius: "50%", background: `${c.a}20`, color: ca, fontSize: 10, fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>{i + 1}</span>
             <span style={{ fontSize: 12, color: sb, lineHeight: 1.55 }}>{s}</span>
           </div>
         ))}
@@ -1443,7 +1489,7 @@ ${src}`;
     return (
       <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 20 }}>
         <B onClick={goBackScr}>{t.back}</B>
-        <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "14px 0 6px" }}>🔌 {st.title}</h2>
+        <h2 style={{ fontSize: 20, fontWeight: 600, color: ca, margin: "14px 0 6px" }}>🔌 {st.title}</h2>
 
         <div style={{ background: `${c.a}0E`, border: `1px solid ${c.a}25`, borderRadius: 10, padding: "10px 13px", fontSize: 11.5, color: sb, lineHeight: 1.65, marginBottom: 16, maxWidth: 620 }}>
           {st.intro}
@@ -1460,11 +1506,11 @@ ${src}`;
                 style={{ display: "flex", alignItems: "center", gap: 11, background: on ? `${c.a}12` : cd, border: `1px solid ${on ? c.a : bd}`, borderRadius: 11, padding: "11px 13px", cursor: "pointer", transition: "all .15s" }}>
                 <div style={{ width: 36, height: 36, borderRadius: 9, background: on ? `${c.a}22` : bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>{p.icon}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 13.5, fontWeight: 500, color: on ? c.a : tx }}>{nm}</div>
+                  <div style={{ fontSize: 13.5, fontWeight: 500, color: on ? ca : tx }}>{nm}</div>
                   <div style={{ fontSize: 11, color: sb, marginTop: 2 }}>{p.desc[uLang] || p.desc.en}</div>
                 </div>
                 <span style={{ fontSize: 10, padding: "3px 9px", borderRadius: 11, background: bc.bg, color: bc.fg, fontWeight: 500, flexShrink: 0 }}>{p.badge[uLang] || p.badge.en}</span>
-                {on && <span style={{ color: c.a, fontSize: 15, flexShrink: 0 }}>✓</span>}
+                {on && <span style={{ color: ca, fontSize: 15, flexShrink: 0 }}>✓</span>}
               </div>
             );
           })}
@@ -1503,25 +1549,25 @@ ${src}`;
               <Steps items={st.gemini.steps} />
               <div style={{ marginTop: 11, padding: "9px 12px", background: "#0F6E5615", border: "1px solid #0F6E5635", borderRadius: 8, fontSize: 11.5, color: "#3DAA7D", lineHeight: 1.55 }}>{st.gemini.note}</div>
               <div style={{ marginTop: 9, display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: c.a, fontSize: 12 }}>→ aistudio.google.com</a>
-                <a href="https://www.youtube.com/watch?v=Cl4XKgz6EJQ" target="_blank" rel="noreferrer" style={{ color: c.a, fontSize: 12 }}>▶ {rtl ? "סרטון: איך להשיג מפתח חינם" : "Video: get a free key"}</a>
+                <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: ca, fontSize: 12 }}>→ aistudio.google.com</a>
+                <a href="https://www.youtube.com/watch?v=Cl4XKgz6EJQ" target="_blank" rel="noreferrer" style={{ color: ca, fontSize: 12 }}>▶ {rtl ? "סרטון: איך להשיג מפתח חינם" : "Video: get a free key"}</a>
               </div>
             </>)}
 
             {selProvider === "claude" && (<>
               <Field label={st.claude.label} value={aiKeys.claude} onChange={v => setAiKeys(k => ({ ...k, claude: v }))} ph={st.claude.ph} type="password" />
               <Steps items={st.claude.steps} />
-              <div style={{ marginTop: 9 }}><a href="https://console.anthropic.com" target="_blank" rel="noreferrer" style={{ color: c.a, fontSize: 12 }}>→ console.anthropic.com</a></div>
+              <div style={{ marginTop: 9 }}><a href="https://console.anthropic.com" target="_blank" rel="noreferrer" style={{ color: ca, fontSize: 12 }}>→ console.anthropic.com</a></div>
             </>)}
 
             {selProvider === "openai" && (<>
               <Field label={st.openai.label} value={aiKeys.openai} onChange={v => setAiKeys(k => ({ ...k, openai: v }))} ph={st.openai.ph} type="password" />
               <Steps items={st.openai.steps} />
-              <div style={{ marginTop: 9 }}><a href="https://platform.openai.com" target="_blank" rel="noreferrer" style={{ color: c.a, fontSize: 12 }}>→ platform.openai.com</a></div>
+              <div style={{ marginTop: 9 }}><a href="https://platform.openai.com" target="_blank" rel="noreferrer" style={{ color: ca, fontSize: 12 }}>→ platform.openai.com</a></div>
             </>)}
 
             {selProvider === "device" && (<>
-              <div style={{ fontSize: 13, fontWeight: 500, color: c.a, marginBottom: 6 }}>{st.device.title}</div>
+              <div style={{ fontSize: 13, fontWeight: 500, color: ca, marginBottom: 6 }}>{st.device.title}</div>
               <div style={{ fontSize: 12, color: sb, lineHeight: 1.65, marginBottom: 4 }}>{st.device.info}</div>
               <Steps items={st.device.steps} />
               <div style={{ marginTop: 13 }}>
@@ -1564,14 +1610,14 @@ ${src}`;
   if (scr === "history") return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
       <B onClick={goBackScr}>{t.back}</B>
-      <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>📜 {rtl ? "היסטוריה" : "History"}</h2>
+      <h2 style={{ fontSize: 20, fontWeight: 600, color: ca, margin: "16px 0" }}>📜 {rtl ? "היסטוריה" : "History"}</h2>
       {history.length === 0 && <div style={{ color: sb, fontSize: 13 }}>{rtl ? "אין שירים שמורים עדיין" : "No saved songs yet"}</div>}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {history.map(h => (
           <div key={h.id} style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 10, padding: 12 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
               <div>
-                <span style={{ fontSize: 13, fontWeight: 500, color: c.a }}>{h.title}</span>
+                <span style={{ fontSize: 13, fontWeight: 500, color: ca }}>{h.title}</span>
                 <span style={{ fontSize: 10, color: sb, marginInlineStart: 8 }}>{h.date} · {h.mode}</span>
               </div>
               <div style={{ display: "flex", gap: 4 }}>
@@ -1592,7 +1638,7 @@ ${src}`;
   if (scr === "worddict") return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
       <B onClick={goBackScr}>{t.back}</B>
-      <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>📖 {rtl ? "מילון מילים בעייתיות" : "Problem Words Dictionary"}</h2>
+      <h2 style={{ fontSize: 20, fontWeight: 600, color: ca, margin: "16px 0" }}>📖 {rtl ? "מילון מילים בעייתיות" : "Problem Words Dictionary"}</h2>
       <div style={{ fontSize: 12, color: sb, marginBottom: 16, lineHeight: 1.6 }}>
         {rtl ? "כשאתה מתקן מילה בתוצאה, לחץ עליה כאן כדי לשמור את התיקון. בפעם הבאה האפליקציה תזכור." : "When you fix a word in the result, save the correction here. The app will remember it next time."}
       </div>
@@ -1633,7 +1679,7 @@ ${src}`;
       <B onClick={goBackScr}>{t.back}</B>
       <div style={{ textAlign: "center", padding: "34px 0 20px" }}>
         <div style={{ fontSize: 50, marginBottom: 12 }}>🎤</div>
-        <div style={{ fontSize: 28, fontWeight: 700, color: c.a }}>SunoPrep</div>
+        <div style={{ fontSize: 28, fontWeight: 700, color: ca }}>SunoPrep</div>
         <div style={{ fontSize: 13, color: sb }}>{t.ver}</div>
       </div>
       <div style={{ maxWidth: 500, margin: "0 auto" }}>
@@ -1669,7 +1715,7 @@ ${src}`;
             : "SunoPrep is a helper tool. Transliterations and AI suggestions are estimates only. AI features send your text to the provider you chose."}
         </div>
 
-        <div style={{ textAlign: "center", fontSize: 11, color: `${sb}88`, marginTop: 20 }}>© AppNest 2026</div>
+        <div style={{ textAlign: "center", fontSize: 11, color: sb, marginTop: 20 }}>© AppNest 2026</div>
       </div>
     </div>
     );
@@ -1686,7 +1732,7 @@ ${src}`;
     return (
       <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
         <B onClick={goBackScr}>{t.back}</B>
-        <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>⚙ {t.settings}</h2>
+        <h2 style={{ fontSize: 20, fontWeight: 600, color: ca, margin: "16px 0" }}>⚙ {t.settings}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 500 }}>
           {/* AI Connection */}
           <div onClick={() => setScr("aisetup")} style={{ background: aiProvider ? "#0F6E5612" : `${c.a}12`, border: `1px solid ${aiProvider ? "#0F6E5640" : `${c.a}30`}`, borderRadius: 12, padding: 14, cursor: "pointer" }}>
@@ -1695,7 +1741,7 @@ ${src}`;
                 {aiProvider ? (AI_PROVIDERS.find(p => p.id === aiProvider)?.icon || "🔌") : "🔌"}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13.5, fontWeight: 500, color: aiProvider ? "#3DAA7D" : c.a }}>
+                <div style={{ fontSize: 13.5, fontWeight: 500, color: aiProvider ? okC : ca }}>
                   {(SETUP_STEPS[uLang] || SETUP_STEPS.en).title}
                 </div>
                 <div style={{ fontSize: 11, color: sb, marginTop: 2 }}>
@@ -1738,7 +1784,7 @@ ${src}`;
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <input type="range" min="0.5" max="2" step="0.1" value={rate}
                 onChange={e => setRate(parseFloat(e.target.value))} style={{ flex: 1 }} />
-              <span style={{ fontSize: 14, color: c.a, direction: "ltr" }}>×{rate.toFixed(1)}</span>
+              <span style={{ fontSize: 14, color: ca, direction: "ltr" }}>×{rate.toFixed(1)}</span>
             </div>
           </Card>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -1770,7 +1816,7 @@ ${src}`;
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ fontSize: 22 }}>🎤</span>
           <div>
-            <span style={{ fontSize: 17, fontWeight: 700, color: c.a }}>SunoPrep</span>
+            <span style={{ fontSize: 17, fontWeight: 700, color: ca }}>SunoPrep</span>
             <div style={{ fontSize: 9, color: sb }}>{t.appSub}</div>
           </div>
         </div>
@@ -1788,7 +1834,7 @@ ${src}`;
               <div style={{ position: "absolute", top: "100%", [rtl ? "right" : "left"]: 0, background: cd, border: `1px solid ${bd}`, borderRadius: 8, padding: 4, zIndex: 99, minWidth: 100, boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
                 {Object.entries(UI_LANGS).map(([k, v]) => (
                   <div key={k} onClick={() => { setULang(k); setShowLangMenu(false); }}
-                    style={{ padding: "6px 10px", fontSize: 12, color: uLang === k ? c.a : tx, cursor: "pointer", borderRadius: 4, background: uLang === k ? `${c.a}15` : "transparent" }}>
+                    style={{ padding: "6px 10px", fontSize: 12, color: uLang === k ? ca : tx, cursor: "pointer", borderRadius: 4, background: uLang === k ? `${c.a}15` : "transparent" }}>
                     {v}
                   </div>
                 ))}
@@ -1812,7 +1858,7 @@ ${src}`;
             ["projects","🗂️ פרויקטים"],
             ["suno","🎵 Suno"]
           ].map(([id,label]) => (
-            <button key={id} onClick={() => setActiveTab(id)} style={{ padding:"11px 8px", borderRadius:11, border:`1.5px solid ${activeTab===id?c.a:bd}`, background:activeTab===id?`${c.a}22`:cd, color:activeTab===id?c.a:tx, fontSize:13, fontWeight:activeTab===id?700:500, cursor:"pointer", fontFamily:"inherit", textAlign:"center" }}>{label}</button>
+            <button key={id} onClick={() => setActiveTab(id)} style={{ padding:"11px 8px", borderRadius:11, border:`1.5px solid ${activeTab===id?c.a:bd}`, background:activeTab===id?`${c.a}22`:cd, color:activeTab===id?ca:tx, fontSize:13, fontWeight:activeTab===id?700:500, cursor:"pointer", fontFamily:"inherit", textAlign:"center" }}>{label}</button>
           ))}
         </div>
       </div>
@@ -1823,13 +1869,13 @@ ${src}`;
         {/* SOURCE */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-            <span style={{ fontSize: 14, fontWeight: 600, color: c.a }}>{t.srcTitle}</span>
+            <span style={{ fontSize: 14, fontWeight: 600, color: ca }}>{t.srcTitle}</span>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <B sm act={speaking === "s"} onClick={() => speak(src, true)}>{speaking === "s" ? `⏹ ${t.stop}` : `▶ ${t.listen}`}</B>
               <input type="range" min="0.5" max="2" step="0.1" value={rate}
                 onChange={e => setRate(parseFloat(e.target.value))}
                 style={{ width: 70 }} title={t.speed} />
-              <span style={{ fontSize: 11, color: c.a, direction: "ltr", minWidth: 28 }}>×{rate.toFixed(1)}</span>
+              <span style={{ fontSize: 11, color: ca, direction: "ltr", minWidth: 28 }}>×{rate.toFixed(1)}</span>
             </div>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 4 }}>
@@ -1838,7 +1884,7 @@ ${src}`;
           </div>
           {aiProvider && src.trim() && (
             <div style={{ marginBottom: 6 }}>
-              <B sm onClick={autoDetectStructure} dis={autoStructuring} sx={{ fontSize: 11, background: `${c.a}15`, color: c.a, borderColor: `${c.a}50` }}>
+              <B sm onClick={autoDetectStructure} dis={autoStructuring} sx={{ fontSize: 11, background: `${c.a}15`, color: ca, borderColor: `${c.a}50` }}>
                 {autoStructuring ? (rtl ? "⏳ מזהה מבנה..." : "⏳ Detecting...") : (rtl ? "🪄 זהה מבנה אוטומטית" : "🪄 Auto-detect structure")}
               </B>
               <span style={{ fontSize: 9, color: sb, marginInlineStart: 6 }}>{rtl ? "מוסיף [בית]/[פזמון] לבד" : "adds [Verse]/[Chorus] tags"}</span>
@@ -1892,11 +1938,18 @@ ${src}`;
               </div>
             </div>
           )}
-          {src.trim() && (()=>{const words=src.replace(/\[[^\]]*\]/g," ").split(/\s+/).filter(Boolean);const issues=[];const ambiguous=["את","עם","על","שם","ספר","דרך","יכול","חוזר","אור","לב","שלום","מחר"];src.split("\n").forEach((ln,i)=>{const x=ln.trim();if(!x||/^\[.*\]$/.test(x))return;const wc=x.split(/\s+/).length;if(wc>14)issues.push({i,msg:`שורה ארוכה (${wc} מילים) — כדאי לבדוק זרימה`});if(/[A-Za-z]/.test(x)&&/[א-ת]/.test(x))issues.push({i,msg:"ערבוב עברית ואנגלית — כדאי לבדוק הגייה"});if(/(.)\1\1/.test(x))issues.push({i,msg:"אותיות חוזרות באופן חריג — בדוק שאין טעות"});const found=ambiguous.filter(w=>new RegExp(`(^|\\s)${w}($|\\s|[,.!?…])`).test(x));if(found.length)issues.push({i,msg:`מילים שעשויות להיות דו־משמעיות: ${found.join("، ")} — מומלץ להאזין`});const learned=Object.keys(wordDict||{}).filter(w=>x.includes(w));if(learned.length)issues.push({i,msg:`נמצאו מילים מהמילון האישי: ${learned.join("، ")} — אפשר לבדוק את ההגייה השמורה`});});return <div style={{marginTop:10,padding:12,background:cd,border:`1px solid ${c.a}`,borderRadius:12}}><div style={{fontWeight:700,color:c.a}}>🔎 בדיקת הגייה חכמה</div><div style={{fontSize:11,color:sb,marginTop:4}}>הבדיקה מציעה מה לבדוק בלבד — היא לא משנה את המילים.</div>{issues.length?<div style={{display:"grid",gap:5,marginTop:8}}>{issues.map((q,k)=><div key={k} style={{fontSize:12,color:tx}}>🟡 שורה {q.i+1}: {q.msg}</div>)}</div>:<div style={{fontSize:12,marginTop:7,color:tx}}>✅ לא נמצאו אזהרות בסיסיות. מומלץ עדיין להאזין לשורות.</div>}</div>})()}
-          {src.trim() && (()=>{const r=analyzeRhymes(src);return <div style={{marginTop:10,padding:12,background:cd,border:`1px solid ${bd}`,borderRadius:12}}><div style={{fontWeight:700,color:c.a}}>🎵 {rtl?"בדיקת חריזה":"Rhyme check"}</div><div style={{fontSize:11,color:sb,marginTop:4}}>{rtl?"מזהה שורות שנגמרות בצליל דומה (לפי סוף המילה האחרונה).":"Detects lines ending in a similar sound (by last-word ending)."}</div>{r.groups.length?<div style={{display:"grid",gap:5,marginTop:8}}>{r.groups.map(([k,lns],idx)=><div key={idx} style={{fontSize:12,color:tx}}>🎶 {rtl?"שורות":"Lines"} {lns.join(", ")} {rtl?"מתחרזות":"rhyme"} (…{k})</div>)}</div>:<div style={{fontSize:12,marginTop:7,color:sb}}>{rtl?"לא זוהו חרוזים ברורים. זה בסדר — לא כל שיר חייב חריזה.":"No clear rhymes detected. That's fine — not every song needs rhyme."}</div>}</div>})()}
+          {src.trim() && (()=>{const words=src.replace(/\[[^\]]*\]/g," ").split(/\s+/).filter(Boolean);const issues=[];const ambiguous=["את","עם","על","שם","ספר","דרך","יכול","חוזר","אור","לב","שלום","מחר"];src.split("\n").forEach((ln,i)=>{const x=ln.trim();if(!x||/^\[.*\]$/.test(x))return;const wc=x.split(/\s+/).length;if(wc>14)issues.push({i,msg:`שורה ארוכה (${wc} מילים) — כדאי לבדוק זרימה`});if(/[A-Za-z]/.test(x)&&/[א-ת]/.test(x))issues.push({i,msg:"ערבוב עברית ואנגלית — כדאי לבדוק הגייה"});if(/(.)\1\1/.test(x))issues.push({i,msg:"אותיות חוזרות באופן חריג — בדוק שאין טעות"});const found=ambiguous.filter(w=>new RegExp(`(^|\\s)${w}($|\\s|[,.!?…])`).test(x));if(found.length)issues.push({i,msg:`מילים שעשויות להיות דו־משמעיות: ${found.join("، ")} — מומלץ להאזין`});const learned=Object.keys(wordDict||{}).filter(w=>x.includes(w));if(learned.length)issues.push({i,msg:`נמצאו מילים מהמילון האישי: ${learned.join("، ")} — אפשר לבדוק את ההגייה השמורה`});});return <div style={{marginTop:10,padding:12,background:cd,border:`1px solid ${c.a}`,borderRadius:12}}><div style={{fontWeight:700,color: ca}}>🔎 בדיקת הגייה חכמה</div><div style={{fontSize:11,color:sb,marginTop:4}}>הבדיקה מציעה מה לבדוק בלבד — היא לא משנה את המילים.</div>{issues.length?<div style={{display:"grid",gap:5,marginTop:8}}>{issues.map((q,k)=><div key={k} style={{fontSize:12,color:tx}}>🟡 שורה {q.i+1}: {q.msg}</div>)}</div>:<div style={{fontSize:12,marginTop:7,color:tx}}>✅ לא נמצאו אזהרות בסיסיות. מומלץ עדיין להאזין לשורות.</div>}</div>})()}
+          {src.trim() && (()=>{const r=analyzeRhymes(src);const none=!r.groups.length&&!r.weak.length;return <div style={{marginTop:10,padding:12,background:cd,border:`1px solid ${bd}`,borderRadius:12}}>
+            <div style={{fontWeight:700,color: ca}}>🎵 {rtl?"בדיקת חריזה":"Rhyme check"}</div>
+            <div style={{fontSize:11,color:sb,marginTop:4}}>{rtl?"לפי הגייה של סוף המילה האחרונה בכל שורה (הערכה — בלי ניקוד אי אפשר לדעת בוודאות).":"By the sound of each line's last word (an estimate — without vowel marks it can't be certain)."}</div>
+            {r.scheme && !none && <div dir="ltr" style={{fontSize:13,color:tx,marginTop:8,letterSpacing:2,fontFamily:"monospace"}}>{rtl?"תבנית: ":"Pattern: "}{r.scheme}</div>}
+            {r.groups.length>0 && <div style={{display:"grid",gap:5,marginTop:8}}>{r.groups.map((g,idx)=><div key={"s"+idx} style={{fontSize:12,color:tx}}>🎶 {rtl?"שורות":"Lines"} {g.lines.join(", ")} {rtl?"מתחרזות":"rhyme"} (…{g.ending}) <span style={{color:sb}}>— {g.words.join(" · ")}</span></div>)}</div>}
+            {r.weak.length>0 && <div style={{display:"grid",gap:5,marginTop:8}}>{r.weak.map((g,idx)=><div key={"w"+idx} style={{fontSize:12,color:tx}}>〰️ {rtl?"שורות":"Lines"} {g.lines.join(", ")} — {rtl?"חריזה חלשה (צליל סיום דומה)":"loose rhyme (similar ending)"} <span style={{color:sb}}>— {g.words.join(" · ")}</span></div>)}</div>}
+            {none && <div style={{fontSize:12,marginTop:7,color:sb}}>{rtl?"לא זוהו חרוזים ברורים. זה בסדר — לא כל שיר חייב חריזה.":"No clear rhymes detected. That's fine — not every song needs rhyme."}</div>}
+          </div>})()}
           {src.trim() && <div style={{ marginTop: 10, padding: 12, background: `${c.a}0A`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,marginBottom:7}}>
-              <div style={{fontWeight:800,color:c.a}}>🎧 בדיקת השיר לפי שורה</div><B sm act={lineSpeaking===-2} onClick={()=>lineSpeaking!==null?(window.speechSynthesis.cancel(),setLineSpeaking(null)):speakAllLines()}>{lineSpeaking!==null?"⏹ עצור הכל":"▶️ השמע הכל"}</B>
+              <div style={{fontWeight:800,color: ca}}>🎧 בדיקת השיר לפי שורה</div><B sm act={lineSpeaking===-2} onClick={()=>lineSpeaking!==null?(window.speechSynthesis.cancel(),setLineSpeaking(null)):speakAllLines()}>{lineSpeaking!==null?"⏹ עצור הכל":"▶️ השמע הכל"}</B>
               <div style={{fontSize:10,color:sb}}>מהירות: {rate.toFixed(1)}×</div>
             </div>
             <div style={{fontSize:11,color:sb,marginBottom:9}}>לחץ על ▶️ ליד כל שורה כדי לשמוע אותה בנפרד. אפשר גם לסמן: ✅ תקינה, 🟡 לבדיקה או 🔴 בעייתית. תגיות כמו [Verse] ו־[Chorus] לא יוקראו.</div>
@@ -1915,7 +1968,7 @@ ${src}`;
             </div>
           </div>}
           <div style={{ marginTop: 10, padding: 12, background: `${c.a}0D`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
-            <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>💡 בנק משפטים ורעיונות</div>
+            <div style={{ fontWeight: 700, color: ca, marginBottom: 5 }}>💡 בנק משפטים ורעיונות</div>
             <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>שמור שורות שאהבת והוסף אותן לכל שיר בלחיצה.</div>
             <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
               <input value={phraseText} onChange={e=>setPhraseText(e.target.value)} placeholder="משפט או שורת השראה..." style={{ flex:"1 1 220px", minWidth:0, background:bg, border:`1px solid ${bd}`, borderRadius:8, padding:"8px 10px", color:tx, fontFamily:"inherit" }} />
@@ -1931,7 +1984,7 @@ ${src}`;
           </div>
           {src.trim() && (
             <div style={{ marginTop: 10, padding: 12, background: `${c.a}0D`, border: `1px solid ${c.a}45`, borderRadius: 12 }}>
-              <div style={{ fontWeight: 700, color: c.a, marginBottom: 5 }}>📚 מילון הגייה אישי</div>
+              <div style={{ fontWeight: 700, color: ca, marginBottom: 5 }}>📚 מילון הגייה אישי</div>
               <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>שמור צורת הגייה שעבדה לך. בפעם הבאה שהמילה תופיע, תוכל להשתמש בה שוב בלי לתקן מחדש.</div>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                 <input value={dictWord} onChange={e=>setDictWord(e.target.value)} placeholder="המילה המקורית" style={{ flex: "1 1 120px", minWidth: 0, background:bg, border:`1px solid ${bd}`, borderRadius:8, padding:"8px 10px", color:tx, fontFamily:"inherit" }} />
@@ -1963,8 +2016,8 @@ ${src}`;
                 const syl = isTag ? null : countSyllables(line);
                 return isTag ? null : (
                   <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "1px 0" }}>
-                    <span style={{ opacity: 0.6, maxWidth: "80%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{line.trim()}</span>
-                    <span style={{ color: c.a, fontWeight: 500 }}>{syl}</span>
+                    <span style={{ opacity: 0.85, maxWidth: "80%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{line.trim()}</span>
+                    <span style={{ color: ca, fontWeight: 500 }}>{syl}</span>
                   </div>
                 );
               })}
@@ -1991,7 +2044,7 @@ ${src}`;
             style={{ background: `${c.a}12`, border: `1px solid ${c.a}35`, borderRadius: 12, padding: "12px 14px", display: "flex", alignItems: "center", gap: 11, cursor: "pointer" }}>
             <span style={{ fontSize: 20, flexShrink: 0 }}>🔌</span>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: c.a, marginBottom: 3 }}>
+              <div style={{ fontSize: 13, fontWeight: 500, color: ca, marginBottom: 3 }}>
                 {rtl ? "חבר בינה מלאכותית לתעתיק חכם" : "Connect AI for smart transliteration"}
               </div>
               <div style={{ fontSize: 11, color: sb, lineHeight: 1.55 }}>
@@ -2000,7 +2053,7 @@ ${src}`;
                   : "Currently in offline mode. Connect Gemini for free — no credit card — to unlock smart transliteration and extra modes."}
               </div>
             </div>
-            <span style={{ color: c.a, fontSize: 16, flexShrink: 0 }}>{rtl ? "‹" : "›"}</span>
+            <span style={{ color: ca, fontSize: 16, flexShrink: 0 }}>{rtl ? "‹" : "›"}</span>
           </div>
         )}
 
@@ -2009,7 +2062,7 @@ ${src}`;
           <div style={{ background: `${c.a}12`, border: `1px solid ${c.a}30`, borderRadius: 12, padding: "12px 16px", display: "flex", alignItems: "flex-start", gap: 10 }}>
             <span style={{ fontSize: 20, flexShrink: 0 }}>🎙️</span>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: c.a, marginBottom: 4 }}>
+              <div style={{ fontSize: 13, fontWeight: 500, color: ca, marginBottom: 4 }}>
                 {rtl ? "טיפ פרו: שיבוט קול בסונו" : "Pro tip: Voice cloning in Suno"}
               </div>
               <div style={{ fontSize: 11, color: sb, lineHeight: 1.6 }}>
@@ -2024,7 +2077,7 @@ ${src}`;
 
         {/* CONVERSION MODE + BUTTONS */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
-          <div style={{ fontSize: 13, fontWeight: 500, color: c.a, marginBottom: 8 }}>
+          <div style={{ fontSize: 13, fontWeight: 500, color: ca, marginBottom: 8 }}>
             {rtl ? "מצב המרה:" : "Conversion mode:"}
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
@@ -2032,10 +2085,10 @@ ${src}`;
               {rtl ? "🔤 תעתיק מלא (לטינית)" : "🔤 Full transliteration"}
             </B>
             <B sm act={tMode === "hybrid"} onClick={() => setTMode("hybrid")}>
-              {rtl ? "🔀 היברידי" : "🔀 Hybrid"} {!aiProvider && <span style={{ fontSize: 9, color: c.a, marginInlineStart: 2 }}>AI</span>}
+              {rtl ? "🔀 היברידי" : "🔀 Hybrid"} {!aiProvider && <span style={{ fontSize: 9, color: ca, marginInlineStart: 2 }}>AI</span>}
             </B>
             <B sm act={tMode === "optimized"} onClick={() => setTMode("optimized")}>
-              {rtl ? "✨ עברית מותאמת" : "✨ Optimized Hebrew"} {!aiProvider && <span style={{ fontSize: 9, color: c.a, marginInlineStart: 2 }}>AI</span>}
+              {rtl ? "✨ עברית מותאמת" : "✨ Optimized Hebrew"} {!aiProvider && <span style={{ fontSize: 9, color: ca, marginInlineStart: 2 }}>AI</span>}
             </B>
             <B sm act={tMode === "hebrew"} onClick={() => setTMode("hebrew")}>
               {rtl ? "🇮🇱 עברית ישירה" : "🇮🇱 Direct Hebrew"}
@@ -2044,10 +2097,10 @@ ${src}`;
               {rtl ? "🧹 עברית ללא ניקוד" : "🧹 Hebrew without nikud"}
             </B>
             <B sm act={tMode === "marknikud"} onClick={() => setTMode("marknikud")}>
-              {rtl ? "🎯 ניקוד לפי סימון" : "🎯 Mark-to-nikud"} {!aiProvider && <span style={{ fontSize: 9, color: c.a, marginInlineStart: 2 }}>AI</span>}
+              {rtl ? "🎯 ניקוד לפי סימון" : "🎯 Mark-to-nikud"} {!aiProvider && <span style={{ fontSize: 9, color: ca, marginInlineStart: 2 }}>AI</span>}
             </B>
             <B sm act={tMode === "gendernikud"} onClick={() => setTMode("gendernikud")}>
-              {rtl ? "🎭 ניקוד מגדרי" : "🎭 Gender nikud"} {!aiProvider && <span style={{ fontSize: 9, color: c.a, marginInlineStart: 2 }}>AI</span>}
+              {rtl ? "🎭 ניקוד מגדרי" : "🎭 Gender nikud"} {!aiProvider && <span style={{ fontSize: 9, color: ca, marginInlineStart: 2 }}>AI</span>}
             </B>
           </div>
           <div style={{ fontSize: 11, color: sb, marginBottom: 12, lineHeight: 1.6 }}>
@@ -2090,7 +2143,7 @@ ${src}`;
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
             <div>
-              <span style={{ fontSize: 14, fontWeight: 600, color: c.a }}>{t.resTitle}</span>
+              <span style={{ fontSize: 14, fontWeight: 600, color: ca }}>{t.resTitle}</span>
               <span style={{ fontSize: 10, color: sb, marginInlineStart: 6 }}>{t.resSub}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -2098,7 +2151,7 @@ ${src}`;
               <input type="range" min="0.5" max="2" step="0.1" value={rate}
                 onChange={e => setRate(parseFloat(e.target.value))}
                 style={{ width: 70 }} title={t.speed} />
-              <span style={{ fontSize: 11, color: c.a, direction: "ltr", minWidth: 28 }}>×{rate.toFixed(1)}</span>
+              <span style={{ fontSize: 11, color: ca, direction: "ltr", minWidth: 28 }}>×{rate.toFixed(1)}</span>
             </div>
           </div>
           <textarea dir={tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? sl.d : "ltr"} value={res} onChange={e => setRes(e.target.value)} placeholder={t.resPh}
@@ -2131,7 +2184,7 @@ ${src}`;
 
         {/* ═══ STYLE ═══ */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
-          <div style={{ fontSize: 14, fontWeight: 600, color: c.a, marginBottom: 8 }}>{t.styTitle}</div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: ca, marginBottom: 8 }}>{t.styTitle}</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 8 }}>
             {STYLES.map(s => (
               <B key={s.id} sm act={selSty.includes(s.id)} onClick={() => setSelSty(p => p.includes(s.id) ? p.filter(x => x !== s.id) : [...p, s.id])}>
@@ -2162,7 +2215,7 @@ ${src}`;
               style={{ flex: 1, background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "8px 12px", color: tx, fontSize: 13, fontFamily: "inherit", direction: "ltr", textAlign: "left" }}
               onKeyDown={e => { if (e.key === "Enter" && custSty.trim()) addSavedStyle(); }} />
             {custSty.trim() && (
-              <B sm onClick={addSavedStyle} sx={{ background: `${c.a}20`, color: c.a, borderColor: c.a, whiteSpace: "nowrap" }}>
+              <B sm onClick={addSavedStyle} sx={{ background: `${c.a}20`, color: ca, borderColor: c.a, whiteSpace: "nowrap" }}>
                 {rtl ? "⭐ שמור" : "⭐ Save"}
               </B>
             )}
@@ -2205,7 +2258,7 @@ ${src}`;
             </div>
           )}
           {styTxt && (
-            <div style={{ marginTop: 8, padding: "8px 12px", background: `${c.a}10`, borderRadius: 8, border: `1px solid ${c.a}25`, fontSize: 12, color: c.a, direction: "ltr", textAlign: "left" }}>
+            <div style={{ marginTop: 8, padding: "8px 12px", background: `${c.a}10`, borderRadius: 8, border: `1px solid ${c.a}25`, fontSize: 12, color: ca, direction: "ltr", textAlign: "left" }}>
               <span style={{ color: sb }}>{t.prevSty} </span>{styTxt}
             </div>
           )}
@@ -2239,7 +2292,7 @@ ${src}`;
             <div style={{fontSize:11,color:sb,marginTop:4}}>הערכה גסה לפי אורך ומבנה המילים — לא מדד מוזיקלי מדויק.</div>
             <div style={{marginTop:10,display:"grid",gap:7}}>
               {lines.map((o,j)=>{const v=vals[j], ratio=v/Math.max(avg,1), flag=ratio>1.45?"🔴":ratio>1.2?"🟡":ratio<0.65?"🟡":"🟢"; return <div key={o.i} style={{padding:"8px 9px",borderRadius:8,background:bg,border:`1px solid ${bd}`}}>
-                <div style={{display:"flex",justifyContent:"space-between",gap:8,fontSize:11}}><span style={{color:tx,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{flag} {o.text}</span><b style={{color:c.a,whiteSpace:"nowrap"}}>{v} יח׳</b></div>
+                <div style={{display:"flex",justifyContent:"space-between",gap:8,fontSize:11}}><span style={{color:tx,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{flag} {o.text}</span><b style={{color: ca,whiteSpace:"nowrap"}}>{v} יח׳</b></div>
                 <div style={{height:5,borderRadius:5,background:bd,marginTop:6,overflow:"hidden"}}><div style={{height:"100%",width:`${Math.min(100,(v/max)*100)}%`,background:c.a,borderRadius:5}}/></div>
                 {ratio>1.45 && <div style={{fontSize:10,color:sb,marginTop:5}}>השורה ארוכה משמעותית מהממוצע — Suno עלול לדחוס או לבלוע מילים.</div>}
               </div>})}
@@ -2483,7 +2536,7 @@ ${src}`;
 
         {/* PERFORMANCE CARD → STYLE PROMPT */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: c.a }}>🎭 {rtl ? "כרטיס ביצוע → Style Prompt" : "Performance Card → Style Prompt"}</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: ca }}>🎭 {rtl ? "כרטיס ביצוע → Style Prompt" : "Performance Card → Style Prompt"}</div>
           <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 9 }}>{rtl ? "הגדר איך כל חלק אמור להתבצע. הכפתור יוסיף את התיאור ל־Style Prompt בלי לשנות את מילות השיר." : "Describe how each section should be performed. The button adds it to the Style Prompt without changing lyrics."}</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
             {[['verse','🎵 בית'],['chorus','🎶 פזמון'],['bridge','🌉 גשר'],['outro','🌅 סיום']].map(([k,label])=><label key={k} style={{fontSize:11,color:sb}}>{label}<input dir="ltr" value={performanceCard[k]} onChange={e=>setPerformanceCard(x=>({...x,[k]:e.target.value}))} style={{width:"100%",boxSizing:"border-box",marginTop:4,padding:"8px 9px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}} /></label>)}
@@ -2496,7 +2549,7 @@ ${src}`;
 
         {/* SUNO STYLE PROMPT */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: c.a, marginBottom: 6 }}>✨ {rtl ? "Style Prompt מוכן ל־Suno" : "Suno-ready Style Prompt"}</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: ca, marginBottom: 6 }}>✨ {rtl ? "Style Prompt מוכן ל־Suno" : "Suno-ready Style Prompt"}</div>
           <div style={{ fontSize: 11, color: sb, marginBottom: 8 }}>{rtl ? "נוצר מהסגנון, הקול וה־BPM שבחרת. אפשר לערוך לפני ההעתקה." : "Built from your selected style, vocal and BPM. Edit before copying."}</div>
           <textarea value={styTxt} onChange={e=>setCustSty(e.target.value)} dir="ltr" style={{width:"100%",minHeight:100,resize:"vertical",padding:10,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,fontSize:12,lineHeight:1.5}} />
           <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:8}}>
@@ -2508,13 +2561,42 @@ ${src}`;
 
         {/* SUNO PACKAGE */}
         <div style={{ background: cd, border: `2px solid ${c.a}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
-          <div style={{ fontSize: 16, fontWeight: 800, color: c.a }}>📦 {rtl ? "חבילת Suno — הכול במקום אחד" : "Suno Package — everything in one place"}</div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: ca }}>📦 {rtl ? "חבילת Suno — הכול במקום אחד" : "Suno Package — everything in one place"}</div>
           <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 10 }}>{rtl ? "בדיקה אחרונה והעתקה נפרדת של המילים, ה־Style Prompt ותיאור הביצוע." : "Final check and separate copy buttons for lyrics, style and performance."}</div>
           <div style={{display:"grid",gap:7,fontSize:12,color:tx}}>
             <div>🎵 Lyrics: { (res||src).trim() ? "✅" : "⚠️" } {rtl ? ((res||src).trim()?"מוכנים":"חסרים") : ((res||src).trim()?"Ready":"Missing")}</div>
             <div>✨ Style Prompt: {styTxt.trim()?"✅":"⚠️"} {styTxt.trim()?(rtl?"מוכן":"Ready"):(rtl?"חסר":"Missing")}</div>
             <div>🎭 Performance: {performanceCard.verse||performanceCard.chorus||performanceCard.bridge||performanceCard.outro?"✅":"⚠️"} {rtl?"כרטיס ביצוע":"Performance card"}</div>
           </div>
+          {(() => {
+            const lim = SUNO_LIMITS[limProf] || SUNO_LIMITS.v45;
+            const lyr = (res || src).length, sty = styTxt.length;
+            const row = (label, n, max) => {
+              const pct = n / max, col = n > max ? (day ? "#B3261E" : "#E24B4A") : pct > 0.9 ? (day ? "#9A5B00" : "#E8A33D") : okC;
+              return (
+                <div style={{ marginTop: 8 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11.5, color: tx, direction: "ltr" }}>
+                    <span>{label}</span><span style={{ color: col, fontWeight: 600 }}>{n.toLocaleString()} / {max.toLocaleString()}{n > max ? `  (+${(n - max).toLocaleString()})` : ""}</span>
+                  </div>
+                  <div style={{ height: 5, borderRadius: 3, background: `${bd}`, marginTop: 3, overflow: "hidden" }}>
+                    <div style={{ width: `${Math.min(100, pct * 100)}%`, height: "100%", background: col }} />
+                  </div>
+                  {n > max && <div style={{ fontSize: 11, color: col, marginTop: 3 }}>{rtl ? `⚠️ ארוך מדי ב־${(n - max).toLocaleString()} תווים — Suno יחתוך או יסרב. קצר לפני ההעתקה.` : `⚠️ Over the limit by ${(n - max).toLocaleString()} characters — Suno will truncate or refuse. Shorten before copying.`}</div>}
+                </div>
+              );
+            };
+            return (
+              <div style={{ marginTop: 10, paddingTop: 8, borderTop: `1px dashed ${bd}` }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", fontSize: 11, color: sb }}>
+                  <span>{rtl ? "מגבלות Suno לפי גרסת מודל:" : "Suno limits by model:"}</span>
+                  {Object.entries(SUNO_LIMITS).map(([k, v]) => <B key={k} sm act={limProf === k} onClick={() => setLimProf(k)}>{v.label}</B>)}
+                </div>
+                {row("Lyrics", lyr, lim.lyr)}
+                {row("Style", sty, lim.sty)}
+                <div style={{ fontSize: 10, color: sb, marginTop: 6 }}>{rtl ? "המגבלות משתנות בין גרסאות של Suno — אם המספרים אצלך שונים, בחר את הפרופיל הקרוב ובדוק באתר." : "Limits vary by Suno version — if yours differ, pick the closest profile and check the site."}</div>
+              </div>
+            );
+          })()}
           <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:10}}>
             <B sm onClick={()=>navigator.clipboard?.writeText(res||src)} dis={!(res||src).trim()}>📋 {rtl?"העתק Lyrics":"Copy Lyrics"}</B>
             <B sm onClick={()=>navigator.clipboard?.writeText(styTxt)} dis={!styTxt.trim()}>✨ {rtl?"העתק Style":"Copy Style"}</B>
@@ -2532,8 +2614,8 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
 
         </div>}
       {/* FOOTER */}
-        <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: `${sb}88` }}>
-          SunoPrep 9.2.4 by Barak Aflalo — © AppNest 2026
+        <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
+          SunoPrep 9.7 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
