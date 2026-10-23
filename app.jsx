@@ -1327,6 +1327,60 @@ ${src}`;
 
   useEffect(() => { try { localStorage.setItem("sunoprep-active-tab", activeTab); } catch {} }, [activeTab]);
 
+  /* ── כפתור החזרה של הטלפון (דרישת חובה, חלק א׳ סעיף 1 במסמך הדרישות) ──
+     סדר: מדריך / תפריט שפה פתוחים → נסגרים · מסך פנימי → למסך שממנו הגיעו ·
+     לשונית שאינה "כתיבה" → "כתיבה" · בבית → "לחץ שוב כדי לצאת" (יציאה רק בלחיצה שנייה תוך 2 שניות). */
+  const navRef = useRef({});
+  navRef.current = { scr, activeTab, guide, showLangMenu };
+  const scrTrail = useRef(["home"]);
+  const [exitHint, setExitHint] = useState(false);
+  useEffect(() => {
+    const tr = scrTrail.current;
+    if (scr === "home") scrTrail.current = ["home"]; else if (tr[tr.length - 1] !== scr) tr.push(scr);
+  }, [scr]);
+  const backTarget = () => {
+    const tr = scrTrail.current;
+    return tr.length > 1 && tr[tr.length - 2] !== "home" ? tr[tr.length - 2] : "home";
+  };
+  const goBackScr = () => {
+    const tr = scrTrail.current;
+    const target = backTarget();
+    if (target === "home") scrTrail.current = ["home"]; else tr.pop();
+    setScr(target);
+  };
+  useEffect(() => {
+    let guard = false, armed = false, timer = null;
+    // Chrome מדלג על רשומות היסטוריה שנוספו לפני אינטראקציה של המשתמש — לכן "השומר" נוסף רק אחרי הנגיעה הראשונה
+    const active = () => !navigator.userActivation || navigator.userActivation.hasBeenActive;
+    const sync = () => { if (!armed && !guard && active()) { try { window.history.pushState({ g: 1 }, ""); guard = true; } catch (e) {} } };
+    const onFirstTouch = () => { sync(); if (guard) { window.removeEventListener("pointerdown", onFirstTouch, true); window.removeEventListener("keydown", onFirstTouch, true); } };
+    window.addEventListener("pointerdown", onFirstTouch, true);
+    window.addEventListener("keydown", onFirstTouch, true);
+    const onPop = () => {
+      guard = false;
+      const s = navRef.current;
+      if (s.guide) setGuide(false);
+      else if (s.showLangMenu) setShowLangMenu(false);
+      else if (s.scr !== "home") goBackScr();
+      else if (s.activeTab !== "write") setActiveTab("write");
+      else {
+        armed = true; setExitHint(true);
+        timer = setTimeout(() => { armed = false; setExitHint(false); sync(); }, 2000);
+        return;
+      }
+      sync();
+    };
+    sync();
+    window.addEventListener("popstate", onPop);
+    return () => { window.removeEventListener("popstate", onPop); window.removeEventListener("pointerdown", onFirstTouch, true); window.removeEventListener("keydown", onFirstTouch, true); if (timer) clearTimeout(timer); };
+  }, []);
+  const PRESS_AGAIN = { he: "לחץ שוב כדי לצאת", en: "Press back again to exit", ru: "Нажмите «назад» ещё раз для выхода", es: "Pulsa atrás otra vez para salir", ar: "اضغط رجوع مرة أخرى للخروج" };
+  const exitToast = exitHint ? (
+    <div style={{ position: "fixed", bottom: 28, left: "50%", transform: "translateX(-50%)", background: "#222", color: "#fff", padding: "10px 18px", borderRadius: 22, fontSize: 13, zIndex: 9999, boxShadow: "0 4px 14px rgba(0,0,0,.4)", pointerEvents: "none" }}>
+      {PRESS_AGAIN[uLang] || PRESS_AGAIN.en}
+    </div>
+  ) : null;
+
   const B = ({ children, onClick, pri, act, dis, sm, sx }) => (
     <button onClick={onClick} disabled={dis} style={{
       background: pri ? c.a : act ? `${c.a}22` : "transparent",
@@ -1388,7 +1442,7 @@ ${src}`;
     );
     return (
       <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 20 }}>
-        <B onClick={() => setScr("home")}>{t.back}</B>
+        <B onClick={goBackScr}>{t.back}</B>
         <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "14px 0 6px" }}>🔌 {st.title}</h2>
 
         <div style={{ background: `${c.a}0E`, border: `1px solid ${c.a}25`, borderRadius: 10, padding: "10px 13px", fontSize: 11.5, color: sb, lineHeight: 1.65, marginBottom: 16, maxWidth: 620 }}>
@@ -1509,7 +1563,7 @@ ${src}`;
   /* ── HISTORY ── */
   if (scr === "history") return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
-      <B onClick={() => setScr("home")}>{t.back}</B>
+      <B onClick={goBackScr}>{t.back}</B>
       <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>📜 {rtl ? "היסטוריה" : "History"}</h2>
       {history.length === 0 && <div style={{ color: sb, fontSize: 13 }}>{rtl ? "אין שירים שמורים עדיין" : "No saved songs yet"}</div>}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -1537,7 +1591,7 @@ ${src}`;
   /* ── WORD DICTIONARY ── */
   if (scr === "worddict") return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
-      <B onClick={() => setScr("home")}>{t.back}</B>
+      <B onClick={goBackScr}>{t.back}</B>
       <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>📖 {rtl ? "מילון מילים בעייתיות" : "Problem Words Dictionary"}</h2>
       <div style={{ fontSize: 12, color: sb, marginBottom: 16, lineHeight: 1.6 }}>
         {rtl ? "כשאתה מתקן מילה בתוצאה, לחץ עליה כאן כדי לשמור את התיקון. בפעם הבאה האפליקציה תזכור." : "When you fix a word in the result, save the correction here. The app will remember it next time."}
@@ -1576,7 +1630,7 @@ ${src}`;
     );
     return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
-      <B onClick={() => setScr("home")}>{t.back}</B>
+      <B onClick={goBackScr}>{t.back}</B>
       <div style={{ textAlign: "center", padding: "34px 0 20px" }}>
         <div style={{ fontSize: 50, marginBottom: 12 }}>🎤</div>
         <div style={{ fontSize: 28, fontWeight: 700, color: c.a }}>SunoPrep</div>
@@ -1631,7 +1685,7 @@ ${src}`;
     );
     return (
       <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
-        <B onClick={() => setScr("home")}>{t.back}</B>
+        <B onClick={goBackScr}>{t.back}</B>
         <h2 style={{ fontSize: 20, fontWeight: 600, color: c.a, margin: "16px 0" }}>⚙ {t.settings}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 500 }}>
           {/* AI Connection */}
@@ -1709,6 +1763,7 @@ ${src}`;
   return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif" }}>
       <style>{`textarea:focus,input:focus{outline:1px solid ${c.a}} @keyframes sp-p{0%,100%{opacity:1}50%{opacity:.4}} .sp-ld{animation:sp-p 1s infinite} .sp-tabs::-webkit-scrollbar{display:none}`}</style>
+      {exitToast}
 
       {/* HEADER */}
       <div style={{ padding: "10px 16px", borderBottom: `1px solid ${bd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
