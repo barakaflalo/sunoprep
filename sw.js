@@ -19,11 +19,9 @@
   CacheStorage.prototype.match=function(){return sm.apply(this,arguments).then(clean);};
 })();
 
-const CACHE = 'sunoprep-v10.9';
-const ASSETS = ['./','./index.html','./app.jsx','./appnest-assistant.js','./manifest.json','./icon-192.png','./icon-512.png',
-  'https://unpkg.com/react@18/umd/react.production.min.js',
-  'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
-  'https://unpkg.com/@babel/standalone@7/babel.min.js'];
+const CACHE = 'sunoprep-v11.0';
+const ASSETS = ['./','./index.html','./app.js','./appnest-assistant.js','./manifest.json','./icon-192.png','./icon-512.png',
+  './vendor/react.production.min.js','./vendor/react-dom.production.min.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(()=>{}))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k))))); self.clients.claim(); });
 self.addEventListener('fetch', e => {
