@@ -76,9 +76,11 @@
         { name: 'אודות',    match: 'ℹ️' }
       ],
       // שדות שאפשר לכתוב אליהם (מזוהים לפי הטקסט של ה-placeholder)
+      // tab = באיזה מסך השדה נמצא — אם המשתמש במסך אחר, העוזר יעבור לשם לבד (חדש ב-2.0)
+      // placeholder יכול להיות מערך — כדי שזה יעבוד גם כשהממשק באנגלית
       fields: [
-        { name: 'lyrics', label: 'שדה מילות השיר', placeholder: 'כתוב את מילות השיר כאן' },
-        { name: 'style',  label: 'שדה הסגנון המותאם', placeholder: 'הוסף סגנון מותאם' }
+        { name: 'lyrics', label: 'שדה מילות השיר', placeholder: ['כתוב את מילות השיר כאן', 'Write your lyrics here'], tab: 'כתיבה' },
+        { name: 'style',  label: 'שדה הסגנון המותאם', placeholder: ['הוסף סגנון מותאם', 'Add custom style'], tab: 'כתיבה' }
       ],
       // הצעות פתיחה מהירות (כפתורים שקופצים בתחילת השיחה)
       suggestions: [
