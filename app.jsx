@@ -546,6 +546,46 @@ function analyzeRhymes(text) {
   return { total: lines.length, groups, weak, scheme };
 }
 
+/* ═══ AppNest Refine — "המפה" של SunoPrep (המנוע עצמו ב-appnest-refine.js) ═══ */
+const SONG_CRITERIA = { hook: 2, rhyme: 1.5, flow: 1.5, imagery: 1.5, emotion: 1, gender: 1.5, fit: 1, suno: 1 };
+const SONG_CRIT_LABELS = { hook: "🎣 פזמון וקליטות", rhyme: "🎵 חריזה", flow: "🌊 זרימה ומשקל", imagery: "🖼️ דימויים ומקוריות", emotion: "❤️ רגש", gender: "🎭 עקביות מגדר", fit: "🎯 התאמה להגדרות", suno: "🤖 מוכנות לסונו" };
+const HAS_NIKUD = /[ְ-ׇּׁׂ]/;
+function songPostProcess(text, original) {
+  // שלב המילים: אם המקור בלי ניקוד — מורידים ניקוד שהבינה הוסיפה על דעת עצמה
+  return HAS_NIKUD.test(original) ? text : text.replace(/[֑-ׇ]/g, (ch) => ch === "־" ? ch : "");
+}
+function songLocalCheck(text, original) {
+  const issues = [];
+  const lines = text.split("\n").filter(l => l.trim());
+  const origLines = original.split("\n").filter(l => l.trim());
+  const tagsOrig = (original.match(/\[[^\]]+\]/g) || []).length;
+  const tagsNew = (text.match(/\[[^\]]+\]/g) || []).length;
+  if (tagsOrig >= 2 && tagsNew < Math.ceil(tagsOrig / 2)) issues.push("נמחקו תגיות המבנה");
+  if (!/[א-ת]/.test(text)) issues.push("אין עברית בטקסט");
+  if (text !== original && lines.length > origLines.length * 1.6 + 4) issues.push("השיר התארך יותר מדי");
+  if (text !== original && lines.length < origLines.length * 0.5) issues.push("השיר התקצר יותר מדי");
+  const rh = analyzeRhymes(text);
+  const rhymed = new Set([...rh.groups, ...rh.weak].flatMap(g => g.lines)).size;
+  const syl = text.split("\n").filter(l => l.trim() && !/^\s*\[/.test(l)).map(l => countSyllables(l));
+  const long = syl.filter(n => n > 16).length;
+  const summary = "ניתוח מקומי (מחושב בקוד — עובדות, לא ניחוש):\n" +
+    (rh.scheme ? `- תבנית חריזה של סופי השורות: ${rh.scheme}\n` : "") +
+    `- שורות שמתחרזות עם שורה אחרת: ${rhymed} מתוך ${rh.total}\n` +
+    `- הברות לפי שורה: ${syl.map((n, i) => `${i + 1}:${n}`).join(" | ")}\n` +
+    `- שורות ארוכות מאוד (מעל 16 הברות): ${long}`;
+  return { ok: issues.length === 0, issues, metrics: { scheme: rh.scheme, rhymed, total: rh.total, long }, summary };
+}
+/* שומר-מילים לניקוד: אחרי שהבינה מנקדת, בודקים בקוד שהיא לא שינתה אף אות. (ו/י נחשבות שינוי קל — כתיב מלא/חסר) */
+function nikudWordGuard(source, output, dropHyphens) {
+  const words = (s, dh) => { let t = s.replace(/[֑-ֽֿ-ׇ]/g, ""); if (dh) t = t.replace(/([א-ת])-(?=[א-ת])/g, "$1"); return t.split(/[\s־]+/).map(w => w.replace(/[^א-ת]/g, "")).filter(Boolean); };
+  const loose = w => w.replace(/[וי]/g, "");
+  const a = words(source, dropHyphens), b = words(output, false);
+  const ok = loose(a.join("")) === loose(b.join(""));
+  const changed = [];
+  if (!ok && a.length === b.length) a.forEach((w, i) => { if (loose(w) !== loose(b[i])) changed.push({ from: w, to: b[i] }); });
+  return { ok, changed, countDiff: b.length - a.length };
+}
+
 const countSyllables = (line) => {
   const clean = line.replace(/\[.*?\]/g, "").replace(/\(.*?\)/g, "").trim();
   if (!clean) return 0;
@@ -614,6 +654,13 @@ function SunoPrep() {
   const [ideaVariants, setIdeaVariants] = useState([]);
   const [ideaLoading, setIdeaLoading] = useState(false);
   const [ideaImprove, setIdeaImprove] = useState("חזק את הפזמון והפוך אותו ליותר קליט");
+  const [refineRounds, setRefineRounds] = useState(() => Number(localStorage.getItem("sunoprep_refine_rounds")) || 2);
+  const [refineState, setRefineState] = useState(null);
+  const [refineResult, setRefineResult] = useState(null);
+  const refineCancelRef = useRef(false);
+  const [srcBeforeRefine, setSrcBeforeRefine] = useState(null);
+  const [nikudReview, setNikudReview] = useState(null);
+  const [nikudWarn, setNikudWarn] = useState("");
   const [err, setErr] = useState("");
   const [tMode, setTMode] = useState("full");
   const [genderDir, setGenderDir] = useState("m2f");
@@ -998,8 +1045,19 @@ ${src}`;
 
     const prompt = m === "hybrid" ? hybridPrompt : m === "optimized" ? optimizedPrompt : m === "marknikud" ? markNikudPrompt : m === "gendernikud" ? genderNikudPrompt : fullPrompt;
 
+    setNikudWarn(""); setNikudReview(null);
     try {
-      const out = await callAI(prompt);
+      let out = await callAI(prompt);
+      if ((m === "marknikud" || m === "gendernikud") && out?.trim()) {
+        let g = nikudWordGuard(src, out, m === "marknikud");
+        if (!g.ok) {
+          const list = g.changed.slice(0, 8).map(x => `${x.from} → ${x.to}`).join(", ");
+          const retry = prompt + `\n\nCRITICAL: In your previous attempt you CHANGED letters or words${list ? " (" + list + ")" : ""}. Do NOT change, add or remove any letter or word — ONLY add nikud marks where the rules say. Return the full lyrics again.`;
+          const out2 = await callAI(retry);
+          if (out2?.trim()) { const g2 = nikudWordGuard(src, out2, m === "marknikud"); if (g2.ok || g2.changed.length < g.changed.length || (!g.changed.length && Math.abs(g2.countDiff) < Math.abs(g.countDiff))) { out = out2; g = g2; } }
+          if (!g.ok) setNikudWarn(g.changed.length ? `⚠️ הבינה שינתה ${g.changed.length} מילים (גם אחרי ניסיון חוזר): ${g.changed.slice(0, 6).map(x => `${x.from} ← ${x.to}`).join(" · ")}. כדאי לבדוק אותן.` : `⚠️ הבינה שינתה את הטקסט (${g.countDiff > 0 ? "נוספו" : "חסרות"} ${Math.abs(g.countDiff)} מילים). כדאי להשוות למקור.`);
+        }
+      }
       if (out?.trim()) setRes(out.trim());
       else setErr(t.errCon);
     } catch (e) {
@@ -1075,6 +1133,153 @@ ${ideaOut}`;
       const out=await callAI(p); if(out?.trim()) { const next=out.trim(); setIdeaHistory(prev=>[...prev, ideaOut]); setIdeaHistoryIndex(prev=>prev+1); setIdeaOut(next); }
     } catch(e) { setErr(String(e?.message||e)); }
     setIdeaLoading(false);
+  };
+
+  /* ═══ 🎻 סדנת שיפור אוטומטית: כותב → מבקר → משפר (מנוע AppNest Refine) ═══
+     target "idea" = טיוטת AI בלשונית רעיונות · target "write" = השיר שהמשתמש כתב בלשונית כתיבה */
+  const songSettingsText = (own) => own
+    ? `- זה שיר שהמשתמש כתב בעצמו (לא טיוטת AI) — הקול והסגנון שלו הם העיקר\n- מגדר ונמען: ${ideaGenderMode}`
+    : `- סוג: ${ideaType} · מבנה: ${ideaStructure} · אורך: ${ideaLength}\n- מצב רוח: ${ideaMood} · נקודת מבט: ${ideaPerspective}\n- חריזה: ${ideaRhyme} · מגדר ונמען: ${ideaGenderMode}` +
+      (ideaPrompt.trim() ? `\n- הרעיון: "${ideaPrompt.trim()}"` : "") + (ideaKeywords.trim() ? `\n- מילות מפתח: ${ideaKeywords.trim()}` : "");
+
+  const makeSongCritique = (own) => ({ draft, local }) => `אתה מבקר שירים קשוח והוגן, מומחה לכתיבת שירים בעברית ולהכנת מילים ל-Suno AI. תן ציון אמיתי, לא מחמאות: 5 = בינוני, 7 = טוב, 9 = מעולה ונדיר.
+
+${own ? "פרטים על השיר" : "ההגדרות שהכותב ביקש"}:
+${songSettingsText(own)}
+
+${local ? local.summary : ""}
+
+דרג כל קריטריון מ-0 עד 10:
+hook — יש פזמון או שורת מפתח שנתקעת בראש, חוזרת ופשוטה לשירה
+rhyme — איכות החריזה${own ? "" : " ביחס להגדרה"} (היעזר בניתוח המקומי, אבל שפוט לפי ההגייה האמיתית)
+flow — זרימה ומשקל: שורות מקבילות באורך דומה, קל לשיר, בלי שורות עמוסות
+imagery — דימויים מקוריים וקונקרטיים, בלי קלישאות שחוקות
+emotion — רגש אמין ועקבי
+gender — עקביות מלאה של מגדר ופנייה לפי ההגדרה (כל טעות מורידה הרבה)
+fit — ${own ? "שלמות ובהירות: השיר מספר משהו ברור מההתחלה ועד הסוף" : "התאמה לרעיון, למבנה ולאורך שביקשו"}
+suno — מוכנות ל-Suno: תגיות [Verse]/[Chorus] תקינות, שורות לא ארוכות מדי, בלי הסברים בתוך הטקסט
+
+החזר JSON בלבד, בדיוק בפורמט הזה:
+{"scores":{"hook":0,"rhyme":0,"flow":0,"imagery":0,"emotion":0,"gender":0,"fit":0,"suno":0},"strengths":["מה טוב ושווה לשמור"],"weaknesses":[{"where":"פזמון, שורה 2","problem":"מה הבעיה","fix":"הצעה קונקרטית לתיקון"}],"verdict":"משפט אחד"}
+עד 5 חולשות, החשובה ביותר ראשונה. הכל בעברית.
+
+השיר:
+${draft}`;
+
+  const makeSongRewrite = (own) => ({ draft, review, log, round, local }) => {
+    const weak = review.weaknesses.map((w, i) => `${i + 1}. ${w.where ? "[" + w.where + "] " : ""}${w.problem}${w.fix ? " → " + w.fix : ""}`).join("\n");
+    const keep = review.strengths.map(x => "- " + x).join("\n");
+    const rejected = log.filter(e => !e.accepted && e.tried).map(e => `- סבב ${e.round}: ניסה לתקן "${(e.tried || []).slice(0, 3).join("; ")}" — ${e.reason}`).join("\n");
+    const nikudRule = HAS_NIKUD.test(draft) ? "- בשורות שלא שינית השאר את הניקוד בדיוק כמו שהוא; מילים חדשות כתוב בלי ניקוד." : "- בלי ניקוד.";
+    return `אתה כותב ועורך שירים מקצועי בעברית. זה סבב שיפור ${round}.
+המטרה: להעלות את ציון המבקר (כרגע ${review.score}/10) בלי לאבד את מה שטוב.
+
+${songSettingsText(own)}
+
+חולשות לתיקון, לפי סדר חשיבות:
+${weak || "- אין חולשות מפורטות; חזק את הפזמון ואת הדימויים"}
+
+חוזקות שחובה לשמור:
+${keep || "- הרעיון המרכזי"}
+${rejected ? "\nניסיונות קודמים שנדחו — אל תחזור על אותה גישה:\n" + rejected + "\n" : ""}
+${local ? local.summary : ""}
+
+כללים:
+${own ? "- זה השיר של המשתמש: תקן רק את מה שהמבקר ציין, שנה כמה שפחות שורות, ושמור על הקול, המילים והסגנון שלו.\n- שמור על אורך דומה למקור." : `- שמור על הרעיון המרכזי.\n- אל תאריך את השיר מעבר לאורך "${ideaLength}".`}
+- שמור על המבנה ועל תגיות [Verse]/[Chorus]/[Bridge] ותגיות קול שקיימות.
+- ${genderInstruction}
+${nikudRule}
+- בלי הסברים ובלי כותרות — החזר רק את מילות השיר המלאות.
+
+השיר הנוכחי:
+${draft}`;
+  };
+
+  const refineBusy = !!refineState?.running;
+
+  const runAutoRefine = async (target, reviewOnly = false) => {
+    const own = target === "write";
+    const base = own ? src : ideaOut;
+    if (!base.trim()) { setErr(own ? "כתוב שיר לפני השיפור" : "צור או בחר טיוטה לפני השיפור"); return; }
+    if (!aiProvider) { setErr("כדי לשפר צריך לחבר ספק AI בהגדרות"); return; }
+    if (!window.AppNestRefine) { setErr("מנוע השיפור לא נטען — רענן את הדף"); return; }
+    const rounds = reviewOnly ? 0 : refineRounds;
+    refineCancelRef.current = false;
+    if (!own) setIdeaLoading(true);
+    setErr(""); setRefineResult(null);
+    setRefineState({ target, running: true, rounds, stage: "critique", round: 0, steps: [], baseline: null });
+    try {
+      const r = await window.AppNestRefine.run({
+        callAI, draft: base, rounds, minGain: 0.3, criteria: SONG_CRITERIA,
+        buildCritique: makeSongCritique(own), buildRewrite: makeSongRewrite(own),
+        localCheck: songLocalCheck, postProcess: songPostProcess,
+        isCancelled: () => refineCancelRef.current,
+        onProgress: (ev) => setRefineState(st => st && ({ ...st, stage: ev.stage, round: ev.round,
+          baseline: ev.stage === "baseline" ? ev.score : st.baseline,
+          steps: ev.entry ? [...st.steps, ev.entry] : st.steps })),
+      });
+      if (r.improved) {
+        if (own) { setSrcBeforeRefine(base); setSrc(r.text); }
+        else {
+          const accepted = r.log.filter(e => e.accepted).map(e => e.text);
+          const chain = [base, ...accepted.slice(0, -1)];          // כל גרסת ביניים שהתקבלה נכנסת להיסטוריה
+          setIdeaHistory(prev => [...prev, ...chain]); setIdeaHistoryIndex(-1); setIdeaOut(r.text);
+        }
+      }
+      setRefineResult({ ...r, target, reviewOnly });
+    } catch (e) { setErr(String(e?.message || e)); }
+    setRefineState(st => st && { ...st, running: false });
+    if (!own) setIdeaLoading(false);
+  };
+
+  /* ═══ 🧐 מבקר ניקוד: בודק את הניקוד בתוצאה ומציע תיקונים — ומוודא בקוד שהתיקון לא משנה אותיות ═══ */
+  const stripNik = (w) => w.replace(/[֑-ׇ]/g, "").replace(/[^א-ת]/g, "");
+  const sameLetters = (a, b) => { const l = x => stripNik(x).replace(/[וי]/g, ""); return !!stripNik(a) && l(a) === l(b); };
+  const NIKUD_DIRS = { m2f: "גבר שר לאישה", f2m: "אישה שרה לגבר", f2f: "אישה שרה לאישה", m2m: "גבר שר לגבר" };
+
+  const reviewNikud = async () => {
+    if (!res.trim()) return;
+    if (!aiProvider) { setErr("בדיקת ניקוד צריכה חיבור AI בהגדרות"); return; }
+    const text = res;
+    setNikudReview({ loading: true, issues: [], applied: {} }); setErr("");
+    const p = `אתה מומחה לניקוד עברי ולהכנת שירים ל-Suno AI. בדוק את הניקוד בשיר הבא.
+${tMode === "gendernikud" ? `כיוון השירה: ${NIKUD_DIRS[genderDir] || NIKUD_DIRS.m2f}. בדוק במיוחד שהניקוד של מילות פנייה, פעלים וכינויים מתאים לכיוון הזה.\n` : ""}בדוק רק מילים שיש עליהן ניקוד:
+- האם הניקוד נכון דקדוקית
+- האם הוא מתאים למגדר ולהקשר במשפט
+- האם יש מילה מנוקדת חלקית או בצורה שתבלבל את סונו בהגייה
+אסור להציע שינוי אותיות — רק ניקוד. מילה נכונה אל תכלול ברשימה.
+החזר JSON בלבד: {"ok":true,"issues":[{"word":"המילה בדיוק כפי שהיא בטקסט","suggested":"אותה מילה עם ניקוד מתוקן","reason":"הסבר קצר"}],"summary":"משפט אחד"}
+עד 12 בעיות, החשובות ראשונות. הכל בעברית.
+
+השיר:
+${text}`;
+    try {
+      let j = null;
+      for (let i = 0; i < 2 && !j; i++) j = window.AppNestRefine.extractJSON(await callAI(i ? p + "\n\nהחזר אך ורק JSON תקין." : p));
+      if (!j) throw new Error("המבקר לא החזיר תשובה תקינה. נסה שוב.");
+      const issues = (Array.isArray(j.issues) ? j.issues : []).slice(0, 12).map(x => ({
+        word: String(x.word || "").trim(), suggested: String(x.suggested || "").trim(), reason: String(x.reason || ""),
+      })).filter(x => x.word && x.suggested && x.word !== x.suggested)
+        .map(x => ({ ...x, safe: sameLetters(x.word, x.suggested) }));
+      setNikudReview({ loading: false, issues, summary: String(j.summary || ""), applied: {}, forText: text });
+    } catch (e) { setNikudReview(null); setErr(String(e?.message || e)); }
+  };
+
+  const applyNikudFix = (idx) => {
+    const it = nikudReview?.issues[idx]; if (!it || !it.safe) return false;
+    let done = false;
+    setRes(cur => {
+      if (cur.includes(it.word)) { done = true; return cur.replace(it.word, it.suggested); }
+      // לא נמצאה בדיוק — מחפשים מילה עם אותן אותיות
+      const parts = cur.split(/(\s+)/);
+      const k = parts.findIndex(w => w.trim() && stripNik(w) === stripNik(it.word));
+      if (k < 0) return cur;
+      const pre = w => (w.match(/^[^א-ת]*/) || [""])[0], post = w => (w.match(/[^א-ת֑-ׇ]*$/) || [""])[0];
+      parts[k] = pre(parts[k]) + it.suggested.replace(/^[^א-ת]*|[^א-ת֑-ׇ]*$/g, "") + post(parts[k]);
+      done = true; return parts.join("");
+    });
+    setNikudReview(nr => nr && { ...nr, applied: { ...nr.applied, [idx]: true } });
+    return done;
   };
 
   const testConnection = async () => {
@@ -1438,6 +1643,50 @@ ${src}`;
       fontFamily: "inherit", opacity: dis ? 0.5 : 1, transition: "all .15s", ...sx,
     }}>{children}</button>
   );
+
+  /* פאנל סדנת השיפור — משותף ללשונית רעיונות ("idea") וללשונית כתיבה ("write") */
+  const renderRefinePanel = (target) => {
+    const own = target === "write";
+    const st = refineState && refineState.target === target ? refineState : null;
+    const rr = refineResult && refineResult.target === target ? refineResult : null;
+    const busy = refineBusy || (!own && ideaLoading);
+    return <div style={{marginTop:9,padding:10,borderRadius:10,border:`1px solid ${c.a}66`,background:`${c.a}0d`}}>
+      <div style={{fontWeight:800,color:tx,fontSize:13}}>🎻 {own ? "שפר את השיר שכתבת — מבקר · משפר" : "סדנת שיפור אוטומטית — כותב · מבקר · משפר"}</div>
+      <div style={{fontSize:11,color:sb,marginTop:3,lineHeight:1.5}}>{own
+        ? "מבקר AI נותן ציון ורשימת חולשות, ועורך AI מתקן רק את מה שצריך — שומר על המילים והסגנון שלך. הגרסה החדשה נכנסת רק אם הציון באמת עלה, ואפשר תמיד להחזיר את המקור."
+        : "מבקר AI נותן ציון ורשימת חולשות, כותב AI מתקן לפיה, והגרסה החדשה נשמרת רק אם הציון באמת עלה. כל גרסה שהתקבלה נכנסת להיסטוריית הגרסאות."}</div>
+      <div style={{display:"flex",gap:6,marginTop:7,flexWrap:"wrap",alignItems:"center"}}>
+        {own && <select value={ideaGenderMode} disabled={busy} onChange={e=>setIdeaGenderMode(e.target.value)} title="מי שר למי" style={{padding:7,borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}}><option>👨➡️👩 גבר שר לאישה</option><option>👩➡️👨 אישה שרה לגבר</option><option>👨➡️👨 גבר שר לגבר</option><option>👩➡️👩 אישה שרה לאישה</option><option>ניטרלי / ללא מגדר מוגדר</option></select>}
+        <select value={refineRounds} disabled={busy} onChange={e=>{const n=Number(e.target.value);setRefineRounds(n);localStorage.setItem("sunoprep_refine_rounds",String(n));}} style={{padding:7,borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}}>
+          {[1,2,3].map(n=><option key={n} value={n}>{n} {n===1?"סבב":"סבבים"} · עד {1+2*n} קריאות AI</option>)}
+        </select>
+        <B sm pri onClick={()=>runAutoRefine(target,false)} dis={busy}>🎻 שפר אוטומטית</B>
+        <B sm onClick={()=>runAutoRefine(target,true)} dis={busy}>🧐 ביקורת וציון בלבד</B>
+        {st?.running && <B sm onClick={()=>{refineCancelRef.current=true;}}>⏹️ עצור אחרי השלב הנוכחי</B>}
+        {own && srcBeforeRefine!=null && !st?.running && <B sm onClick={()=>{const cur=src;setSrc(srcBeforeRefine);setSrcBeforeRefine(cur);}}>↶ החלף בין המקור לגרסה המשופרת</B>}
+      </div>
+      {st?.running && <div style={{marginTop:7,fontSize:12,color:ca,fontWeight:700}}>⏳ {st.stage==="rewrite" ? `סבב ${st.round}/${st.rounds}: ${own?"העורך":"הכותב"} מתקן לפי הביקורת...` : st.round===0 ? "המבקר קורא את השיר ונותן ציון..." : `סבב ${st.round}/${st.rounds}: המבקר בודק את הגרסה החדשה...`}{st.baseline!=null && ` · ציון התחלתי ${st.baseline}`}</div>}
+      {st?.steps?.length>0 && <div style={{marginTop:6,display:"grid",gap:4}}>{st.steps.map((e,i)=><div key={i} style={{fontSize:11,padding:"5px 8px",borderRadius:7,background:bg,border:`1px solid ${e.accepted?c.a:bd}`,color:tx}}>
+        {e.accepted?"✅":"↩️"} סבב {e.round}{e.after!=null?`: ${e.before} → ${e.after}`:""} — {e.reason}
+      </div>)}</div>}
+      {rr && !st?.running && <div style={{marginTop:8,padding:9,borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",gap:6,flexWrap:"wrap"}}>
+          <b style={{color:tx}}>{rr.reviewOnly?"🧐 ציון המבקר":rr.improved?"🎉 השיר שופר":"השיר נשאר כמו שהוא"}</b>
+          <span style={{fontSize:20,fontWeight:800,color:ca,direction:"ltr"}}>{rr.reviewOnly||!rr.improved?`${rr.finalScore}/10`:`${rr.initialScore} → ${rr.finalScore}`}</span>
+        </div>
+        {!rr.reviewOnly && !rr.improved && <div style={{fontSize:11,color:sb,marginTop:3}}>אף גרסה לא עברה את הציון של {own?"השיר":"הטיוטה"} שלך, אז לא שיניתי כלום. אפשר לנסות שוב (המבקר והכותב יוצאים שונים בכל פעם).</div>}
+        <div style={{marginTop:7,display:"grid",gap:3}}>{Object.keys(SONG_CRITERIA).map(k=>{const v=rr.review.scores[k];return <div key={k} style={{display:"grid",gridTemplateColumns:"125px 1fr 28px",gap:6,alignItems:"center",fontSize:11,color:tx}}>
+          <span>{SONG_CRIT_LABELS[k]}</span>
+          <div style={{height:7,borderRadius:4,background:`${c.a}22`,overflow:"hidden"}}><div style={{width:`${(v||0)*10}%`,height:"100%",background:c.a}}/></div>
+          <span style={{direction:"ltr",textAlign:"left"}}>{v==null?"–":v}</span>
+        </div>;})}</div>
+        {rr.review.verdict && <div style={{marginTop:7,fontSize:12,color:tx}}>💬 {rr.review.verdict}</div>}
+        {rr.review.strengths.length>0 && <div style={{marginTop:6,fontSize:11,color:tx}}><b>👍 חוזקות:</b>{rr.review.strengths.map((x,i)=><div key={i}>• {x}</div>)}</div>}
+        {rr.review.weaknesses.length>0 && <div style={{marginTop:6,fontSize:11,color:tx}}><b>🔧 מה עוד אפשר לשפר:</b>{rr.review.weaknesses.map((w,i)=><div key={i} style={{marginTop:2}}>• {w.where?<b>{w.where}: </b>:null}{w.problem}{w.fix?<span style={{color:sb}}> — {w.fix}</span>:null}</div>)}</div>}
+        <div style={{fontSize:10,color:sb,marginTop:6}}>{rr.calls} קריאות AI בהרצה הזו · הציון הכולל מחושב באפליקציה לפי משקלות (פזמון כפול).</div>
+      </div>}
+    </div>;
+  };
 
   /* ── GUIDE ── */
   if (guide) {
@@ -1898,6 +2147,7 @@ ${src}`;
             {VOICE_TAGS.map(vt => <B key={vt.l} sm onClick={() => insertTag(vt.l)} sx={{ fontSize: 11, borderStyle: "dashed" }}>{rtl ? vt.h : vt.l}</B>)}
           </div>
           <textarea ref={srcRef} dir={sl.d} value={src} onChange={e => setSrc(e.target.value)} placeholder={t.srcPh} style={TA} />
+          {rtl && src.trim().length>20 && renderRefinePanel("write")}
           {tMode === "marknikud" && (
             <div style={{ marginTop: 6, padding: "9px 12px", background: `${c.a}0C`, border: `1px solid ${c.a}35`, borderRadius: 10 }}>
               <div style={{ fontSize: 11, color: sb, lineHeight: 1.6, marginBottom: 7 }}>
@@ -2156,6 +2406,26 @@ ${src}`;
           </div>
           <textarea dir={tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? sl.d : "ltr"} value={res} onChange={e => setRes(e.target.value)} placeholder={t.resPh}
             style={{ ...TA, fontFamily: tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? "inherit" : "'Courier New',monospace", direction: tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? sl.d : "ltr", textAlign: tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? (sl.d === "rtl" ? "right" : "left") : "left" }} />
+          {nikudWarn && res && <div style={{ marginTop: 6, padding: "7px 10px", borderRadius: 7, border: "1px solid #e0a03a", background: "#e0a03a18", color: tx, fontSize: 12, lineHeight: 1.5 }}>{nikudWarn}</div>}
+          {res && aiProvider && (tMode === "marknikud" || tMode === "gendernikud" || tMode === "optimized") && HAS_NIKUD.test(res) && <div style={{ marginTop: 6, padding: "8px 10px", borderRadius: 8, border: `1px solid ${bd}`, background: `${c.a}08` }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+              <B sm onClick={reviewNikud} dis={nikudReview?.loading || loading}>{nikudReview?.loading ? "⏳ המבקר בודק את הניקוד..." : "🧐 בדוק את הניקוד (מבקר AI)"}</B>
+              {nikudReview?.issues?.some((x, i) => x.safe && !nikudReview.applied[i]) && <B sm pri onClick={() => nikudReview.issues.forEach((x, i) => { if (x.safe && !nikudReview.applied[i]) applyNikudFix(i); })}>✅ תקן הכל</B>}
+              <span style={{ fontSize: 10, color: sb }}>קריאת AI אחת. תיקון שמשנה אותיות נחסם אוטומטית.</span>
+            </div>
+            {nikudReview && !nikudReview.loading && <div style={{ marginTop: 7, fontSize: 12, color: tx }}>
+              {nikudReview.issues.length === 0 ? <div>✅ המבקר לא מצא בעיות בניקוד.{nikudReview.summary ? " " + nikudReview.summary : ""}</div> : <>
+                {nikudReview.summary && <div style={{ marginBottom: 5 }}>💬 {nikudReview.summary}</div>}
+                {nikudReview.issues.map((x, i) => <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap", padding: "4px 0", borderTop: i ? `1px solid ${bd}` : "none" }}>
+                  <span style={{ fontSize: 15 }}>{x.word}</span><span style={{ color: sb }}>←</span><span style={{ fontSize: 15, fontWeight: 700, color: ca }}>{x.suggested}</span>
+                  <span style={{ fontSize: 11, color: sb, flex: "1 1 140px" }}>{x.reason}</span>
+                  {!x.safe ? <span style={{ fontSize: 10, color: "#e0a03a" }}>⚠️ ההצעה משנה אותיות — לא מוחל</span>
+                    : nikudReview.applied[i] ? <span style={{ fontSize: 11, color: ca }}>✓ תוקן</span>
+                    : <B sm onClick={() => applyNikudFix(i)}>תקן</B>}
+                </div>)}
+              </>}
+            </div>}
+          </div>}
           {res && <div style={{ marginTop: 6, padding: "6px 10px", background: `${c.a}08`, borderRadius: 6, fontSize: 11, color: sb, lineHeight: 1.6 }}>
             💡 {tMode === "optimized" 
               ? (rtl ? "טיפ: אם הקצב איטי מדי — הסר רווחים בין תחיליות, או הוסף BPM גבוה יותר בסגנון. אם מילה נשמעת לא נכון — הסר או שנה את הניקוד שלה." 
@@ -2396,7 +2666,9 @@ ${src}`;
             {ideaOut && <><select value={ideaImprove} onChange={e=>setIdeaImprove(e.target.value)} style={{padding:8,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>חזק את הפזמון והפוך אותו ליותר קליט</option><option>הפוך ליותר קצבי וריקודי</option><option>הפוך ליותר מרגש ואישי</option><option>קצר שורות ארוכות ושפר זרימה</option><option>שמור על הרעיון ושנה את הניסוח</option></select><B sm onClick={improveIdea} dis={ideaLoading}>🪄 שפר טיוטה</B><B sm onClick={checkGenderConsistency} dis={ideaLoading}>🔎 בדוק התאמת פנייה</B><B sm onClick={adaptIdeaGender} dis={ideaLoading}>✨ התאם למצב שנבחר</B><B sm onClick={()=>setSrc(prev=>prev ? prev+"\n\n"+ideaOut : ideaOut)}>➕ הוסף למקור</B><B sm onClick={saveIdeaExcerpt}>💡 שמור משפט לבנק</B><B sm onClick={()=>{const t=window.prompt("הדבק כאן רק את השורה/החלק שתרצה להוסיף למקור:"); if(t&&t.trim()) addPhraseToSong(t.trim());}}>✂️ הוסף חלק למקור</B></>}
             {ideaOut && <B sm onClick={()=>generateIdea(1)}>🔀 צור כיוון נוסף</B>}
           </div>
-          {genderCheckResult && <div style={{marginTop:8,padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx,whiteSpace:"pre-wrap",fontSize:12}}><b>🎭 בדיקת התאמה:</b><br/>{genderCheckResult}</div>}\n          {ideaVariants.length>1 && <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>{ideaVariants.map((v,i)=><B key={i} sm onClick={()=>setIdeaOut(v)}>{i===0?"💖 כיוון 1":i===1?"⚡ כיוון 2":"🌙 כיוון 3"}</B>)}</div>}{ideaOut && <div style={{marginTop:8,padding:9,borderRadius:9,background:bg,border:`1px solid ${bd}`}}><div style={{fontSize:11,fontWeight:700,color:tx}}>🗂️ היסטוריית גרסאות {ideaHistory.length ? `— ${ideaHistory.length+1} גרסאות` : "— גרסה מקורית"}</div><div style={{display:"flex",gap:6,marginTop:6,flexWrap:"wrap"}}>{ideaHistory.map((v,i)=><B key={i} sm onClick={()=>{setIdeaOut(v);setIdeaHistoryIndex(i)}}>↩️ גרסה {i+1}</B>)}{ideaHistory.length>0&&<B sm onClick={()=>{const last=ideaHistory[ideaHistory.length-1];setIdeaHistory(prev=>prev.slice(0,-1));setIdeaOut(last);setIdeaHistoryIndex(-1)}}>↶ חזור לגרסה קודמת</B>}<B sm onClick={()=>{setIdeaHistory([]);setIdeaHistoryIndex(-1)}}>🗑️ נקה היסטוריה</B></div><div style={{fontSize:10,color:sb,marginTop:5}}>לפני כל שיפור נשמרת הגרסה הקודמת. אפשר לחזור אליה בכל זמן.</div>
+          {ideaOut && renderRefinePanel("idea")}
+          {genderCheckResult && <div style={{marginTop:8,padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx,whiteSpace:"pre-wrap",fontSize:12}}><b>🎭 בדיקת התאמה:</b><br/>{genderCheckResult}</div>}
+          {ideaVariants.length>1 && <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>{ideaVariants.map((v,i)=><B key={i} sm onClick={()=>setIdeaOut(v)}>{i===0?"💖 כיוון 1":i===1?"⚡ כיוון 2":"🌙 כיוון 3"}</B>)}</div>}{ideaOut && <div style={{marginTop:8,padding:9,borderRadius:9,background:bg,border:`1px solid ${bd}`}}><div style={{fontSize:11,fontWeight:700,color:tx}}>🗂️ היסטוריית גרסאות {ideaHistory.length ? `— ${ideaHistory.length+1} גרסאות` : "— גרסה מקורית"}</div><div style={{display:"flex",gap:6,marginTop:6,flexWrap:"wrap"}}>{ideaHistory.map((v,i)=><B key={i} sm onClick={()=>{setIdeaOut(v);setIdeaHistoryIndex(i)}}>↩️ גרסה {i+1}</B>)}{ideaHistory.length>0&&<B sm onClick={()=>{const last=ideaHistory[ideaHistory.length-1];setIdeaHistory(prev=>prev.slice(0,-1));setIdeaOut(last);setIdeaHistoryIndex(-1)}}>↶ חזור לגרסה קודמת</B>}<B sm onClick={()=>{setIdeaHistory([]);setIdeaHistoryIndex(-1)}}>🗑️ נקה היסטוריה</B></div><div style={{fontSize:10,color:sb,marginTop:5}}>לפני כל שיפור נשמרת הגרסה הקודמת. אפשר לחזור אליה בכל זמן.</div>
 {ideaHistory.length>0 && <div style={{marginTop:10,paddingTop:9,borderTop:`1px solid ${bd}`}}>
 <div style={{fontSize:11,fontWeight:700}}>🔍 השוואת שתי גרסאות</div>
 <div style={{display:"flex",gap:6,marginTop:6,flexWrap:"wrap"}}>

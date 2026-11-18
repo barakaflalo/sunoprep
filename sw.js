@@ -19,8 +19,8 @@
   CacheStorage.prototype.match=function(){return sm.apply(this,arguments).then(clean);};
 })();
 
-const CACHE = 'sunoprep-v11.3';
-const ASSETS = ['./','./index.html','./app.js','./appnest-assistant.js','./manifest.json','./icon-192.png','./icon-512.png',
+const CACHE = 'sunoprep-v11.4';
+const ASSETS = ['./','./index.html','./app.js','./appnest-assistant.js','./appnest-refine.js','./manifest.json','./icon-192.png','./icon-512.png',
   './vendor/react.production.min.js','./vendor/react-dom.production.min.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(()=>{}))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k))))); self.clients.claim(); });
