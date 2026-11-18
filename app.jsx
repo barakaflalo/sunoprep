@@ -31,8 +31,8 @@ const TR = {
       { i: "💾", t: "שמור להיסטוריה", d: "שמור שירים מוצלחים להיסטוריה (📜) כדי לזכור מה עבד. ייצא גיבוי בהגדרות." },
     ],
     skip: "דלג", next: "הבא", done: "סיום",
-    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• 5 שפות ממשק, 9 שפות מקור\n• 4 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 9.7", back: "← חזרה לדף הבית",
+    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
+    ver: "גרסה 9.9", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -67,8 +67,8 @@ const TR = {
       { i: "💾", t: "Save to history", d: "Save successful songs to history (📜) to remember what worked. Export backups in Settings." },
     ],
     skip: "Skip", next: "Next", done: "Done",
-    aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• 5 UI languages, 9 source languages\n• 4 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 9.7", back: "← Back to home",
+    aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• ✨ AI song studio, auto-refine with a critic, nikud reviewer\n• 5 UI languages, 9 source languages\n• 5 color themes + day/night mode\n• Runs in browser — no server, no install",
+    ver: "Version 9.9", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v9.7", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v9.9", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v9.7", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v9.9", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -546,6 +546,27 @@ function analyzeRhymes(text) {
   return { total: lines.length, groups, weak, scheme };
 }
 
+/* ═══ אולפן השירים — שמירת המצב (כל שינוי נשמר מיד, חלק א׳) ═══ */
+const IDEA_KEY = "sunoprep_idea_state";
+const IDEA_SAVED = (() => { try { return JSON.parse(localStorage.getItem(IDEA_KEY) || "{}") || {}; } catch (e) { return {}; } })();
+const IDEA_GENRES = ["מזרחי", "פופ ישראלי", "בלדה", "ראפ / היפ־הופ", "רוק", "ים־תיכוני", "שיר ילדים", "חופשי"];
+const IDEA_MOODS = ["רומנטי", "שמח וקצבי", "עצוב ומרגש", "עוצמתי", "נוסטלגי", "מצחיק"];
+const IDEA_GENDERS = ["👨➡️👩 גבר שר לאישה", "👩➡️👨 אישה שרה לגבר", "👨➡️👨 גבר שר לגבר", "👩➡️👩 אישה שרה לאישה", "ניטרלי / ללא מגדר מוגדר"];
+const IDEA_TOPICS = ["אהבה ראשונה", "געגוע לבית", "פרידה וגעגוע", "מסיבה של קיץ", "שיר לאמא", "חברים לכל החיים", "לקום מחדש אחרי נפילה", "לילה בעיר"];
+const GENRE_HINT = {
+  "מזרחי": "סגנון מזרחי: רגש גדול ופנייה ישירה, פזמון מזמר עם הברות ארוכות שאפשר לסלסל בהן.",
+  "פופ ישראלי": "פופ ישראלי: פזמון פשוט ומיידי, משפטים כמו דיבור יומיומי, הוק של 2–4 מילים.",
+  "בלדה": "בלדה: שורות נושמות, רגש שעולה בהדרגה ומגיע לשיא בגשר.",
+  "ראפ / היפ־הופ": "ראפ: חריזה פנימית ומשחקי מילים, שורות צפופות בקצב, פזמון קצר שחוזר.",
+  "רוק": "רוק: אנרגיה, משפטים חדים וישירים, פזמון שצועקים יחד.",
+  "ים־תיכוני": "ים־תיכוני: חום, שמש וריקוד, שורות קצביות וקלילות.",
+  "שיר ילדים": "שיר ילדים: מילים פשוטות, הרבה חזרות והומור, בלי שום תוכן שלא מתאים לילדים.",
+  "חופשי": "",
+};
+const LENGTH_HINT = { "קצרה": "בית אחד ופזמון", "רגילה": "שני בתים, פזמון וגשר", "מלאה": "שלושה בתים, פזמון, גשר וסיום" };
+const SECTION_HE = { "verse": "בית", "chorus": "פזמון", "pre-chorus": "טרום־פזמון", "bridge": "גשר", "intro": "פתיחה", "outro": "סיום", "hook": "הוק", "break": "הפסקה" };
+const sectionLabel = (tag) => { const m = tag.trim().match(/^([A-Za-z-]+)\s*(\d*)/); const he = m && SECTION_HE[m[1].toLowerCase()]; return he ? `${he}${m[2] ? " " + m[2] : ""}` : tag; };
+
 /* ═══ AppNest Refine — "המפה" של SunoPrep (המנוע עצמו ב-appnest-refine.js) ═══ */
 const SONG_CRITERIA = { hook: 2, rhyme: 1.5, flow: 1.5, imagery: 1.5, emotion: 1, gender: 1.5, fit: 1, suno: 1 };
 const SONG_CRIT_LABELS = { hook: "🎣 פזמון וקליטות", rhyme: "🎵 חריזה", flow: "🌊 זרימה ומשקל", imagery: "🖼️ דימויים ומקוריות", emotion: "❤️ רגש", gender: "🎭 עקביות מגדר", fit: "🎯 התאמה להגדרות", suno: "🤖 מוכנות לסונו" };
@@ -624,12 +645,12 @@ function SunoPrep() {
   const [sLang, setSLang] = useState("he");
   const [uLang, setULang] = useState("he");
   const [loading, setLoading] = useState(false);
-  const [ideaPrompt, setIdeaPrompt] = useState("");
-  const [ideaMood, setIdeaMood] = useState("רומנטי");
-  const [ideaType, setIdeaType] = useState("טיוטת שיר");
-  const [ideaStructure, setIdeaStructure] = useState("בית–פזמון–בית–פזמון–גשר");
-  const [ideaLength, setIdeaLength] = useState("רגילה");
-  const [ideaPerspective, setIdeaPerspective] = useState("גוף ראשון");
+  const [ideaPrompt, setIdeaPrompt] = useState(() => IDEA_SAVED.ideaPrompt ?? "");
+  const [ideaMood, setIdeaMood] = useState(() => IDEA_SAVED.ideaMood ?? "רומנטי");
+  const [ideaType, setIdeaType] = useState(() => IDEA_SAVED.ideaType ?? "טיוטת שיר");
+  const [ideaStructure, setIdeaStructure] = useState(() => IDEA_SAVED.ideaStructure ?? "בית–פזמון–בית–פזמון–גשר");
+  const [ideaLength, setIdeaLength] = useState(() => IDEA_SAVED.ideaLength ?? "רגילה");
+  const [ideaPerspective, setIdeaPerspective] = useState(() => IDEA_SAVED.ideaPerspective ?? "גוף ראשון");
   const [ideaGenderMode, setIdeaGenderMode] = useState(() => localStorage.getItem("sunoprep_idea_gender_mode") || "ניטרלי / ללא מגדר מוגדר");
   const [genderCheckResult, setGenderCheckResult] = useState("");
   const [voiceSamples, setVoiceSamples] = useState([]);
@@ -644,14 +665,25 @@ function SunoPrep() {
   const voiceChunksRef = useRef([]);
   useEffect(()=>{ let alive=true; voiceDBAll().then(rows=>{if(alive)setVoiceSamples(rows.map(x=>({...x,url:URL.createObjectURL(x.blob)})));}).catch(()=>{}); return ()=>{alive=false;};},[]);
 
-  const [ideaRhyme, setIdeaRhyme] = useState("חריזה טבעית");
-  const [ideaKeywords, setIdeaKeywords] = useState("");
-  const [ideaOut, setIdeaOut] = useState("");
-  const [ideaHistory, setIdeaHistory] = useState([]);
+  const [ideaRhyme, setIdeaRhyme] = useState(() => IDEA_SAVED.ideaRhyme ?? "חריזה טבעית");
+  const [ideaKeywords, setIdeaKeywords] = useState(() => IDEA_SAVED.ideaKeywords ?? "");
+  const [ideaOut, setIdeaOut] = useState(() => IDEA_SAVED.ideaOut ?? "");
+  const [ideaHistory, setIdeaHistory] = useState(() => Array.isArray(IDEA_SAVED.ideaHistory) ? IDEA_SAVED.ideaHistory : []);
   const [ideaHistoryIndex, setIdeaHistoryIndex] = useState(-1);
   const [compareA, setCompareA] = useState("current");
   const [compareB, setCompareB] = useState("history-0");
-  const [ideaVariants, setIdeaVariants] = useState([]);
+  const [ideaVariants, setIdeaVariants] = useState(() => Array.isArray(IDEA_SAVED.ideaVariants) ? IDEA_SAVED.ideaVariants : []);
+  const [ideaGenre, setIdeaGenre] = useState(() => IDEA_SAVED.ideaGenre || "פופ ישראלי");
+  const [ideaAutoRefine, setIdeaAutoRefine] = useState(() => !!IDEA_SAVED.ideaAutoRefine);
+  const [ideaMore, setIdeaMore] = useState(false);
+  const [ideaEdit, setIdeaEdit] = useState(false);
+  const [ideaShowVersions, setIdeaShowVersions] = useState(false);
+  const [ideaInspire, setIdeaInspire] = useState(null);      // {loading, ideas:[]}
+  const [ideaTitles, setIdeaTitles] = useState(null);        // {loading, titles:[]}
+  const [ideaStyleMsg, setIdeaStyleMsg] = useState("");
+  const [lineSel, setLineSel] = useState(null);              // אינדקס השורה שנבחרה בטיוטה
+  const [lineTool, setLineTool] = useState(null);            // {idx, kind, loading, options, err}
+  const [continueBusy, setContinueBusy] = useState(false);
   const [ideaLoading, setIdeaLoading] = useState(false);
   const [ideaImprove, setIdeaImprove] = useState("חזק את הפזמון והפוך אותו ליותר קליט");
   const [refineRounds, setRefineRounds] = useState(() => Number(localStorage.getItem("sunoprep_refine_rounds")) || 2);
@@ -662,6 +694,7 @@ function SunoPrep() {
   const [nikudReview, setNikudReview] = useState(null);
   const [nikudWarn, setNikudWarn] = useState("");
   const [err, setErr] = useState("");
+  useEffect(() => { if (!err) return; const t = setTimeout(() => setErr(""), 9000); return () => clearTimeout(t); }, [err]);
   const [tMode, setTMode] = useState("full");
   const [genderDir, setGenderDir] = useState("m2f");
   const [showVoiceTip, setShowVoiceTip] = useState(true);
@@ -675,7 +708,8 @@ function SunoPrep() {
   const [testState, setTestState] = useState(null);
   const [selSty, setSelSty] = useState([]);
   const [selVocal, setSelVocal] = useState([]);
-  const [custSty, setCustSty] = useState("");
+  const [custSty, setCustSty] = useState(() => { try { return localStorage.getItem("sunoprep_cust_sty") || ""; } catch (e) { return ""; } });
+  useEffect(() => { try { localStorage.setItem("sunoprep_cust_sty", custSty); } catch (e) {} }, [custSty]);
   const [performanceCard, setPerformanceCard] = useState({verse:"soft and intimate", chorus:"powerful and open", bridge:"emotional and rising", outro:"gentle and fading"});
   const [bpmVal, setBpmVal] = useState(0);
   const [savedSty, setSavedSty] = useState([]);
@@ -1110,29 +1144,143 @@ ${src}`;
     setIdeaLoading(false);
   };
 
-  const generateIdea = async (count=1) => {
-    if (!ideaPrompt.trim()) { setErr("כתוב רעיון קצר או התחלה לשיר"); return; }
-    if (!aiProvider) { setErr("כדי ליצור טיוטה אמיתית צריך לחבר ספק AI בהגדרות"); return; }
-    setIdeaLoading(true); setErr("");
-    const makePrompt = (i) => `אתה כותב שירים יצירתי בעברית. צור ${ideaType} לפי הרעיון: "${ideaPrompt}". מצב רוח: ${ideaMood}. מבנה רצוי: ${ideaStructure}. אורך: ${ideaLength}. נקודת מבט: ${ideaPerspective}. התאמת מגדר ונמען: ${ideaGenderMode}. סגנון חריזה: ${ideaRhyme}. הקפד על התאמה עקבית של לשון הפנייה, כינויי גוף, פעלים, תארים וכינויי חיבה לפי הבחירה. אל תחליף מגדר או צורת פנייה באמצע הטקסט. אם נבחר "ניטרלי / ללא מגדר מוגדר", נסח באופן טבעי וניטרלי ככל האפשר. מילות מפתח שחייבות להשתלב אם מתאימות: "${ideaKeywords}". אם נבחר מבנה שיר, השתמש בתגיות [Verse], [Chorus], [Bridge] לפי הצורך. זהו כיוון מספר ${i+1}; הוא חייב להיות שונה מהכיוונים האחרים בזווית, בדימויים, בפזמון ובניסוח. כתוב בעברית טבעית, קליטה ורגשית. אל תוסיף הסברים, כותרות טכניות או הערות. תן טקסט מקורי שאפשר לערוך ולהשתמש בו כהשראה.`;
+  /* ═══ ✨ אולפן השירים ═══ */
+  useEffect(() => {
+    const t = setTimeout(() => { try { localStorage.setItem(IDEA_KEY, JSON.stringify({ ideaPrompt, ideaMood, ideaType, ideaStructure, ideaLength, ideaPerspective, ideaRhyme, ideaKeywords, ideaOut, ideaGenre, ideaAutoRefine, ideaVariants: ideaVariants.slice(0, 3), ideaHistory: ideaHistory.slice(-15) })); } catch (e) {} }, 400);
+    return () => clearTimeout(t);
+  }, [ideaPrompt, ideaMood, ideaType, ideaStructure, ideaLength, ideaPerspective, ideaRhyme, ideaKeywords, ideaOut, ideaGenre, ideaAutoRefine, ideaVariants, ideaHistory]);
+
+  // קריאת AI שמחזירה JSON (ניסיון חוזר אחד אם הפורמט נשבר)
+  const aiJSON = async (prompt) => {
+    const ex = (window.AppNestRefine && window.AppNestRefine.extractJSON) || ((t) => { try { return JSON.parse(t); } catch (e) { return null; } });
+    for (let i = 0; i < 2; i++) { const j = ex(await callAI(i ? prompt + "\n\nהחזר אך ורק JSON תקין, בלי טקסט נוסף." : prompt)); if (j) return j; }
+    throw new Error("הבינה לא החזירה תשובה בפורמט הנכון. נסה שוב.");
+  };
+  const needAI = (what) => { if (aiProvider) return true; setErr(`כדי ${what} צריך לחבר ספק AI בהגדרות (Gemini חינמי)`); return false; };
+
+  const setDraft = (next, keepOld = true) => {           // מחליף טיוטה ושומר את הקודמת בהיסטוריה
+    if (keepOld && ideaOut.trim() && ideaOut !== next) { setIdeaHistory(prev => [...prev, ideaOut].slice(-15)); setIdeaHistoryIndex(-1); }
+    setIdeaOut(next); setLineSel(null); setLineTool(null);
+  };
+
+  const ANGLES = ["כיוון רגשי ואישי, מנקודת מבט אינטימית", "כיוון קצבי עם פזמון שמתפוצץ", "כיוון מפתיע — זווית, סיפור או דימוי שלא מצפים להם"];
+  const makeSongPrompt = (i, count) => `אתה כותב שירים מקצועי בעברית שכותב להיטים, ומכין מילים ל-Suno AI.
+כתוב ${ideaType} על: "${ideaPrompt.trim()}".
+
+הגדרות:
+- ז'אנר: ${ideaGenre} · מצב רוח: ${ideaMood}
+- מבנה: ${ideaStructure} · אורך: ${ideaLength} (${LENGTH_HINT[ideaLength] || ""})
+- נקודת מבט: ${ideaPerspective} · חריזה: ${ideaRhyme}
+- מי שר למי: ${ideaGenderMode}. ${genderInstruction}${ideaKeywords.trim() ? `\n- מילות מפתח לשלב אם זה טבעי: ${ideaKeywords.trim()}` : ""}
+
+כללי כתיבה:
+1. פזמון קליט: שורת מפתח (הוק) קצרה שחוזרת, והפזמון חוזר זהה בכל פעם שהוא מופיע.
+2. דימויים קונקרטיים ופרטים אמיתיים (מקום, חפץ, רגע) — להראות ולא להסביר. בלי קלישאות שחוקות כמו "לב שבור", "דמעות כמו גשם", "את כל העולם שלי".
+3. שורות קצרות שקל לשיר: עד 8–9 מילים, ובשורות מקבילות מספר הברות דומה.
+4. ${GENRE_HINT[ideaGenre] || "עקבי בסגנון ובקצב."}
+5. עברית טבעית ועכשווית, לא מליצית.
+6. תגיות מבנה באנגלית בסוגריים מרובעים, כל אחת בשורה נפרדת: [Verse 1], [Pre-Chorus], [Chorus], [Bridge], [Outro].
+7. בלי ניקוד, בלי כותרת ובלי הסברים — רק מילות השיר.${count > 1 ? `\n\nזה כיוון ${i + 1} מתוך ${count}: ${ANGLES[i] || ANGLES[2]}. הוא חייב להיות שונה לגמרי מהכיוונים האחרים — בזווית, בדימויים ובפזמון.` : ""}`;
+
+  const generateIdea = async (count = 1) => {
+    if (!ideaPrompt.trim()) { setErr("כתוב קודם על מה השיר (או בחר נושא מהרשימה)"); return; }
+    if (!needAI("לכתוב שיר")) return;
+    setIdeaLoading(true); setErr(""); setRefineResult(null); setIdeaTitles(null); setIdeaStyleMsg("");
+    let first = "";
     try {
-      const outs = await Promise.all(Array.from({length:count},(_,i)=>callAI(makePrompt(i))));
-      const clean=outs.map(x=>(x||"").trim()).filter(Boolean);
-      setIdeaVariants(clean); setIdeaOut(clean[0]||"");
-    } catch(e) { setErr(String(e?.message||e)); }
+      const outs = await Promise.all(Array.from({ length: count }, (_, i) => callAI(makeSongPrompt(i, count)).catch(() => "")));
+      const clean = outs.map(x => songPostProcess((window.AppNestRefine ? window.AppNestRefine.cleanText(x) : (x || "")).trim(), "")).filter(Boolean);
+      if (!clean.length) throw new Error("לא התקבלה טיוטה. בדוק את החיבור בהגדרות ונסה שוב.");
+      setIdeaVariants(clean); first = clean[0]; setDraft(first); setIdeaEdit(false);
+    } catch (e) { setErr(String(e?.message || e)); }
+    setIdeaLoading(false);
+    if (first && count === 1 && ideaAutoRefine) runAutoRefine("idea", false, first, 1);
+  };
+
+  const quickImprove = async (how) => {
+    if (!ideaOut.trim() || !needAI("לשפר")) return;
+    setIdeaLoading(true); setErr("");
+    try {
+      const p = `אתה עורך שירים מקצועי בעברית. שפר את הטיוטה לפי הבקשה: "${how}". שמור על הרעיון, על המבנה ועל תגיות [Verse]/[Chorus]. ${genderInstruction} ${GENRE_HINT[ideaGenre] || ""} בלי ניקוד ובלי הסברים — החזר רק את הטיוטה המשופרת.\n\nהטיוטה:\n${ideaOut}`;
+      const out = window.AppNestRefine ? window.AppNestRefine.cleanText(await callAI(p)) : (await callAI(p) || "").trim();
+      if (out) setDraft(songPostProcess(out, ideaOut));
+    } catch (e) { setErr(String(e?.message || e)); }
     setIdeaLoading(false);
   };
 
-  const improveIdea = async () => {
-    if (!ideaOut.trim()) { setErr("צור או בחר טיוטה לפני השיפור"); return; }
-    if (!aiProvider) { setErr("כדי לשפר טיוטה צריך לחבר ספק AI בהגדרות"); return; }
-    setIdeaLoading(true); setErr("");
+  const inspireMe = async () => {
+    if (!needAI("לקבל רעיונות")) return;
+    setIdeaInspire({ loading: true, ideas: [] }); setErr("");
     try {
-      const p=`אתה עורך שירים מקצועי בעברית. שפר את הטיוטה הבאה לפי הבקשה: "${ideaImprove}". שמור על הרעיון והחלקים הטובים. ${genderInstruction} אל תוסיף הסברים; החזר רק את הטיוטה המשופרת. הטיוטה:
-${ideaOut}`;
-      const out=await callAI(p); if(out?.trim()) { const next=out.trim(); setIdeaHistory(prev=>[...prev, ideaOut]); setIdeaHistoryIndex(prev=>prev+1); setIdeaOut(next); }
-    } catch(e) { setErr(String(e?.message||e)); }
+      const j = await aiJSON(`הצע 5 רעיונות מקוריים לשירים בעברית בז'אנר ${ideaGenre}, במצב רוח ${ideaMood}${ideaPrompt.trim() ? `, בהשראת: "${ideaPrompt.trim()}"` : ""}. כל רעיון במשפט אחד קונקרטי ומפתיע (סיפור, רגע או דימוי — לא נושא כללי). החזר JSON בלבד: {"ideas":["...","...","...","...","..."]}`);
+      setIdeaInspire({ loading: false, ideas: (j.ideas || []).map(String).filter(Boolean).slice(0, 6) });
+    } catch (e) { setIdeaInspire(null); setErr(String(e?.message || e)); }
+  };
+
+  const suggestTitles = async () => {
+    if (!ideaOut.trim() || !needAI("להציע שם")) return;
+    setIdeaTitles({ loading: true, titles: [] }); setErr("");
+    try {
+      const j = await aiJSON(`הצע 5 שמות קצרים וקליטים (1–4 מילים) לשיר הבא. עדיף שם שנלקח מההוק. החזר JSON בלבד: {"titles":["..."]}\n\nהשיר:\n${ideaOut}`);
+      setIdeaTitles({ loading: false, titles: (j.titles || []).map(String).filter(Boolean).slice(0, 6) });
+    } catch (e) { setIdeaTitles(null); setErr(String(e?.message || e)); }
+  };
+
+  const suggestStyle = async () => {
+    if (!ideaOut.trim() || !needAI("להציע סגנון")) return;
+    setIdeaLoading(true); setErr(""); setIdeaStyleMsg("");
+    try {
+      const j = await aiJSON(`You are a Suno AI prompt expert. Write a Suno "Style of Music" prompt in ENGLISH for these Hebrew lyrics: genre "${ideaGenre}", mood "${ideaMood}", singer: ${ideaGenderMode}. Comma-separated tags: genre and sub-genre, 2–3 instruments, vocal type, tempo/BPM, mood. Max 110 characters. Do not include artist names. Return JSON only: {"style":"..."}\n\nLyrics:\n${ideaOut}`);
+      const st = String(j.style || "").replace(/["\n]/g, " ").trim().slice(0, 160);
+      if (!st) throw new Error("לא התקבל סגנון");
+      setCustSty(st); setIdeaStyleMsg(`🎼 הוכנס לשדה "סגנון מותאם אישית" בלשונית כתיבה: ${st}`);
+    } catch (e) { setErr(String(e?.message || e)); }
     setIdeaLoading(false);
+  };
+
+  const sendDraftToWrite = () => {
+    if (!ideaOut.trim()) return;
+    if (src.trim()) {
+      const replace = window.confirm("בלשונית כתיבה כבר יש שיר.\n\nאישור = להחליף אותו בטיוטה הזו\nביטול = להוסיף את הטיוטה בסוף");
+      setSrc(replace ? ideaOut : src.replace(/\s*$/, "") + "\n\n" + ideaOut);
+    } else setSrc(ideaOut);
+    setActiveTab("write");
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {}
+  };
+
+  // כלי שורה: חלופות / קיצור / חרוזים לשורה שנבחרה
+  const lineTask = async (idx, kind) => {
+    const lines = ideaOut.split("\n"); const line = (lines[idx] || "").trim(); if (!line || !needAI("להשתמש בכלי השורה")) return;
+    setLineTool({ idx, kind, loading: true, options: [] }); setErr("");
+    const syl = countSyllables(line);
+    const words = line.replace(/[.,!?;:"'()…–—-]/g, " ").split(/\s+/).filter(Boolean); const last = words[words.length - 1] || "";
+    const prevLine = (lines.slice(0, idx).reverse().find(l => l.trim() && !/^\s*\[/.test(l)) || "").trim();
+    const nextLine = (lines.slice(idx + 1).find(l => l.trim() && !/^\s*\[/.test(l)) || "").trim();
+    const prompts = {
+      alt: `אתה כותב שירים בעברית. בשיר שלמטה, כתוב 3 חלופות לשורה "${line}" בלבד. כל חלופה: אותו רעיון בניסוח רענן, בערך ${syl} הברות, ממשיכה טבעי מהשורה הקודמת ("${prevLine}") ומתחברת לבאה ("${nextLine}")${ideaRhyme !== "ללא חריזה מחייבת" ? ", ושומרת על החריזה של השורה" : ""}. ${genderInstruction} בלי ניקוד. החזר JSON בלבד: {"options":["...","...","..."]}\n\nהשיר:\n${ideaOut}`,
+      short: `קצר את השורה "${line}" לגרסה קלה יותר לשירה (בערך ${Math.max(4, syl - 3)} הברות), באותה משמעות ובאותו חרוז. תן 2 אפשרויות. ${genderInstruction} בלי ניקוד. החזר JSON בלבד: {"options":["...","..."]}`,
+      rhyme: `תן 12 מילים או צירופים קצרים בעברית שמתחרזים לפי ההגייה עם "${last}" ומתאימים לשיר בז'אנר ${ideaGenre} על "${ideaPrompt.trim() || "אהבה"}". סדר מהחרוז החזק לחלש. בלי ניקוד. החזר JSON בלבד: {"options":["..."]}`,
+    };
+    try {
+      const j = await aiJSON(prompts[kind]);
+      const opts = (j.options || []).map(x => songPostProcess(String(x).trim(), "")).filter(Boolean).slice(0, kind === "rhyme" ? 14 : 4);
+      setLineTool({ idx, kind, loading: false, options: opts, last });
+    } catch (e) { setLineTool({ idx, kind, loading: false, options: [], err: String(e?.message || e) }); }
+  };
+  const replaceLine = (idx, text) => { const lines = ideaOut.split("\n"); lines[idx] = text; setDraft(lines.join("\n")); };
+
+  // ✍️ המשך את השיר (לשונית כתיבה): כותב את החלק הבא ומוסיף בסוף
+  const continueSong = async () => {
+    if (!src.trim() || !needAI("להמשיך את השיר")) return;
+    setContinueBusy(true); setErr("");
+    try {
+      const tags = (src.match(/\[[^\]]+\]/g) || []).map(t => t.slice(1, -1));
+      const p = `אתה כותב שירים בעברית. זה שיר שהמשתמש התחיל לכתוב. כתוב רק את החלק הבא שלו (בית, פזמון או גשר — מה שמתאים עכשיו לפי המבנה${tags.length ? `; עד עכשיו: ${tags.join(", ")}` : ""}). שמור על הקול, הסגנון, המשקל והחריזה של המשתמש. אם החלק הבא הוא פזמון שכבר הופיע — חזור עליו זהה. ${genderInstruction} ${HAS_NIKUD.test(src) ? "" : "בלי ניקוד. "}התחל בתגית מבנה בסוגריים מרובעים (למשל [Verse 2]) והחזר רק את החלק החדש, בלי הסברים.\n\nהשיר עד עכשיו:\n${src}`;
+      const out = window.AppNestRefine ? window.AppNestRefine.cleanText(await callAI(p)) : (await callAI(p) || "").trim();
+      if (!out) throw new Error("לא התקבל המשך. נסה שוב.");
+      setSrcBeforeRefine(src); setSrc(src.replace(/\s*$/, "") + "\n\n" + songPostProcess(out, src));
+    } catch (e) { setErr(String(e?.message || e)); }
+    setContinueBusy(false);
   };
 
   /* ═══ 🎻 סדנת שיפור אוטומטית: כותב → מבקר → משפר (מנוע AppNest Refine) ═══
@@ -1197,13 +1345,13 @@ ${draft}`;
 
   const refineBusy = !!refineState?.running;
 
-  const runAutoRefine = async (target, reviewOnly = false) => {
+  const runAutoRefine = async (target, reviewOnly = false, draftOverride = null, roundsOverride = null) => {
     const own = target === "write";
-    const base = own ? src : ideaOut;
+    const base = draftOverride != null ? draftOverride : own ? src : ideaOut;
     if (!base.trim()) { setErr(own ? "כתוב שיר לפני השיפור" : "צור או בחר טיוטה לפני השיפור"); return; }
     if (!aiProvider) { setErr("כדי לשפר צריך לחבר ספק AI בהגדרות"); return; }
     if (!window.AppNestRefine) { setErr("מנוע השיפור לא נטען — רענן את הדף"); return; }
-    const rounds = reviewOnly ? 0 : refineRounds;
+    const rounds = reviewOnly ? 0 : (roundsOverride || refineRounds);
     refineCancelRef.current = false;
     if (!own) setIdeaLoading(true);
     setErr(""); setRefineResult(null);
@@ -1223,7 +1371,7 @@ ${draft}`;
         else {
           const accepted = r.log.filter(e => e.accepted).map(e => e.text);
           const chain = [base, ...accepted.slice(0, -1)];          // כל גרסת ביניים שהתקבלה נכנסת להיסטוריה
-          setIdeaHistory(prev => [...prev, ...chain]); setIdeaHistoryIndex(-1); setIdeaOut(r.text);
+          setIdeaHistory(prev => [...prev, ...chain].slice(-15)); setIdeaHistoryIndex(-1); setIdeaOut(r.text); setLineSel(null); setLineTool(null);
         }
       }
       setRefineResult({ ...r, target, reviewOnly });
@@ -1644,6 +1792,54 @@ ${src}`;
     }}>{children}</button>
   );
 
+  /* ═══ רכיבי עיצוב של אולפן השירים ═══ */
+  const Chip = ({ on, onClick, children, dis }) => (
+    <button onClick={onClick} disabled={dis} style={{
+      padding: "7px 12px", borderRadius: 20, fontSize: 13, fontFamily: "inherit", cursor: dis ? "not-allowed" : "pointer",
+      border: `1px solid ${on ? c.a : bd}`, background: on ? c.a : bg, color: on ? onA : tx, fontWeight: on ? 700 : 400,
+      opacity: dis ? 0.5 : 1, transition: "all .15s", lineHeight: 1.3, minHeight: 36,
+    }}>{children}</button>
+  );
+  const stepCard = { marginTop: 12, padding: 14, borderRadius: 16, background: cd, border: `1px solid ${bd}` };
+  const stepHead = { display: "flex", alignItems: "center", gap: 8, fontWeight: 800, fontSize: 16, color: tx };
+  const stepNum = { width: 26, height: 26, borderRadius: "50%", display: "inline-grid", placeItems: "center", fontSize: 13, fontWeight: 800, background: c.a, color: onA, flexShrink: 0 };
+  const chipLabel = { fontSize: 12, fontWeight: 700, color: sb, marginTop: 12, marginBottom: 6 };
+  const chipRow = { display: "flex", gap: 6, flexWrap: "wrap" };
+
+  const renderLineTools = (idx) => {
+    const lt = lineTool && lineTool.idx === idx ? lineTool : null;
+    return <div style={{ margin: "4px 4px 8px", padding: 9, borderRadius: 10, background: cd, border: `1px solid ${c.a}66` }}>
+      <div style={chipRow}>
+        <Chip dis={lt?.loading} on={lt?.kind === "alt"} onClick={() => lineTask(idx, "alt")}>🔁 3 חלופות</Chip>
+        <Chip dis={lt?.loading} on={lt?.kind === "short"} onClick={() => lineTask(idx, "short")}>✂️ קצר</Chip>
+        <Chip dis={lt?.loading} on={lt?.kind === "rhyme"} onClick={() => lineTask(idx, "rhyme")}>🎯 חרוזים</Chip>
+        <Chip onClick={() => { setIdeaEdit(true); setLineSel(null); }}>✏️ ערוך ידנית</Chip>
+      </div>
+      {lt?.loading && <div style={{ fontSize: 12, color: ca, marginTop: 8 }}>⏳ חושב...</div>}
+      {lt?.err && <div style={{ fontSize: 12, color: "#e0a03a", marginTop: 8 }}>⚠️ {lt.err}</div>}
+      {lt && !lt.loading && lt.options.length > 0 && (lt.kind === "rhyme"
+        ? <div style={{ marginTop: 8 }}><div style={{ fontSize: 11, color: sb, marginBottom: 5 }}>חרוזים ל"{lt.last}" — לחץ כדי להעתיק:</div><div style={chipRow}>{lt.options.map(o => <Chip key={o} onClick={() => { try { navigator.clipboard && navigator.clipboard.writeText(o); } catch (e) {} }}>{o}</Chip>)}</div></div>
+        : <div style={{ marginTop: 8, display: "grid", gap: 6 }}>{lt.options.map((o, k) => <button key={k} onClick={() => replaceLine(idx, o)} style={{ textAlign: "start", padding: "8px 10px", borderRadius: 9, border: `1px solid ${bd}`, background: bg, color: tx, fontFamily: "inherit", fontSize: 14, cursor: "pointer", display: "flex", justifyContent: "space-between", gap: 8 }}><span>{o}</span><span style={{ fontSize: 11, color: ca, flexShrink: 0 }}>החלף ↵</span></button>)}</div>)}
+    </div>;
+  };
+
+  const renderDraftView = () => {
+    let section = "";
+    return ideaOut.split("\n").map((l, i) => {
+      const tag = l.trim().match(/^\[(.+?)\]$/);
+      if (tag) { section = tag[1]; return <div key={i} style={{ margin: i ? "12px 4px 5px" : "0 4px 5px" }}><span style={{ fontSize: 11, fontWeight: 700, color: ca, border: `1px solid ${c.a}66`, borderRadius: 20, padding: "2px 10px", background: `${c.a}14` }}>{sectionLabel(tag[1])} <span style={{ opacity: .6, fontWeight: 400 }}>· {tag[1]}</span></span></div>; }
+      if (!l.trim()) return <div key={i} style={{ height: 6 }} />;
+      const chorus = /chorus|hook|פזמון/i.test(section) && !/pre/i.test(section), open = lineSel === i;
+      return <div key={i}>
+        <div onClick={() => { setLineSel(open ? null : i); if (!open && lineTool?.idx !== i) setLineTool(null); }} style={{ padding: "5px 9px", borderRadius: 8, cursor: "pointer", fontSize: 15, lineHeight: 1.55, color: tx, display: "flex", justifyContent: "space-between", gap: 8,
+          background: open ? `${c.a}26` : chorus ? `${c.a}0f` : "transparent", borderInlineStart: `3px solid ${chorus || open ? c.a : "transparent"}`, fontWeight: chorus ? 600 : 400 }}>
+          <span>{l}</span><span style={{ fontSize: 10, color: sb, flexShrink: 0, alignSelf: "center" }}>{countSyllables(l)}</span>
+        </div>
+        {open && renderLineTools(i)}
+      </div>;
+    });
+  };
+
   /* פאנל סדנת השיפור — משותף ללשונית רעיונות ("idea") וללשונית כתיבה ("write") */
   const renderRefinePanel = (target) => {
     const own = target === "write";
@@ -1663,7 +1859,8 @@ ${src}`;
         <B sm pri onClick={()=>runAutoRefine(target,false)} dis={busy}>🎻 שפר אוטומטית</B>
         <B sm onClick={()=>runAutoRefine(target,true)} dis={busy}>🧐 ביקורת וציון בלבד</B>
         {st?.running && <B sm onClick={()=>{refineCancelRef.current=true;}}>⏹️ עצור אחרי השלב הנוכחי</B>}
-        {own && srcBeforeRefine!=null && !st?.running && <B sm onClick={()=>{const cur=src;setSrc(srcBeforeRefine);setSrcBeforeRefine(cur);}}>↶ החלף בין המקור לגרסה המשופרת</B>}
+        {own && <B sm onClick={continueSong} dis={busy||continueBusy}>{continueBusy?"⏳ כותב את ההמשך...":"✍️ כתוב לי את החלק הבא"}</B>}
+        {own && srcBeforeRefine!=null && !st?.running && <B sm onClick={()=>{const cur=src;setSrc(srcBeforeRefine);setSrcBeforeRefine(cur);}}>↶ החזר / החלף לגרסה הקודמת</B>}
       </div>
       {st?.running && <div style={{marginTop:7,fontSize:12,color:ca,fontWeight:700}}>⏳ {st.stage==="rewrite" ? `סבב ${st.round}/${st.rounds}: ${own?"העורך":"הכותב"} מתקן לפי הביקורת...` : st.round===0 ? "המבקר קורא את השיר ונותן ציון..." : `סבב ${st.round}/${st.rounds}: המבקר בודק את הגרסה החדשה...`}{st.baseline!=null && ` · ציון התחלתי ${st.baseline}`}</div>}
       {st?.steps?.length>0 && <div style={{marginTop:6,display:"grid",gap:4}}>{st.steps.map((e,i)=><div key={i} style={{fontSize:11,padding:"5px 8px",borderRadius:7,background:bg,border:`1px solid ${e.accepted?c.a:bd}`,color:tx}}>
@@ -1940,6 +2137,7 @@ ${src}`;
           {infoRow(rtl ? "פלטפורמה" : "Platform", "PWA · HTML5")}
           {infoRow(rtl ? "אחסון נתונים" : "Data storage", rtl ? "על המכשיר בלבד" : "On device only")}
           {infoRow(rtl ? "רישיון" : "License", "© AppNest 2026")}
+          {infoRow(rtl ? "השראה" : "Inspired by", "PaperOrchestra (Google Research, Apache-2.0) · AG-UI (MIT)")}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -1949,7 +2147,7 @@ ${src}`;
           <B onClick={() => window.open("mailto:appnest55@gmail.com?subject=SunoPrep Feedback")}>
             ✉️ {rtl ? "שלח משוב" : "Send feedback"}
           </B>
-          <B onClick={() => window.open("https://barakaflalo.github.io/appnest", "_blank")}>
+          <B onClick={() => window.open("https://appnest-store.pages.dev", "_blank")}>
             🏪 {rtl ? "חנות AppNest" : "AppNest Store"}
           </B>
           <B onClick={() => { setGStep(0); setGuide(true); }}>📖 {t.guide}</B>
@@ -2387,7 +2585,6 @@ ${src}`;
           </div>
         </div>
 
-        {err && <div style={{ padding: "8px 12px", borderRadius: 8, background: day ? "#FEE" : "#3A1515", border: `1px solid ${day ? "#E88" : "#5A2020"}`, color: "#E55", fontSize: 12, textAlign: "center" }}>{err}</div>}
 
         {/* ═══ RESULT: LYRICS ═══ */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
@@ -2646,46 +2843,126 @@ ${src}`;
         </div>
       </div>}
       {activeTab === "ideas" && <div>
-      {/* AI IDEA STUDIO */}
-        <div style={{ marginTop:12, padding:14, borderRadius:12, background:cd, border:`1px solid ${bd}` }}>
-          <div style={{ fontWeight:800, color:tx }}>✨ אולפן רעיונות וטיוטות AI</div>
-          <div style={{ fontSize:11, color:sb, marginTop:4 }}>כתוב התחלה, רעיון או מצב. ה־AI יציע טיוטה שתוכל לקחת ממנה רק מה שאהבת.</div>
-          <textarea value={ideaPrompt} onChange={e=>setIdeaPrompt(e.target.value)} placeholder="לדוגמה: שיר קצבי על אהבה שהתרחקה אבל עדיין יש תקווה..." style={{width:"100%",minHeight:76,marginTop:9,padding:10,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,resize:"vertical"}} />
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7,marginTop:7}}>
-            <select value={ideaStructure} onChange={e=>setIdeaStructure(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>בית–פזמון–בית–פזמון–גשר</option><option>בית–פזמון</option><option>פזמון בלבד</option><option>מבנה חופשי</option></select>
-            <select value={ideaLength} onChange={e=>setIdeaLength(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>קצרה</option><option>רגילה</option><option>מלאה</option></select>
-            <select value={ideaMood} onChange={e=>setIdeaMood(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>רומנטי</option><option>שמח וקצבי</option><option>עצוב ומרגש</option><option>עוצמתי</option><option>נוסטלגי</option></select>
-            <select value={ideaType} onChange={e=>setIdeaType(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>טיוטת שיר</option><option>פזמון</option><option>בית</option><option>רעיונות לשיר</option></select><select value={ideaGenderMode} onChange={e=>setIdeaGenderMode(e.target.value)} title="מי שר למי" style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx,fontWeight:700}}><option>👨➡️👩 גבר שר לאישה</option><option>👩➡️👨 אישה שרה לגבר</option><option>👨➡️👨 גבר שר לגבר</option><option>👩➡️👩 אישה שרה לאישה</option><option>ניטרלי / ללא מגדר מוגדר</option></select><select value={ideaPerspective} onChange={e=>setIdeaPerspective(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>גוף ראשון</option><option>גוף שני</option><option>סיפור מהצד</option><option>דואט</option></select><div style={{width:"100%",fontSize:12,color:sb,marginTop:2}}>🎭 התאמת מגדר פעילה: <b style={{color:tx}}>{ideaGenderMode}</b> — Gemini יתאים את הפנייה וההטיות לאורך הטיוטה.</div>
-            <select value={ideaRhyme} onChange={e=>setIdeaRhyme(e.target.value)} style={{padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>חריזה טבעית</option><option>חריזה מודגשת</option><option>ללא חריזה מחייבת</option></select>
+        {/* ═══ ✨ אולפן השירים — רעיון → צליל → שיר → ליטוש ═══ */}
+        <div style={{ marginTop:12, padding:"16px 14px", borderRadius:16, background:`linear-gradient(160deg, ${c.a}1f, ${cd} 55%)`, border:`1px solid ${c.a}55` }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <div style={{ width:42, height:42, borderRadius:12, display:"grid", placeItems:"center", fontSize:22, background:`${c.a}26`, border:`1px solid ${c.a}66` }}>✨</div>
+            <div>
+              <div style={{ fontWeight:800, fontSize:18, color:tx }}>אולפן השירים</div>
+              <div style={{ fontSize:12, color:sb }}>רעיון ← צליל ← שיר ← ליטוש. ה־AI כותב, ואתה בוחר מה נשאר.</div>
+            </div>
           </div>
-          <input value={ideaKeywords} onChange={e=>setIdeaKeywords(e.target.value)} placeholder="🔑 מילות מפתח אופציונליות, מופרדות בפסיקים" style={{width:"100%",marginTop:7,padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}} />
-          <div style={{fontSize:10,color:sb,marginTop:4}}>אפשר לכוון את נקודת המבט, החריזה ומילים שחשוב לך לשלב — בלי שה־AI ישנה את הטקסט המקורי.</div>
-          <div style={{display:"flex",gap:7,marginTop:8,flexWrap:"wrap"}}>
-            <B sm onClick={()=>generateIdea(1)} dis={ideaLoading}>{ideaLoading?"יוצר...":"✨ צור טיוטה"}</B>
-            <B sm onClick={()=>generateIdea(3)} dis={ideaLoading}>{ideaLoading?"יוצר 3 כיוונים...":"🎨 צור 3 כיוונים"}</B>
-            {ideaOut && <><select value={ideaImprove} onChange={e=>setIdeaImprove(e.target.value)} style={{padding:8,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx}}><option>חזק את הפזמון והפוך אותו ליותר קליט</option><option>הפוך ליותר קצבי וריקודי</option><option>הפוך ליותר מרגש ואישי</option><option>קצר שורות ארוכות ושפר זרימה</option><option>שמור על הרעיון ושנה את הניסוח</option></select><B sm onClick={improveIdea} dis={ideaLoading}>🪄 שפר טיוטה</B><B sm onClick={checkGenderConsistency} dis={ideaLoading}>🔎 בדוק התאמת פנייה</B><B sm onClick={adaptIdeaGender} dis={ideaLoading}>✨ התאם למצב שנבחר</B><B sm onClick={()=>setSrc(prev=>prev ? prev+"\n\n"+ideaOut : ideaOut)}>➕ הוסף למקור</B><B sm onClick={saveIdeaExcerpt}>💡 שמור משפט לבנק</B><B sm onClick={()=>{const t=window.prompt("הדבק כאן רק את השורה/החלק שתרצה להוסיף למקור:"); if(t&&t.trim()) addPhraseToSong(t.trim());}}>✂️ הוסף חלק למקור</B></>}
-            {ideaOut && <B sm onClick={()=>generateIdea(1)}>🔀 צור כיוון נוסף</B>}
-          </div>
-          {ideaOut && renderRefinePanel("idea")}
-          {genderCheckResult && <div style={{marginTop:8,padding:9,borderRadius:9,border:`1px solid ${bd}`,background:bg,color:tx,whiteSpace:"pre-wrap",fontSize:12}}><b>🎭 בדיקת התאמה:</b><br/>{genderCheckResult}</div>}
-          {ideaVariants.length>1 && <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>{ideaVariants.map((v,i)=><B key={i} sm onClick={()=>setIdeaOut(v)}>{i===0?"💖 כיוון 1":i===1?"⚡ כיוון 2":"🌙 כיוון 3"}</B>)}</div>}{ideaOut && <div style={{marginTop:8,padding:9,borderRadius:9,background:bg,border:`1px solid ${bd}`}}><div style={{fontSize:11,fontWeight:700,color:tx}}>🗂️ היסטוריית גרסאות {ideaHistory.length ? `— ${ideaHistory.length+1} גרסאות` : "— גרסה מקורית"}</div><div style={{display:"flex",gap:6,marginTop:6,flexWrap:"wrap"}}>{ideaHistory.map((v,i)=><B key={i} sm onClick={()=>{setIdeaOut(v);setIdeaHistoryIndex(i)}}>↩️ גרסה {i+1}</B>)}{ideaHistory.length>0&&<B sm onClick={()=>{const last=ideaHistory[ideaHistory.length-1];setIdeaHistory(prev=>prev.slice(0,-1));setIdeaOut(last);setIdeaHistoryIndex(-1)}}>↶ חזור לגרסה קודמת</B>}<B sm onClick={()=>{setIdeaHistory([]);setIdeaHistoryIndex(-1)}}>🗑️ נקה היסטוריה</B></div><div style={{fontSize:10,color:sb,marginTop:5}}>לפני כל שיפור נשמרת הגרסה הקודמת. אפשר לחזור אליה בכל זמן.</div>
-{ideaHistory.length>0 && <div style={{marginTop:10,paddingTop:9,borderTop:`1px solid ${bd}`}}>
-<div style={{fontSize:11,fontWeight:700}}>🔍 השוואת שתי גרסאות</div>
-<div style={{display:"flex",gap:6,marginTop:6,flexWrap:"wrap"}}>
-<select value={compareA} onChange={e=>setCompareA(e.target.value)} style={{padding:7,borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}}><option value="current">הגרסה הנוכחית</option>{ideaHistory.map((_,i)=><option key={i} value={`history-${i}`}>גרסה {i+1}</option>)}</select>
-<select value={compareB} onChange={e=>setCompareB(e.target.value)} style={{padding:7,borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}}><option value="current">הגרסה הנוכחית</option>{ideaHistory.map((_,i)=><option key={i} value={`history-${i}`}>גרסה {i+1}</option>)}</select>
-</div>
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7,marginTop:7}}>
-{[compareA,compareB].map((sel,k)=>{const val=sel==="current"?ideaOut:ideaHistory[Number(sel.split("-")[1])]||"";return <div key={k} style={{padding:8,border:`1px solid ${bd}`,borderRadius:8,whiteSpace:"pre-wrap",fontSize:11,maxHeight:220,overflow:"auto"}}><div style={{fontWeight:700,marginBottom:5}}>{sel==="current"?"נוכחית":`גרסה ${Number(sel.split("-")[1])+1}`}</div>{val}</div>})}
-</div>
-<div style={{fontSize:10,color:sb,marginTop:5}}>אפשר להשוות זו לצד זו, ואז לבחור גרסה קודמת או להמשיך לשפר את הנוכחית.</div>
-</div>}
-</div>}
-          {ideaOut && <textarea value={ideaOut} onChange={e=>{setIdeaOut(e.target.value); setIdeaVariants(prev=>prev.map(v=>v===ideaOut?e.target.value:v));}} style={{width:"100%",minHeight:170,marginTop:9,padding:10,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,resize:"vertical"}} />}
-          {!aiProvider && <div style={{fontSize:11,color:sb,marginTop:7}}>ℹ️ חבר ספק AI בהגדרות כדי להפעיל יצירה אמיתית.</div>}
+          {!aiProvider && <div onClick={()=>setScr("aisetup")} style={{ marginTop:10, padding:"9px 11px", borderRadius:10, background:bg, border:`1px dashed ${c.a}`, fontSize:12, color:tx, cursor:"pointer" }}>🔌 כדי לכתוב שירים צריך לחבר ספק AI — <b style={{color:ca}}>Gemini חינמי, בלי כרטיס אשראי</b>. לחץ כאן לחיבור.</div>}
         </div>
 
+        {/* שלב 1 — על מה השיר */}
+        <div style={stepCard}>
+          <div style={stepHead}><span style={stepNum}>1</span>על מה השיר?</div>
+          <textarea value={ideaPrompt} onChange={e=>setIdeaPrompt(e.target.value)} placeholder="לדוגמה: הוא עומד בתחנה האחרונה של הלילה ומחכה להודעה ממנה שלא מגיעה..." style={{width:"100%",minHeight:80,marginTop:8,padding:11,borderRadius:12,border:`1px solid ${bd}`,background:bg,color:tx,resize:"vertical",fontSize:15,fontFamily:"inherit",lineHeight:1.5}} />
+          <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+            {IDEA_TOPICS.map(tp=><Chip key={tp} on={ideaPrompt===tp} onClick={()=>setIdeaPrompt(tp)}>{tp}</Chip>)}
+          </div>
+          <div style={{marginTop:9}}><B sm onClick={inspireMe} dis={ideaInspire?.loading}>{ideaInspire?.loading?"⏳ חושב על רעיונות...":"🎲 תן לי 5 רעיונות מפתיעים"}</B></div>
+          {ideaInspire?.ideas?.length>0 && <div style={{marginTop:8,display:"grid",gap:6}}>
+            {ideaInspire.ideas.map((x,i)=><button key={i} onClick={()=>{setIdeaPrompt(x);setIdeaInspire(null);}} style={{textAlign:"start",padding:"9px 11px",borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,fontSize:13,fontFamily:"inherit",cursor:"pointer",lineHeight:1.45}}>💡 {x}</button>)}
+          </div>}
+        </div>
+
+        {/* שלב 2 — איך הוא יישמע */}
+        <div style={stepCard}>
+          <div style={stepHead}><span style={stepNum}>2</span>איך הוא יישמע?</div>
+          <div style={chipLabel}>🎸 ז'אנר</div>
+          <div style={chipRow}>{IDEA_GENRES.map(g=><Chip key={g} on={ideaGenre===g} onClick={()=>setIdeaGenre(g)}>{g}</Chip>)}</div>
+          <div style={chipLabel}>🎭 מצב רוח</div>
+          <div style={chipRow}>{IDEA_MOODS.map(m=><Chip key={m} on={ideaMood===m} onClick={()=>setIdeaMood(m)}>{m}</Chip>)}</div>
+          <div style={chipLabel}>🎤 מי שר למי</div>
+          <div style={chipRow}>{IDEA_GENDERS.map(g=><Chip key={g} on={ideaGenderMode===g} onClick={()=>setIdeaGenderMode(g)}>{g}</Chip>)}</div>
+          <button onClick={()=>setIdeaMore(v=>!v)} style={{marginTop:10,background:"transparent",border:"none",color:ca,fontFamily:"inherit",fontSize:13,fontWeight:700,cursor:"pointer",padding:0}}>{ideaMore?"▴ פחות הגדרות":"▾ עוד הגדרות"} <span style={{color:sb,fontWeight:400,fontSize:11}}>({ideaStructure} · {ideaLength} · {ideaRhyme})</span></button>
+          {ideaMore && <div style={{marginTop:4}}>
+            <div style={chipLabel}>🧱 מבנה</div>
+            <div style={chipRow}>{["בית–פזמון–בית–פזמון–גשר","בית–פזמון","פזמון בלבד","מבנה חופשי"].map(x=><Chip key={x} on={ideaStructure===x} onClick={()=>setIdeaStructure(x)}>{x}</Chip>)}</div>
+            <div style={chipLabel}>📏 אורך</div>
+            <div style={chipRow}>{["קצרה","רגילה","מלאה"].map(x=><Chip key={x} on={ideaLength===x} onClick={()=>setIdeaLength(x)}>{x} <span style={{opacity:.7,fontSize:10}}>· {LENGTH_HINT[x]}</span></Chip>)}</div>
+            <div style={chipLabel}>📝 מה לכתוב</div>
+            <div style={chipRow}>{["טיוטת שיר","פזמון","בית","רעיונות לשיר"].map(x=><Chip key={x} on={ideaType===x} onClick={()=>setIdeaType(x)}>{x}</Chip>)}</div>
+            <div style={chipLabel}>👁️ נקודת מבט</div>
+            <div style={chipRow}>{["גוף ראשון","גוף שני","סיפור מהצד","דואט"].map(x=><Chip key={x} on={ideaPerspective===x} onClick={()=>setIdeaPerspective(x)}>{x}</Chip>)}</div>
+            <div style={chipLabel}>🎵 חריזה</div>
+            <div style={chipRow}>{["חריזה טבעית","חריזה מודגשת","ללא חריזה מחייבת"].map(x=><Chip key={x} on={ideaRhyme===x} onClick={()=>setIdeaRhyme(x)}>{x}</Chip>)}</div>
+            <div style={chipLabel}>🔑 מילים שחייבות להופיע</div>
+            <input value={ideaKeywords} onChange={e=>setIdeaKeywords(e.target.value)} placeholder="למשל: ים, תל אביב, שתיים בלילה" style={{width:"100%",marginTop:4,padding:10,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,fontFamily:"inherit",fontSize:14}} />
+          </div>}
+        </div>
+
+        {/* שלב 3 — כתיבה */}
+        <div style={stepCard}>
+          <div style={stepHead}><span style={stepNum}>3</span>כתוב לי שיר</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr",gap:8,marginTop:8}}>
+            <B pri onClick={()=>generateIdea(1)} dis={ideaLoading||refineBusy} sx={{width:"100%",fontSize:16,padding:"14px 18px"}}>{ideaLoading?"⏳ כותב...":refineBusy?"🎻 משפר...":"✨ כתוב לי שיר"}</B>
+            <B onClick={()=>generateIdea(3)} dis={ideaLoading||refineBusy} sx={{width:"100%"}}>🎨 3 כיוונים שונים לבחירה</B>
+          </div>
+          <label style={{display:"flex",alignItems:"center",gap:8,marginTop:10,fontSize:12,color:tx,cursor:"pointer"}}>
+            <input type="checkbox" checked={ideaAutoRefine} onChange={e=>setIdeaAutoRefine(e.target.checked)} style={{width:18,height:18,accentColor:c.a}} />
+            <span>🎻 ללטש אוטומטית אחרי הכתיבה <span style={{color:sb}}>(מבקר + שכתוב, עוד עד 3 קריאות AI)</span></span>
+          </label>
+        </div>
+
+        {/* התוצאה */}
+        {ideaOut && <div style={{...stepCard, border:`1px solid ${c.a}77`}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,flexWrap:"wrap"}}>
+            <div style={stepHead}><span style={stepNum}>4</span>השיר שלך</div>
+            <div style={{display:"flex",gap:6}}>
+              {refineResult?.target==="idea" && <span title="ציון המבקר" style={{fontSize:12,fontWeight:800,color:onA,background:c.a,borderRadius:20,padding:"3px 10px"}}>⭐ {refineResult.finalScore}/10</span>}
+              <B sm act={ideaEdit} onClick={()=>{setIdeaEdit(v=>!v);setLineSel(null);}}>{ideaEdit?"👁️ תצוגה":"✏️ עריכה"}</B>
+            </div>
+          </div>
+          {ideaVariants.length>1 && <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>{ideaVariants.map((v,i)=><Chip key={i} on={ideaOut===v} onClick={()=>{setIdeaOut(v);setLineSel(null);setLineTool(null);}}>{["💖 כיוון 1 · רגשי","⚡ כיוון 2 · קצבי","🌙 כיוון 3 · מפתיע"][i]||`כיוון ${i+1}`}</Chip>)}</div>}
+          {ideaEdit
+            ? <textarea value={ideaOut} onChange={e=>{const v=e.target.value; setIdeaVariants(prev=>prev.map(x=>x===ideaOut?v:x)); setIdeaOut(v);}} style={{width:"100%",minHeight:260,marginTop:10,padding:12,borderRadius:12,border:`1px solid ${bd}`,background:bg,color:tx,resize:"vertical",fontSize:15,lineHeight:1.6,fontFamily:"inherit"}} />
+            : <div style={{marginTop:10,padding:"10px 8px",borderRadius:12,background:bg,border:`1px solid ${bd}`}}>
+                <div style={{fontSize:11,color:sb,margin:"0 4px 6px"}}>👆 לחץ על שורה כדי להחליף, לקצר או למצוא לה חרוזים · המספר = הברות</div>
+                {renderDraftView()}
+              </div>}
+
+          <B pri onClick={sendDraftToWrite} sx={{width:"100%",marginTop:10,fontSize:15}}>📝 העבר ללשונית כתיבה</B>
+
+          <div style={chipLabel}>🪄 שיפור מהיר בלחיצה</div>
+          <div style={chipRow}>
+            {["חזק את הפזמון והפוך אותו לקליט יותר","הפוך לקצבי וריקודי יותר","הפוך למרגש ואישי יותר","קצר שורות ארוכות ושפר זרימה","החלף קלישאות בדימויים מקוריים","שמור על הרעיון ושנה את הניסוח"].map(x=><Chip key={x} dis={ideaLoading||refineBusy} onClick={()=>quickImprove(x)}>{x}</Chip>)}
+          </div>
+
+          <div style={chipLabel}>🧰 עוד כלים</div>
+          <div style={chipRow}>
+            <Chip dis={ideaTitles?.loading} onClick={suggestTitles}>{ideaTitles?.loading?"⏳ מחפש שם...":"🏷️ הצע שם לשיר"}</Chip>
+            <Chip dis={ideaLoading} onClick={suggestStyle}>🎼 התאם סגנון לסונו</Chip>
+            <Chip dis={ideaLoading} onClick={checkGenderConsistency}>🔎 בדוק את הפנייה</Chip>
+            <Chip dis={ideaLoading} onClick={adaptIdeaGender}>🎭 התאם ל"{ideaGenderMode.replace(/^[^֐-׿]+/,"")}"</Chip>
+            <Chip onClick={saveIdeaExcerpt}>💡 שמור משפט לבנק</Chip>
+          </div>
+          {ideaTitles?.titles?.length>0 && <div style={{marginTop:8,padding:9,borderRadius:10,background:bg,border:`1px solid ${bd}`}}>
+            <div style={{fontSize:11,color:sb,marginBottom:6}}>לחץ על שם כדי לקבוע אותו כשם הפרויקט (ולהעתיק):</div>
+            <div style={chipRow}>{ideaTitles.titles.map(t0=><Chip key={t0} on={projectName===t0} onClick={()=>{setProjectName(t0); try{navigator.clipboard&&navigator.clipboard.writeText(t0);}catch(e){}}}>{t0}</Chip>)}</div>
+          </div>}
+          {ideaStyleMsg && <div style={{marginTop:8,padding:9,borderRadius:10,background:bg,border:`1px solid ${c.a}66`,fontSize:12,color:tx,direction:"rtl"}}>{ideaStyleMsg}</div>}
+          {genderCheckResult && <div style={{marginTop:8,padding:9,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,whiteSpace:"pre-wrap",fontSize:12}}><b>🎭 בדיקת התאמה:</b><br/>{genderCheckResult}</div>}
+
+          {renderRefinePanel("idea")}
+
+          <button onClick={()=>setIdeaShowVersions(v=>!v)} style={{marginTop:10,background:"transparent",border:"none",color:ca,fontFamily:"inherit",fontSize:13,fontWeight:700,cursor:"pointer",padding:0}}>{ideaShowVersions?"▴":"▾"} 🗂️ גרסאות קודמות ({ideaHistory.length})</button>
+          {ideaShowVersions && <div style={{marginTop:6,padding:9,borderRadius:10,background:bg,border:`1px solid ${bd}`}}>
+            {ideaHistory.length===0 ? <div style={{fontSize:12,color:sb}}>עוד אין גרסאות קודמות. לפני כל שינוי הגרסה הקודמת נשמרת כאן.</div> : <>
+              <div style={chipRow}>{ideaHistory.map((v,i)=><Chip key={i} onClick={()=>{setIdeaHistory(prev=>[...prev.filter((_,k)=>k!==i), ideaOut]);setIdeaOut(v);setLineSel(null);}}>↩️ גרסה {i+1}</Chip>)}<Chip onClick={()=>{if(window.confirm("למחוק את כל הגרסאות הקודמות?")){setIdeaHistory([]);setIdeaHistoryIndex(-1);}}}>🗑️ נקה</Chip></div>
+              <div style={{fontSize:11,fontWeight:700,color:tx,marginTop:10}}>🔍 השוואה</div>
+              <div style={{display:"flex",gap:6,marginTop:6,flexWrap:"wrap"}}>
+                {[["A",compareA,setCompareA],["B",compareB,setCompareB]].map(([k,val,setv])=><select key={k} value={val} onChange={e=>setv(e.target.value)} style={{padding:7,borderRadius:8,border:`1px solid ${bd}`,background:cd,color:tx}}><option value="current">הגרסה הנוכחית</option>{ideaHistory.map((_,i)=><option key={i} value={`history-${i}`}>גרסה {i+1}</option>)}</select>)}
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7,marginTop:7}}>
+                {[compareA,compareB].map((sel,k)=>{const val=sel==="current"?ideaOut:ideaHistory[Number(sel.split("-")[1])]||"";return <div key={k} style={{padding:8,border:`1px solid ${bd}`,borderRadius:8,whiteSpace:"pre-wrap",fontSize:11,maxHeight:240,overflow:"auto",color:tx}}><div style={{fontWeight:700,marginBottom:5}}>{sel==="current"?"נוכחית":`גרסה ${Number(sel.split("-")[1])+1}`}</div>{val}</div>})}
+              </div>
+            </>}
+          </div>}
         </div>}
+      </div>}
       {activeTab === "checks" && <div>
         <div style={{ display:"flex", justifyContent:"flex-end", padding:"0 0 8px" }}>
           <B onClick={() => setScr("worddict")} sx={{ fontSize:13, padding:"8px 16px" }}>📖 {rtl ? "מילים בעייתיות" : "Problem words"}</B>
@@ -2886,8 +3163,11 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
 
         </div>}
       {/* FOOTER */}
+      {err && <div role="alert" onClick={() => setErr("")} style={{ position: "fixed", insetInline: 12, bottom: 84, zIndex: 9998, padding: "11px 14px", borderRadius: 12, background: day ? "#FFF1F1" : "#3A1515", border: `1px solid ${day ? "#E88" : "#7A2a2a"}`, color: day ? "#B42318" : "#FFB4B4", fontSize: 13, lineHeight: 1.5, boxShadow: "0 8px 24px rgba(0,0,0,.35)", display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer", direction: rtl ? "rtl" : "ltr" }}>
+        <span style={{ flex: 1 }}>⚠️ {err}</span><span style={{ opacity: .7 }}>✕</span>
+      </div>}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
-          SunoPrep 9.7 by Barak Aflalo — © AppNest 2026
+          SunoPrep 9.9 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
