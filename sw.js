@@ -19,7 +19,7 @@
   CacheStorage.prototype.match=function(){return sm.apply(this,arguments).then(clean);};
 })();
 
-const CACHE = 'sunoprep-v11.6';
+const CACHE = 'sunoprep-v11.7';
 const ASSETS = ['./','./index.html','./app.js','./appnest-assistant.js','./appnest-refine.js','./manifest.json','./icon-192.png','./icon-512.png',
   './vendor/react.production.min.js','./vendor/react-dom.production.min.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(()=>{}))); self.skipWaiting(); });

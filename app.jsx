@@ -31,8 +31,8 @@ const TR = {
       { i: "💾", t: "שמור להיסטוריה", d: "שמור שירים מוצלחים להיסטוריה (📜) כדי לזכור מה עבד. ייצא גיבוי בהגדרות." },
     ],
     skip: "דלג", next: "הבא", done: "סיום",
-    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 9.9", back: "← חזרה לדף הבית",
+    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
+    ver: "גרסה 10.0", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• ✨ AI song studio, auto-refine with a critic, nikud reviewer\n• 5 UI languages, 9 source languages\n• 5 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 9.9", back: "← Back to home",
+    ver: "Version 10.0", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v9.9", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.0", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v9.9", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.0", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -338,7 +338,7 @@ async function fetchGeminiModels(key) {
   } catch { return null; }
 }
 
-async function callGemini(keys, prompt, modelList) {
+async function callGemini(keys, prompt, modelList, opts = {}) {
   const keyList = Array.isArray(keys) ? keys : [keys];
   // Try a cached working model first, then the provided/default list
   let models = modelList && modelList.length ? modelList : GEMINI_MODELS;
@@ -347,9 +347,37 @@ async function callGemini(keys, prompt, modelList) {
   let lastErr = null;
   for (const key of keyList) {
     for (const model of models) {
-      const genCfg = { temperature: 0.3, maxOutputTokens: 6000 };
-      if (model.startsWith("gemini-2.5") || model.startsWith("gemini-3")) genCfg.thinkingConfig = { thinkingBudget: 0 };
+      const genCfg = { temperature: opts.temperature ?? 0.3, maxOutputTokens: 6000 };
+      // בלי "חשיבה" בכל מודל Flash (כולל gemini-flash-latest) — זה מה שהאט את יצירת השירים
+      if (model.includes("flash") || model.startsWith("gemini-2.5") || model.startsWith("gemini-3")) genCfg.thinkingConfig = { thinkingBudget: 0 };
       try {
+        if (opts.onText) {                                   // זרימה: הטקסט מופיע תוך כדי כתיבה
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse&key=${key}`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genCfg }),
+          });
+          if (res.ok && res.body) {
+            const reader = res.body.getReader(), dec = new TextDecoder(); let buf = "", full = "";
+            for (;;) {
+              const { value, done } = await reader.read(); if (done) break;
+              buf += dec.decode(value, { stream: true });
+              let nl; while ((nl = buf.indexOf("\n")) >= 0) {
+                const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+                if (!line.startsWith("data:")) continue;
+                try { const d = JSON.parse(line.slice(5)); const piece = (d?.candidates?.[0]?.content?.parts || []).map(x => x.text || "").join(""); if (piece) { full += piece; opts.onText(full); } } catch (e) {}
+              }
+            }
+            if (full.trim()) { try { localStorage.setItem("sp_gemini_model", model); } catch {} return full; }
+            // הזרימה לא החזירה טקסט — ממשיכים לבקשה רגילה באותו מודל
+          }
+          if (!res.ok) {
+            const e = await res.json().catch(() => ({}));
+            lastErr = new Error(e?.error?.message || `HTTP ${res.status}`);
+            if (res.status === 429) { try { localStorage.removeItem("sp_gemini_model"); } catch {} }
+            if (![404, 429, 500, 503].includes(res.status)) throw lastErr;
+            continue;
+          }
+        }
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genCfg }),
@@ -369,24 +397,24 @@ async function callGemini(keys, prompt, modelList) {
   throw lastErr || new Error("Gemini unavailable");
 }
 
-async function callOpenAICompat(url, key, prompt, model) {
+async function callOpenAICompat(url, key, prompt, model, opts = {}) {
   const h = { "Content-Type": "application/json" };
   if (key) h["Authorization"] = "Bearer " + key;
   const res = await fetch(url, {
     method: "POST", headers: h,
-    body: JSON.stringify({ model: model || "gpt-4o-mini", max_tokens: 3000, messages: [{ role: "user", content: prompt }] }),
+    body: JSON.stringify({ model: model || "gpt-4o-mini", max_tokens: 3000, ...(opts.temperature != null ? { temperature: opts.temperature } : {}), messages: [{ role: "user", content: prompt }] }),
   });
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
   const d = await res.json();
   return d?.choices?.[0]?.message?.content || "";
 }
 
-async function callClaude(key, prompt) {
+async function callClaude(key, prompt, opts = {}) {
   const h = { "Content-Type": "application/json" };
   if (key) { h["x-api-key"] = key; h["anthropic-version"] = "2023-06-01"; h["anthropic-dangerous-direct-browser-access"] = "true"; }
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST", headers: h,
-    body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 3000, messages: [{ role: "user", content: prompt }] }),
+    body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 3000, ...(opts.temperature != null ? { temperature: Math.min(1, opts.temperature) } : {}), messages: [{ role: "user", content: prompt }] }),
   });
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
   const d = await res.json();
@@ -684,6 +712,19 @@ function SunoPrep() {
   const [lineSel, setLineSel] = useState(null);              // אינדקס השורה שנבחרה בטיוטה
   const [lineTool, setLineTool] = useState(null);            // {idx, kind, loading, options, err}
   const [continueBusy, setContinueBusy] = useState(false);
+  /* ═══ 📚 ספריית הסגנונות שלי — סגנונות שניסיתי בסונו, עם דירוג והערות ═══ */
+  const [styleLib, setStyleLib] = useState(() => { try { const v = JSON.parse(localStorage.getItem("sunoprep_style_lib") || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; } });
+  useEffect(() => { try { localStorage.setItem("sunoprep_style_lib", JSON.stringify(styleLib)); } catch (e) {} }, [styleLib]);
+  const [libQuery, setLibQuery] = useState("");
+  const [libFilter, setLibFilter] = useState("all");
+  const [libSort, setLibSort] = useState("recent");
+  const [libEdit, setLibEdit] = useState(null);              // רשומה בעריכה (חדשה או קיימת)
+  const [libVar, setLibVar] = useState(null);                // {id, loading, options}
+  const [libMsg, setLibMsg] = useState("");
+  const [ideaLive, setIdeaLive] = useState("");              // טקסט שזורם בזמן הכתיבה
+  const [ideaStart, setIdeaStart] = useState(0);
+  const [, setTick] = useState(0);
+  useEffect(() => { if (!ideaStart) return; const t = setInterval(() => setTick(x => x + 1), 1000); return () => clearInterval(t); }, [ideaStart]);
   const [ideaLoading, setIdeaLoading] = useState(false);
   const [ideaImprove, setIdeaImprove] = useState("חזק את הפזמון והפוך אותו ליותר קליט");
   const [refineRounds, setRefineRounds] = useState(() => Number(localStorage.getItem("sunoprep_refine_rounds")) || 2);
@@ -831,6 +872,42 @@ function SunoPrep() {
     ? `Voice character reference: ${activeVoice.notes.trim()}`
     : "";
   const styTxt = [...selSty.map(id => allStyles.find(s => s.id === id)?.p).filter(Boolean), ...selVocal.map(id => VOCAL_STYLES.find(s => s.id === id)?.p).filter(Boolean), bpmText, custSty.trim(), activeVoiceHint, accentHint].filter(Boolean).join(", ");
+
+  // הסגנון "הנקי" שנבנה עכשיו (בלי הנחיית המבטא/הקול שנוספות אוטומטית) + ההגדרות המדויקות כדי לשחזר אותו
+  const builtStyleNow = () => [...selSty.map(id => allStyles.find(x => x.id === id)?.p).filter(Boolean), ...selVocal.map(id => VOCAL_STYLES.find(x => x.id === id)?.p).filter(Boolean), bpmText, custSty.trim()].filter(Boolean).join(", ");
+  const newLibEntry = (style, extra = {}) => ({ id: "sl_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6), name: "", style, rating: 0, notes: "", tags: [], links: "", songs: projectName.trim() ? [projectName.trim()] : [], tryAgain: false, created: Date.now(), lastUsed: 0, uses: 0, ...extra });
+  const openLibFromCurrent = (styleOverride, extra = {}) => {
+    const st = (styleOverride || builtStyleNow()).trim();
+    const e = newLibEntry(st, { setup: styleOverride ? null : { selSty, selVocal, bpmVal, custSty }, ...extra });
+    setLibEdit({ ...e, isNew: true, tagsText: (e.tags || []).join(", "), songsText: e.songs.join(", ") });
+    setLibMsg(""); setScr("styles");
+  };
+  const saveLibEdit = () => {
+    const e = libEdit; if (!e) return;
+    if (!e.style.trim()) { setErr("כתוב או הדבק את טקסט הסגנון"); return; }
+    const clean = { ...e, name: (e.name || "").trim() || e.style.trim().slice(0, 32), style: e.style.trim(),
+      tags: (e.tagsText || "").split(/[,،]+/).map(x => x.trim()).filter(Boolean), songs: (e.songsText || "").split(/[,،]+/).map(x => x.trim()).filter(Boolean) };
+    delete clean.isNew; delete clean.tagsText; delete clean.songsText;
+    setStyleLib(prev => prev.some(x => x.id === clean.id) ? prev.map(x => x.id === clean.id ? clean : x) : [clean, ...prev]);
+    setLibEdit(null); setLibMsg(`✅ "${clean.name}" נשמר בספרייה`);
+  };
+  const editLib = (x) => setLibEdit({ ...x, tagsText: (x.tags || []).join(", "), songsText: (x.songs || []).join(", ") });
+  const updateLib = (id, patch) => setStyleLib(prev => prev.map(x => x.id === id ? { ...x, ...patch } : x));
+  const deleteLib = (x) => { if (window.confirm(`למחוק את "${x.name}" מהספרייה?`)) setStyleLib(prev => prev.filter(y => y.id !== x.id)); };
+  const applyLibStyle = (x) => {
+    const ok = x.setup && (x.setup.selSty || []).every(id => allStyles.some(a => a.id === id));
+    if (ok) { setSelSty(x.setup.selSty || []); setSelVocal(x.setup.selVocal || []); setBpmVal(x.setup.bpmVal || 0); setCustSty(x.setup.custSty || ""); }
+    else { setSelSty([]); setSelVocal([]); setBpmVal(0); setCustSty(x.style); }
+    updateLib(x.id, { uses: (x.uses || 0) + 1, lastUsed: Date.now() });
+    setActiveTab("write"); setScr("home");
+    setTimeout(() => setErr(""), 0);
+  };
+  const importStarStyles = () => {
+    const have = new Set(styleLib.map(x => x.style.trim()));
+    const add = savedSty.filter(x => x.prompt && !have.has(x.prompt.trim())).map(x => newLibEntry(x.prompt.trim(), { name: x.label, songs: [] }));
+    if (!add.length) { setLibMsg("כל הסגנונות המסומנים ב-⭐ כבר נמצאים בספרייה"); return; }
+    setStyleLib(prev => [...add, ...prev]); setLibMsg(`✅ יובאו ${add.length} סגנונות מ-⭐ הסגנונות שלי`);
+  };
 
   const insertTag = useCallback((tag) => {
     const el = srcRef.current; if (!el) return;
@@ -1102,18 +1179,19 @@ ${src}`;
     setLoading(false);
   };
 
-  const callAI = async (prompt) => {
+  // opts: {temperature, onText} — יצירתי = טמפרטורה גבוהה, ביקורת/ניקוד = נמוכה; onText = זרימה (Gemini בלבד)
+  const callAI = async (prompt, opts = {}) => {
     const p = aiProvider;
     if (p === "gemini") {
       const keys = aiKeys.gemini.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
       const models = selModel ? [selModel, ...GEMINI_MODELS.filter(m => m !== selModel)] : (liveModels.length ? liveModels : null);
-      return await callGemini(keys, prompt, models);
+      return await callGemini(keys, prompt, models, opts);
     }
-    if (p === "claude") return await callClaude(aiKeys.claude, prompt);
-    if (p === "builtin") return await callClaude("", prompt);
-    if (p === "openai") return await callOpenAICompat("https://api.openai.com/v1/chat/completions", aiKeys.openai, prompt, "gpt-4o-mini");
-    if (p === "device") return await callOpenAICompat(aiKeys.deviceUrl.replace(/\/+$/, "") + "/chat/completions", "", prompt, "llama3");
-    if (p === "custom") return await callOpenAICompat(aiKeys.customUrl, aiKeys.customKey, prompt, "gpt-4o-mini");
+    if (p === "claude") return await callClaude(aiKeys.claude, prompt, opts);
+    if (p === "builtin") return await callClaude("", prompt, opts);
+    if (p === "openai") return await callOpenAICompat("https://api.openai.com/v1/chat/completions", aiKeys.openai, prompt, "gpt-4o-mini", opts);
+    if (p === "device") return await callOpenAICompat(aiKeys.deviceUrl.replace(/\/+$/, "") + "/chat/completions", "", prompt, "llama3", opts);
+    if (p === "custom") return await callOpenAICompat(aiKeys.customUrl, aiKeys.customKey, prompt, "gpt-4o-mini", opts);
     throw new Error("No provider");
   };
 
@@ -1151,9 +1229,9 @@ ${src}`;
   }, [ideaPrompt, ideaMood, ideaType, ideaStructure, ideaLength, ideaPerspective, ideaRhyme, ideaKeywords, ideaOut, ideaGenre, ideaAutoRefine, ideaVariants, ideaHistory]);
 
   // קריאת AI שמחזירה JSON (ניסיון חוזר אחד אם הפורמט נשבר)
-  const aiJSON = async (prompt) => {
+  const aiJSON = async (prompt, temperature = 0.9) => {
     const ex = (window.AppNestRefine && window.AppNestRefine.extractJSON) || ((t) => { try { return JSON.parse(t); } catch (e) { return null; } });
-    for (let i = 0; i < 2; i++) { const j = ex(await callAI(i ? prompt + "\n\nהחזר אך ורק JSON תקין, בלי טקסט נוסף." : prompt)); if (j) return j; }
+    for (let i = 0; i < 2; i++) { const j = ex(await callAI(i ? prompt + "\n\nהחזר אך ורק JSON תקין, בלי טקסט נוסף." : prompt, { temperature })); if (j) return j; }
     throw new Error("הבינה לא החזירה תשובה בפורמט הנכון. נסה שוב.");
   };
   const needAI = (what) => { if (aiProvider) return true; setErr(`כדי ${what} צריך לחבר ספק AI בהגדרות (Gemini חינמי)`); return false; };
@@ -1185,15 +1263,16 @@ ${src}`;
   const generateIdea = async (count = 1) => {
     if (!ideaPrompt.trim()) { setErr("כתוב קודם על מה השיר (או בחר נושא מהרשימה)"); return; }
     if (!needAI("לכתוב שיר")) return;
-    setIdeaLoading(true); setErr(""); setRefineResult(null); setIdeaTitles(null); setIdeaStyleMsg("");
+    setIdeaLoading(true); setErr(""); setRefineResult(null); setIdeaTitles(null); setIdeaStyleMsg(""); setIdeaLive(""); setIdeaStart(Date.now());
     let first = "";
     try {
-      const outs = await Promise.all(Array.from({ length: count }, (_, i) => callAI(makeSongPrompt(i, count)).catch(() => "")));
+      const live = count === 1 && aiProvider === "gemini";
+      const outs = await Promise.all(Array.from({ length: count }, (_, i) => callAI(makeSongPrompt(i, count), { temperature: 0.95, ...(live ? { onText: (t) => setIdeaLive(t) } : {}) }).catch((e) => { if (count === 1) throw e; return ""; })));
       const clean = outs.map(x => songPostProcess((window.AppNestRefine ? window.AppNestRefine.cleanText(x) : (x || "")).trim(), "")).filter(Boolean);
       if (!clean.length) throw new Error("לא התקבלה טיוטה. בדוק את החיבור בהגדרות ונסה שוב.");
       setIdeaVariants(clean); first = clean[0]; setDraft(first); setIdeaEdit(false);
     } catch (e) { setErr(String(e?.message || e)); }
-    setIdeaLoading(false);
+    setIdeaLoading(false); setIdeaLive(""); setIdeaStart(0);
     if (first && count === 1 && ideaAutoRefine) runAutoRefine("idea", false, first, 1);
   };
 
@@ -1202,7 +1281,8 @@ ${src}`;
     setIdeaLoading(true); setErr("");
     try {
       const p = `אתה עורך שירים מקצועי בעברית. שפר את הטיוטה לפי הבקשה: "${how}". שמור על הרעיון, על המבנה ועל תגיות [Verse]/[Chorus]. ${genderInstruction} ${GENRE_HINT[ideaGenre] || ""} בלי ניקוד ובלי הסברים — החזר רק את הטיוטה המשופרת.\n\nהטיוטה:\n${ideaOut}`;
-      const out = window.AppNestRefine ? window.AppNestRefine.cleanText(await callAI(p)) : (await callAI(p) || "").trim();
+      const raw = await callAI(p, { temperature: 0.85 });
+      const out = window.AppNestRefine ? window.AppNestRefine.cleanText(raw) : (raw || "").trim();
       if (out) setDraft(songPostProcess(out, ideaOut));
     } catch (e) { setErr(String(e?.message || e)); }
     setIdeaLoading(false);
@@ -1269,6 +1349,19 @@ ${src}`;
   };
   const replaceLine = (idx, text) => { const lines = ideaOut.split("\n"); lines[idx] = text; setDraft(lines.join("\n")); };
 
+  // 📚 וריאציות לסגנון מהספרייה (קריאת AI אחת)
+  const styleVariations = async (x) => {
+    if (!needAI("ליצור וריאציות")) return;
+    setLibVar({ id: x.id, loading: true, options: [] }); setErr("");
+    try {
+      const j = await aiJSON(`You are a Suno AI style-prompt expert. The user liked this Suno "Style of Music" prompt:
+"${x.style}"
+${x.notes ? `Their notes about what worked / what to change (Hebrew): ${x.notes}
+` : ""}Write 3 variations that keep what they liked but explore a different direction each (e.g. instrumentation, energy/tempo, vocal delivery). English, comma-separated tags, max 120 characters each, no artist names. For each give a short Hebrew explanation of what changed. Return JSON only: {"variations":[{"style":"...","why":"..."}]}`, 0.9);
+      setLibVar({ id: x.id, loading: false, options: (j.variations || []).map(v => ({ style: String(v.style || "").replace(/["\n]/g, " ").trim(), why: String(v.why || "") })).filter(v => v.style).slice(0, 4) });
+    } catch (e) { setLibVar(null); setErr(String(e?.message || e)); }
+  };
+
   // ✍️ המשך את השיר (לשונית כתיבה): כותב את החלק הבא ומוסיף בסוף
   const continueSong = async () => {
     if (!src.trim() || !needAI("להמשיך את השיר")) return;
@@ -1276,7 +1369,8 @@ ${src}`;
     try {
       const tags = (src.match(/\[[^\]]+\]/g) || []).map(t => t.slice(1, -1));
       const p = `אתה כותב שירים בעברית. זה שיר שהמשתמש התחיל לכתוב. כתוב רק את החלק הבא שלו (בית, פזמון או גשר — מה שמתאים עכשיו לפי המבנה${tags.length ? `; עד עכשיו: ${tags.join(", ")}` : ""}). שמור על הקול, הסגנון, המשקל והחריזה של המשתמש. אם החלק הבא הוא פזמון שכבר הופיע — חזור עליו זהה. ${genderInstruction} ${HAS_NIKUD.test(src) ? "" : "בלי ניקוד. "}התחל בתגית מבנה בסוגריים מרובעים (למשל [Verse 2]) והחזר רק את החלק החדש, בלי הסברים.\n\nהשיר עד עכשיו:\n${src}`;
-      const out = window.AppNestRefine ? window.AppNestRefine.cleanText(await callAI(p)) : (await callAI(p) || "").trim();
+      const raw = await callAI(p, { temperature: 0.85 });
+      const out = window.AppNestRefine ? window.AppNestRefine.cleanText(raw) : (raw || "").trim();
       if (!out) throw new Error("לא התקבל המשך. נסה שוב.");
       setSrcBeforeRefine(src); setSrc(src.replace(/\s*$/, "") + "\n\n" + songPostProcess(out, src));
     } catch (e) { setErr(String(e?.message || e)); }
@@ -1358,7 +1452,7 @@ ${draft}`;
     setRefineState({ target, running: true, rounds, stage: "critique", round: 0, steps: [], baseline: null });
     try {
       const r = await window.AppNestRefine.run({
-        callAI, draft: base, rounds, minGain: 0.3, criteria: SONG_CRITERIA,
+        callAI: (pr) => callAI(pr, { temperature: pr.startsWith("אתה מבקר שירים") ? 0.2 : 0.85 }), draft: base, rounds, minGain: 0.3, criteria: SONG_CRITERIA,
         buildCritique: makeSongCritique(own), buildRewrite: makeSongRewrite(own),
         localCheck: songLocalCheck, postProcess: songPostProcess,
         isCancelled: () => refineCancelRef.current,
@@ -1544,7 +1638,7 @@ ${text}`;
   const [showBackupReminder, setShowBackupReminder] = useState(false);
 
   const expBk = () => {
-    const d = JSON.stringify({ backupVersion: "9.0", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, uname, sLang, uLang, theme, day, activeVoiceId }, null, 2);
+    const d = JSON.stringify({ backupVersion: "9.0", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, styleLib, uname, sLang, uLang, theme, day, activeVoiceId }, null, 2);
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([d], { type: "application/json" }));
     a.download = `sunoprep-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click();
@@ -1559,7 +1653,7 @@ ${text}`;
       try {
         const d = JSON.parse(ev.target.result);
         if (d.src !== undefined) setSrc(d.src); if (d.res !== undefined) setRes(d.res);
-        if (d.selSty) setSelSty(d.selSty); if (d.selVocal) setSelVocal(d.selVocal); if (d.custSty !== undefined) setCustSty(d.custSty); if (d.bpmVal !== undefined) setBpmVal(d.bpmVal); if (d.savedSty) setSavedSty(d.savedSty);
+        if (d.selSty) setSelSty(d.selSty); if (d.selVocal) setSelVocal(d.selVocal); if (d.custSty !== undefined) setCustSty(d.custSty); if (d.bpmVal !== undefined) setBpmVal(d.bpmVal); if (d.savedSty) setSavedSty(d.savedSty); if (Array.isArray(d.styleLib)) setStyleLib(d.styleLib);
         if (d.uname) setUname(d.uname); if (d.sLang) setSLang(d.sLang);
         if (d.uLang) setULang(d.uLang); if (d.theme) setTheme(d.theme);
         if (d.day !== undefined) setDay(d.day); if (d.activeVoiceId !== undefined) setActiveVoiceId(d.activeVoiceId);
@@ -2053,6 +2147,110 @@ ${src}`;
   }
 
   /* ── HISTORY ── */
+  /* ── 📚 STYLE LIBRARY ── */
+  if (scr === "styles") {
+    const q = libQuery.trim().toLowerCase();
+    const allTags = [...new Set(styleLib.flatMap(x => x.tags || []))].slice(0, 12);
+    let list = styleLib.filter(x => libFilter === "all" || (libFilter === "fav" && (x.rating || 0) >= 4) || (libFilter === "try" && x.tryAgain) || (libFilter.startsWith("tag:") && (x.tags || []).includes(libFilter.slice(4))));
+    if (q) list = list.filter(x => [x.name, x.style, x.notes, ...(x.tags || []), ...(x.songs || [])].join(" ").toLowerCase().includes(q));
+    list = [...list].sort((a, b) => libSort === "rating" ? (b.rating || 0) - (a.rating || 0) : libSort === "name" ? a.name.localeCompare(b.name, "he") : (b.lastUsed || b.created || 0) - (a.lastUsed || a.created || 0));
+    const fld = { width: "100%", marginTop: 4, padding: 10, borderRadius: 10, border: `1px solid ${bd}`, background: bg, color: tx, fontFamily: "inherit", fontSize: 14 };
+    const lbl = { fontSize: 12, fontWeight: 700, color: sb, marginTop: 10 };
+    const stars = (n, onSet) => <span style={{ display: "inline-flex", gap: 2, direction: "ltr" }}>{[1, 2, 3, 4, 5].map(k => <button key={k} onClick={onSet ? () => onSet(k === n ? 0 : k) : undefined} style={{ background: "transparent", border: "none", padding: 0, fontSize: onSet ? 22 : 15, cursor: onSet ? "pointer" : "default", color: k <= n ? "#F5B301" : bd, lineHeight: 1 }}>★</button>)}</span>;
+    const linkify = (txt) => (txt || "").split(/\n+/).map(l => l.trim()).filter(Boolean).map((l, i) => /^https?:\/\//.test(l) ? <div key={i}><a href={l} target="_blank" rel="noopener noreferrer" style={{ color: ca, fontSize: 12, wordBreak: "break-all" }}>🔗 {l.replace(/^https?:\/\/(www\.)?/, "").slice(0, 48)}</a></div> : <div key={i} style={{ fontSize: 12, color: tx }}>{l}</div>);
+    const E = libEdit;
+    return (
+      <div style={{ background: bg, color: tx, minHeight: "100vh", direction: "rtl", fontFamily: "'Segoe UI',sans-serif", padding: "18px 14px 90px", maxWidth: 680, margin: "0 auto" }}>
+        <B onClick={goBackScr}>{t.back}</B>
+        <div style={{ marginTop: 14, padding: "16px 14px", borderRadius: 16, background: `linear-gradient(160deg, ${c.a}1f, ${cd} 55%)`, border: `1px solid ${c.a}55` }}>
+          <div style={{ fontWeight: 800, fontSize: 19, color: tx }}>📚 ספריית הסגנונות שלי</div>
+          <div style={{ fontSize: 12, color: sb, marginTop: 3, lineHeight: 1.5 }}>כל סגנון שניסית בסונו — עם דירוג, הערות על מה יצא, קישורים לשירים, ו"לנסות שוב". לחיצה על ▶️ מחזירה את הסגנון בדיוק לבונה הסגנון.</div>
+          <div style={{ display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap" }}>
+            <B sm pri onClick={() => openLibFromCurrent()} dis={!builtStyleNow()}>➕ שמור את הסגנון שבנוי עכשיו</B>
+            <B sm onClick={() => { const e = newLibEntry(""); setLibEdit({ ...e, isNew: true, tagsText: "", songsText: e.songs.join(", ") }); }}>✍️ סגנון חדש (הדבקה)</B>
+            {savedSty.length > 0 && <B sm onClick={importStarStyles}>⭐ ייבא מ"הסגנונות שלי"</B>}
+          </div>
+          {libMsg && <div style={{ marginTop: 8, fontSize: 12, color: ca }}>{libMsg}</div>}
+        </div>
+
+        {E && <div style={{ marginTop: 12, padding: 14, borderRadius: 16, background: cd, border: `2px solid ${c.a}` }}>
+          <div style={{ fontWeight: 800, fontSize: 16, color: tx }}>{E.isNew ? "➕ סגנון חדש בספרייה" : "✏️ עריכת סגנון"}</div>
+          <div style={lbl}>שם</div>
+          <input value={E.name} onChange={ev => setLibEdit({ ...E, name: ev.target.value })} placeholder='למשל: "מזרחי חם עם עוד — יצא מעולה"' style={fld} />
+          <div style={lbl}>טקסט הסגנון לסונו</div>
+          <textarea dir="ltr" value={E.style} onChange={ev => setLibEdit({ ...E, style: ev.target.value })} placeholder="Mizrahi pop, oud, darbuka, warm male vocals, 95 BPM" style={{ ...fld, minHeight: 70, textAlign: "left", fontFamily: "monospace", fontSize: 13 }} />
+          <div style={lbl}>כמה אהבתי את מה שיצא</div>
+          <div style={{ marginTop: 4 }}>{stars(E.rating || 0, n => setLibEdit({ ...E, rating: n }))}</div>
+          <label style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10, fontSize: 13, color: tx, cursor: "pointer" }}><input type="checkbox" checked={!!E.tryAgain} onChange={ev => setLibEdit({ ...E, tryAgain: ev.target.checked })} style={{ width: 18, height: 18, accentColor: c.a }} />🧪 רוצה לנסות אותו שוב בעתיד</label>
+          <div style={lbl}>הערות — מה יצא טוב? מה לשנות בפעם הבאה?</div>
+          <textarea value={E.notes} onChange={ev => setLibEdit({ ...E, notes: ev.target.value })} placeholder="למשל: הקול יצא מושלם, אבל הקצב מהיר מדי. בפעם הבאה 85 BPM. עובד הכי טוב עם עברית מנוקדת." style={{ ...fld, minHeight: 80, resize: "vertical", lineHeight: 1.5 }} />
+          <div style={lbl}>תגיות (מופרדות בפסיק)</div>
+          <input value={E.tagsText} onChange={ev => setLibEdit({ ...E, tagsText: ev.target.value })} placeholder="מזרחי, חתונה, קצבי" style={fld} />
+          <div style={lbl}>שירים שעשיתי איתו (מופרדים בפסיק)</div>
+          <input value={E.songsText} onChange={ev => setLibEdit({ ...E, songsText: ev.target.value })} placeholder="רק מילה, התחנה האחרונה" style={fld} />
+          <div style={lbl}>קישורים לשירים בסונו / יוטיוב (שורה לכל קישור)</div>
+          <textarea dir="ltr" value={E.links} onChange={ev => setLibEdit({ ...E, links: ev.target.value })} placeholder="https://suno.com/song/..." style={{ ...fld, minHeight: 54, textAlign: "left", fontSize: 12 }} />
+          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <B pri onClick={saveLibEdit} sx={{ flex: 1 }}>💾 שמור</B>
+            <B onClick={() => setLibEdit(null)}>ביטול</B>
+          </div>
+        </div>}
+
+        {styleLib.length > 0 && <div style={{ marginTop: 12 }}>
+          <input value={libQuery} onChange={ev => setLibQuery(ev.target.value)} placeholder="🔍 חיפוש בשם, בסגנון, בהערות או בתגיות" style={{ ...fld, marginTop: 0 }} />
+          <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
+            <Chip on={libFilter === "all"} onClick={() => setLibFilter("all")}>הכל ({styleLib.length})</Chip>
+            <Chip on={libFilter === "fav"} onClick={() => setLibFilter("fav")}>❤️ אהבתי (4★+)</Chip>
+            <Chip on={libFilter === "try"} onClick={() => setLibFilter("try")}>🧪 לנסות שוב</Chip>
+            {allTags.map(tg => <Chip key={tg} on={libFilter === "tag:" + tg} onClick={() => setLibFilter("tag:" + tg)}>#{tg}</Chip>)}
+          </div>
+          <div style={{ display: "flex", gap: 6, marginTop: 8, alignItems: "center", fontSize: 12, color: sb }}>מיון:
+            {[["recent", "אחרון"], ["rating", "דירוג"], ["name", "שם"]].map(([k, l]) => <Chip key={k} on={libSort === k} onClick={() => setLibSort(k)}>{l}</Chip>)}
+          </div>
+        </div>}
+
+        {styleLib.length === 0 && !E && <div style={{ marginTop: 14, padding: 18, borderRadius: 16, border: `1px dashed ${bd}`, textAlign: "center", color: sb, fontSize: 13, lineHeight: 1.6 }}>
+          <div style={{ fontSize: 34 }}>🎼</div>
+          עוד אין סגנונות בספרייה.<br />בנה סגנון בלשונית כתיבה ולחץ "📚 שמור לספרייה", או הדבק כאן סגנון שעבד לך בסונו.
+        </div>}
+        {styleLib.length > 0 && list.length === 0 && <div style={{ marginTop: 14, color: sb, fontSize: 13, textAlign: "center" }}>לא נמצאו סגנונות לחיפוש הזה.</div>}
+
+        <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
+          {list.map(x => <div key={x.id} style={{ padding: 13, borderRadius: 14, background: cd, border: `1px solid ${x.rating >= 4 ? c.a + "88" : bd}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "flex-start" }}>
+              <div style={{ fontWeight: 800, fontSize: 15, color: tx, lineHeight: 1.35 }}>{x.tryAgain ? "🧪 " : ""}{x.name}</div>
+              {stars(x.rating || 0, n => updateLib(x.id, { rating: n }))}
+            </div>
+            <div dir="ltr" style={{ marginTop: 7, padding: "7px 9px", borderRadius: 8, background: bg, border: `1px solid ${bd}`, fontFamily: "monospace", fontSize: 12, color: tx, textAlign: "left", lineHeight: 1.45 }}>{x.style}</div>
+            {x.notes && <div style={{ marginTop: 7, fontSize: 13, color: tx, whiteSpace: "pre-wrap", lineHeight: 1.5 }}>📝 {x.notes}</div>}
+            {(x.tags || []).length > 0 && <div style={{ display: "flex", gap: 4, marginTop: 7, flexWrap: "wrap" }}>{x.tags.map(tg => <span key={tg} style={{ fontSize: 11, padding: "2px 8px", borderRadius: 20, background: `${c.a}18`, color: ca }}>#{tg}</span>)}</div>}
+            {(x.songs || []).length > 0 && <div style={{ marginTop: 6, fontSize: 12, color: sb }}>🎵 {x.songs.join(" · ")}</div>}
+            {x.links && <div style={{ marginTop: 5 }}>{linkify(x.links)}</div>}
+            <div style={{ marginTop: 6, fontSize: 10, color: sb }}>{x.uses ? `שימש ${x.uses} פעמים · ` : ""}{x.lastUsed ? `לאחרונה ${new Date(x.lastUsed).toLocaleDateString("he-IL")}` : `נשמר ${new Date(x.created).toLocaleDateString("he-IL")}`}</div>
+            <div style={{ display: "flex", gap: 6, marginTop: 9, flexWrap: "wrap" }}>
+              <B sm pri onClick={() => applyLibStyle(x)}>▶️ השתמש עכשיו</B>
+              <B sm onClick={() => { try { navigator.clipboard && navigator.clipboard.writeText(x.style); setLibMsg(`📋 הועתק: ${x.name}`); } catch (e) {} }}>📋 העתק</B>
+              <B sm onClick={() => editLib(x)}>✏️ ערוך / הערות</B>
+              <B sm onClick={() => styleVariations(x)} dis={libVar?.loading}>{libVar?.id === x.id && libVar.loading ? "⏳ חושב..." : "🧪 3 וריאציות"}</B>
+              <B sm onClick={() => updateLib(x.id, { tryAgain: !x.tryAgain })}>{x.tryAgain ? "✓ ברשימת הניסיון" : "🧪 לנסות שוב"}</B>
+              <button onClick={() => deleteLib(x)} title="מחק" style={{ background: "transparent", border: "none", color: "#E55", cursor: "pointer", fontSize: 14 }}>🗑️</button>
+            </div>
+            {libVar?.id === x.id && !libVar.loading && libVar.options.length > 0 && <div style={{ marginTop: 9, display: "grid", gap: 7 }}>
+              {libVar.options.map((v, k) => <div key={k} style={{ padding: 9, borderRadius: 10, background: bg, border: `1px solid ${bd}` }}>
+                <div dir="ltr" style={{ fontFamily: "monospace", fontSize: 12, color: tx, textAlign: "left" }}>{v.style}</div>
+                {v.why && <div style={{ fontSize: 12, color: sb, marginTop: 4 }}>{v.why}</div>}
+                <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+                  <B sm onClick={() => { const e = newLibEntry(v.style, { name: `${x.name} · וריאציה ${k + 1}`, tags: x.tags || [], tryAgain: true, notes: v.why ? `וריאציה של "${x.name}": ${v.why}` : "", songs: [] }); setStyleLib(prev => [e, ...prev]); setLibMsg(`✅ נשמרה וריאציה ${k + 1} (מסומנת "לנסות שוב")`); }}>💾 שמור כסגנון חדש</B>
+                  <B sm onClick={() => applyLibStyle({ id: "_tmp", style: v.style })}>▶️ נסה עכשיו</B>
+                </div>
+              </div>)}
+            </div>}
+          </div>)}
+        </div>
+      </div>
+    );
+  }
+
   if (scr === "history") return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
       <B onClick={goBackScr}>{t.back}</B>
@@ -2688,6 +2886,10 @@ ${src}`;
             )}
           </div>
 
+          {rtl && <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
+            <B sm onClick={() => openLibFromCurrent()} dis={!builtStyleNow()} sx={{ borderColor: `${c.a}80` }}>📚 שמור לספריית הסגנונות</B>
+            <B sm onClick={() => { setLibEdit(null); setLibMsg(""); setScr("styles"); }}>📚 הספרייה שלי ({styleLib.length})</B>
+          </div>}
           {savedSty.length > 0 && (
             <div style={{ marginTop: 8 }}>
               <div style={{ fontSize: 11, color: sb, marginBottom: 4 }}>{rtl ? "⭐ הסגנונות שלי:" : "⭐ My styles:"}</div>
@@ -2898,17 +3100,23 @@ ${src}`;
         <div style={stepCard}>
           <div style={stepHead}><span style={stepNum}>3</span>כתוב לי שיר</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr",gap:8,marginTop:8}}>
-            <B pri onClick={()=>generateIdea(1)} dis={ideaLoading||refineBusy} sx={{width:"100%",fontSize:16,padding:"14px 18px"}}>{ideaLoading?"⏳ כותב...":refineBusy?"🎻 משפר...":"✨ כתוב לי שיר"}</B>
+            <B pri onClick={()=>generateIdea(1)} dis={ideaLoading||refineBusy} sx={{width:"100%",fontSize:16,padding:"14px 18px"}}>{ideaLoading?`⏳ כותב...${ideaStart?` ${Math.max(0,Math.round((Date.now()-ideaStart)/1000))} שנ׳`:""}`:refineBusy?"🎻 מלטש...":"✨ כתוב לי שיר"}</B>
             <B onClick={()=>generateIdea(3)} dis={ideaLoading||refineBusy} sx={{width:"100%"}}>🎨 3 כיוונים שונים לבחירה</B>
           </div>
           <label style={{display:"flex",alignItems:"center",gap:8,marginTop:10,fontSize:12,color:tx,cursor:"pointer"}}>
             <input type="checkbox" checked={ideaAutoRefine} onChange={e=>setIdeaAutoRefine(e.target.checked)} style={{width:18,height:18,accentColor:c.a}} />
-            <span>🎻 ללטש אוטומטית אחרי הכתיבה <span style={{color:sb}}>(מבקר + שכתוב, עוד עד 3 קריאות AI)</span></span>
+            <span>🎻 ללטש אוטומטית אחרי הכתיבה <span style={{color:sb}}>(עוד 3 קריאות AI — מוסיף בערך 20–40 שניות)</span></span>
           </label>
         </div>
 
+        {/* כתיבה חיה — הטקסט זורם תוך כדי (Gemini) */}
+        {ideaLoading && ideaLive && <div style={{...stepCard, border:`1px solid ${c.a}77`}}>
+          <div style={stepHead}><span style={stepNum}>✍️</span>כותב עכשיו...</div>
+          <div style={{marginTop:10,padding:12,borderRadius:12,background:bg,border:`1px solid ${bd}`,whiteSpace:"pre-wrap",fontSize:15,lineHeight:1.6,color:tx}}>{ideaLive}<span className="sp-ld" style={{color:ca}}>▌</span></div>
+        </div>}
+
         {/* התוצאה */}
-        {ideaOut && <div style={{...stepCard, border:`1px solid ${c.a}77`}}>
+        {ideaOut && !(ideaLoading && ideaLive) && <div style={{...stepCard, border:`1px solid ${c.a}77`}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,flexWrap:"wrap"}}>
             <div style={stepHead}><span style={stepNum}>4</span>השיר שלך</div>
             <div style={{display:"flex",gap:6}}>
@@ -2943,7 +3151,7 @@ ${src}`;
             <div style={{fontSize:11,color:sb,marginBottom:6}}>לחץ על שם כדי לקבוע אותו כשם הפרויקט (ולהעתיק):</div>
             <div style={chipRow}>{ideaTitles.titles.map(t0=><Chip key={t0} on={projectName===t0} onClick={()=>{setProjectName(t0); try{navigator.clipboard&&navigator.clipboard.writeText(t0);}catch(e){}}}>{t0}</Chip>)}</div>
           </div>}
-          {ideaStyleMsg && <div style={{marginTop:8,padding:9,borderRadius:10,background:bg,border:`1px solid ${c.a}66`,fontSize:12,color:tx,direction:"rtl"}}>{ideaStyleMsg}</div>}
+          {ideaStyleMsg && <div style={{marginTop:8,padding:9,borderRadius:10,background:bg,border:`1px solid ${c.a}66`,fontSize:12,color:tx,direction:"rtl"}}>{ideaStyleMsg}<div style={{marginTop:7}}><B sm onClick={()=>openLibFromCurrent(custSty,{tags:[ideaGenre,ideaMood].filter(Boolean),name:`${ideaGenre} · ${ideaMood}`})}>📚 שמור לספריית הסגנונות</B></div></div>}
           {genderCheckResult && <div style={{marginTop:8,padding:9,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,whiteSpace:"pre-wrap",fontSize:12}}><b>🎭 בדיקת התאמה:</b><br/>{genderCheckResult}</div>}
 
           {renderRefinePanel("idea")}
@@ -3167,7 +3375,7 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
         <span style={{ flex: 1 }}>⚠️ {err}</span><span style={{ opacity: .7 }}>✕</span>
       </div>}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
-          SunoPrep 9.9 by Barak Aflalo — © AppNest 2026
+          SunoPrep 10.0 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
