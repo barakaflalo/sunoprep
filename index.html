@@ -9,11 +9,11 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SunoPrep">
-  <meta name="description" content="SunoPrep 10.0 - Advanced song preparation tool for Suno AI">
+  <meta name="description" content="SunoPrep 10.1 - Advanced song preparation tool for Suno AI">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" href="icon-192.png">
-  <title>SunoPrep 10.0</title>
+  <title>SunoPrep 10.1</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0B0B0F; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -62,13 +62,13 @@
       aiConfigKey: 'sp_ai-config',
       appDescription:
         'SunoPrep הוא כלי להכנת שירים ל-Suno AI: כתיבת מילות שיר, תגיות מבנה ([Verse], [Chorus] וכו\'), ' +
-        'המרת עברית לכתיב שסונו מבין, בחירת סגנון מוזיקלי וקול, ובנק משפטים ורעיונות. ' +
+        'המרת עברית לכתיב שסונו מבין, בחירת סגנון מוזיקלי בלשונית "סגנונות" (כולל ספריית סגנונות עם דירוג והערות), ספריית קולות בלשונית "בדיקות", ובנק משפטים ורעיונות. ' +
         'עזור למשתמש לכתוב שירים טובים, להבין את התכונות, ולמצוא את דרכו באפליקציה.',
       // מסכים שאפשר לנווט אליהם (הטקסט/אייקון שמופיע על הכפתור)
       tabs: [
         { name: 'כתיבה',    match: 'כתיבה' },
         { name: 'רעיונות',  match: 'רעיונות' },
-        { name: 'קולות',    match: 'קולות' },
+        { name: 'סגנונות',  match: '🎼 סגנונות' },
         { name: 'בדיקות',   match: 'בדיקות' },
         { name: 'פרויקטים', match: 'פרויקטים' },
         { name: 'Suno',     match: 'Suno' },
@@ -80,14 +80,14 @@
       // placeholder יכול להיות מערך — כדי שזה יעבוד גם כשהממשק באנגלית
       fields: [
         { name: 'lyrics', label: 'שדה מילות השיר', placeholder: ['כתוב את מילות השיר כאן', 'Write your lyrics here'], tab: 'כתיבה' },
-        { name: 'style',  label: 'שדה הסגנון המותאם', placeholder: ['הוסף סגנון מותאם', 'Add custom style'], tab: 'כתיבה' }
+        { name: 'style',  label: 'שדה הסגנון המותאם', placeholder: ['הוסף סגנון מותאם', 'Add custom style'], tab: 'סגנונות' }
       ],
       // הצעות פתיחה מהירות (כפתורים שקופצים בתחילת השיחה)
       suggestions: [
         'כתוב לי שיר מזרחי על אהבה',
         'שפר את השיר שכתבתי',
         'מה זה תגיות מבנה?',
-        'עבור למסך הקולות'
+        'עבור למסך הסגנונות'
       ]
     };
   </script>

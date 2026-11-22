@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 10.0", back: "← חזרה לדף הבית",
+    ver: "גרסה 10.1", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• ✨ AI song studio, auto-refine with a critic, nikud reviewer\n• 5 UI languages, 9 source languages\n• 5 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 10.0", back: "← Back to home",
+    ver: "Version 10.1", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.0", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.1", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.0", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.1", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -667,7 +667,7 @@ const countSyllables = (line) => {
 
 function SunoPrep() {
   const [scr, setScr] = useState("home");
-  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("sunoprep-active-tab") || "write");
+  const [activeTab, setActiveTab] = useState(() => { const v = localStorage.getItem("sunoprep-active-tab") || "write"; return v === "voice" ? "checks" : v; });
   const [src, setSrc] = useState("");
   const [res, setRes] = useState("");
   const [sLang, setSLang] = useState("he");
@@ -880,7 +880,7 @@ function SunoPrep() {
     const st = (styleOverride || builtStyleNow()).trim();
     const e = newLibEntry(st, { setup: styleOverride ? null : { selSty, selVocal, bpmVal, custSty }, ...extra });
     setLibEdit({ ...e, isNew: true, tagsText: (e.tags || []).join(", "), songsText: e.songs.join(", ") });
-    setLibMsg(""); setScr("styles");
+    setLibMsg(""); setActiveTab("styles"); setTimeout(() => { try { document.getElementById("sty-library").scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {} }, 60);
   };
   const saveLibEdit = () => {
     const e = libEdit; if (!e) return;
@@ -899,8 +899,8 @@ function SunoPrep() {
     if (ok) { setSelSty(x.setup.selSty || []); setSelVocal(x.setup.selVocal || []); setBpmVal(x.setup.bpmVal || 0); setCustSty(x.setup.custSty || ""); }
     else { setSelSty([]); setSelVocal([]); setBpmVal(0); setCustSty(x.style); }
     updateLib(x.id, { uses: (x.uses || 0) + 1, lastUsed: Date.now() });
-    setActiveTab("write"); setScr("home");
-    setTimeout(() => setErr(""), 0);
+    setLibMsg(`▶️ הסגנון "${x.name || "החדש"}" מוכן — אפשר להעתיק אותו למעלה`);
+    setActiveTab("styles"); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {}
   };
   const importStarStyles = () => {
     const have = new Set(styleLib.map(x => x.style.trim()));
@@ -1313,7 +1313,7 @@ ${src}`;
       const j = await aiJSON(`You are a Suno AI prompt expert. Write a Suno "Style of Music" prompt in ENGLISH for these Hebrew lyrics: genre "${ideaGenre}", mood "${ideaMood}", singer: ${ideaGenderMode}. Comma-separated tags: genre and sub-genre, 2–3 instruments, vocal type, tempo/BPM, mood. Max 110 characters. Do not include artist names. Return JSON only: {"style":"..."}\n\nLyrics:\n${ideaOut}`);
       const st = String(j.style || "").replace(/["\n]/g, " ").trim().slice(0, 160);
       if (!st) throw new Error("לא התקבל סגנון");
-      setCustSty(st); setIdeaStyleMsg(`🎼 הוכנס לשדה "סגנון מותאם אישית" בלשונית כתיבה: ${st}`);
+      setCustSty(st); setIdeaStyleMsg(`🎼 הוכנס לשדה "סגנון מותאם אישית" בלשונית סגנונות: ${st}`);
     } catch (e) { setErr(String(e?.message || e)); }
     setIdeaLoading(false);
   };
@@ -2147,8 +2147,8 @@ ${src}`;
   }
 
   /* ── HISTORY ── */
-  /* ── 📚 STYLE LIBRARY ── */
-  if (scr === "styles") {
+  /* ── 📚 STYLE LIBRARY — מוצג בתוך לשונית "סגנונות" ── */
+  const renderStyleLibrary = () => {
     const q = libQuery.trim().toLowerCase();
     const allTags = [...new Set(styleLib.flatMap(x => x.tags || []))].slice(0, 12);
     let list = styleLib.filter(x => libFilter === "all" || (libFilter === "fav" && (x.rating || 0) >= 4) || (libFilter === "try" && x.tryAgain) || (libFilter.startsWith("tag:") && (x.tags || []).includes(libFilter.slice(4))));
@@ -2160,9 +2160,8 @@ ${src}`;
     const linkify = (txt) => (txt || "").split(/\n+/).map(l => l.trim()).filter(Boolean).map((l, i) => /^https?:\/\//.test(l) ? <div key={i}><a href={l} target="_blank" rel="noopener noreferrer" style={{ color: ca, fontSize: 12, wordBreak: "break-all" }}>🔗 {l.replace(/^https?:\/\/(www\.)?/, "").slice(0, 48)}</a></div> : <div key={i} style={{ fontSize: 12, color: tx }}>{l}</div>);
     const E = libEdit;
     return (
-      <div style={{ background: bg, color: tx, minHeight: "100vh", direction: "rtl", fontFamily: "'Segoe UI',sans-serif", padding: "18px 14px 90px", maxWidth: 680, margin: "0 auto" }}>
-        <B onClick={goBackScr}>{t.back}</B>
-        <div style={{ marginTop: 14, padding: "16px 14px", borderRadius: 16, background: `linear-gradient(160deg, ${c.a}1f, ${cd} 55%)`, border: `1px solid ${c.a}55` }}>
+      <div style={{ color: tx, direction: "rtl" }}>
+        <div style={{ padding: "14px", borderRadius: 14, background: cd, border: `1px solid ${c.a}55` }}>
           <div style={{ fontWeight: 800, fontSize: 19, color: tx }}>📚 ספריית הסגנונות שלי</div>
           <div style={{ fontSize: 12, color: sb, marginTop: 3, lineHeight: 1.5 }}>כל סגנון שניסית בסונו — עם דירוג, הערות על מה יצא, קישורים לשירים, ו"לנסות שוב". לחיצה על ▶️ מחזירה את הסגנון בדיוק לבונה הסגנון.</div>
           <div style={{ display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap" }}>
@@ -2211,7 +2210,7 @@ ${src}`;
 
         {styleLib.length === 0 && !E && <div style={{ marginTop: 14, padding: 18, borderRadius: 16, border: `1px dashed ${bd}`, textAlign: "center", color: sb, fontSize: 13, lineHeight: 1.6 }}>
           <div style={{ fontSize: 34 }}>🎼</div>
-          עוד אין סגנונות בספרייה.<br />בנה סגנון בלשונית כתיבה ולחץ "📚 שמור לספרייה", או הדבק כאן סגנון שעבד לך בסונו.
+          עוד אין סגנונות בספרייה.<br />בנה סגנון למעלה ולחץ "📚 שמור לספרייה", או הדבק כאן סגנון שעבד לך בסונו.
         </div>}
         {styleLib.length > 0 && list.length === 0 && <div style={{ marginTop: 14, color: sb, fontSize: 13, textAlign: "center" }}>לא נמצאו סגנונות לחיפוש הזה.</div>}
 
@@ -2249,7 +2248,7 @@ ${src}`;
         </div>
       </div>
     );
-  }
+  };
 
   if (scr === "history") return (
     <div style={{ background: bg, color: tx, minHeight: "100vh", direction: rtl ? "rtl" : "ltr", fontFamily: "'Segoe UI',sans-serif", padding: 24 }}>
@@ -2498,7 +2497,7 @@ ${src}`;
           {[
             ["write","✍️ כתיבה"],
             ["ideas","✨ רעיונות"],
-            ["voice","🎙️ קולות"],
+            ["styles","🎼 סגנונות"],
             ["checks","🎧 בדיקות"],
             ["projects","🗂️ פרויקטים"],
             ["suno","🎵 Suno"]
@@ -2847,8 +2846,85 @@ ${src}`;
           </div>
         </div>
 
+        {/* 🎼 הסגנון — מקוצר; העריכה המלאה בלשונית סגנונות */}
+        <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
+          <div style={{ flex: "1 1 200px", minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: ca }}>🎼 {rtl ? "הסגנון לשיר" : "Song style"}</div>
+            <div dir="ltr" style={{ fontSize: 11, marginTop: 3, color: styTxt ? tx : sb, textAlign: "left", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{styTxt || (rtl ? "עוד לא נבחר סגנון" : "No style selected yet")}</div>
+          </div>
+          <div style={{ display: "flex", gap: 6 }}>
+            <B sm onClick={() => { setActiveTab("styles"); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {} }}>🎼 {styTxt ? (rtl ? "ערוך סגנון" : "Edit style") : (rtl ? "בחר סגנון" : "Choose style")}</B>
+            {styTxt && <B sm pri onClick={() => copy(styTxt, "sty")}>{cpd === "sty" ? "✅" : "📋"} {rtl ? "העתק" : "Copy"}</B>}
+          </div>
+        </div>
+
+        {/* RHYTHM & LINE BALANCE */}
+        {src.trim() && (() => {
+          const lines = src.split(/\n/).map((x,i)=>({text:x.trim(),i})).filter(o=>o.text && !/^\[.*\]$/.test(o.text));
+          const count = x => (x.match(/[א-ת]+/g)||[]).reduce((n,w)=>n+Math.max(1,(w.replace(/[אהוי]/g," ").trim().match(/[א-ת]+/g)||[]).length),0);
+          const vals=lines.map(o=>count(o.text));
+          const avg=vals.reduce((a,b)=>a+b,0)/Math.max(1,vals.length);
+          const max=Math.max(...vals,1);
+          return <div style={{marginTop:12,padding:14,borderRadius:12,background:`${c.a}0d`,border:`1px solid ${c.a}35`}}>
+            <div style={{fontWeight:800,fontSize:15,color:tx}}>🎵 איזון קצב ועומס שורות</div>
+            <div style={{fontSize:11,color:sb,marginTop:4}}>הערכה גסה לפי אורך ומבנה המילים — לא מדד מוזיקלי מדויק.</div>
+            <div style={{marginTop:10,display:"grid",gap:7}}>
+              {lines.map((o,j)=>{const v=vals[j], ratio=v/Math.max(avg,1), flag=ratio>1.45?"🔴":ratio>1.2?"🟡":ratio<0.65?"🟡":"🟢"; return <div key={o.i} style={{padding:"8px 9px",borderRadius:8,background:bg,border:`1px solid ${bd}`}}>
+                <div style={{display:"flex",justifyContent:"space-between",gap:8,fontSize:11}}><span style={{color:tx,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{flag} {o.text}</span><b style={{color: ca,whiteSpace:"nowrap"}}>{v} יח׳</b></div>
+                <div style={{height:5,borderRadius:5,background:bd,marginTop:6,overflow:"hidden"}}><div style={{height:"100%",width:`${Math.min(100,(v/max)*100)}%`,background:c.a,borderRadius:5}}/></div>
+                {ratio>1.45 && <div style={{fontSize:10,color:sb,marginTop:5}}>השורה ארוכה משמעותית מהממוצע — Suno עלול לדחוס או לבלוע מילים.</div>}
+              </div>})}
+            </div>
+            <div style={{fontSize:10,color:sb,marginTop:8}}>ממוצע: {avg.toFixed(1)} יחידות לשורה. השווה בעיקר שורות בתוך אותו בית.</div>
+          </div>
+        })()}
+
+        {/* FINAL SUNO CHECK */}
+        {src.trim() && (() => {
+          const rawLines = src.split(/\n/).map(x=>x.trim()).filter(x=>x && !/^\[.*\]$/.test(x));
+          const issues = [];
+          const mixed = rawLines.filter(x => /[א-ת][A-Za-z]|[A-Za-z][א-ת]/.test(x));
+          if (mixed.length) issues.push(`נמצא ערבוב עברית/אנגלית ב־${mixed.length} שורות`);
+          const stretched = rawLines.filter(x => /(.)\1\1\1/.test(x));
+          if (stretched.length) issues.push(`נמצאו אותיות שחוזרות יותר מדי ב־${stretched.length} שורות`);
+          const longLines = rawLines.filter(x => (x.match(/[א-ת]+/g)||[]).length > 14);
+          if (longLines.length) issues.push(`${longLines.length} שורות ארוכות שעלולות להיות צפופות לשירה`);
+          const changed = res && src.trim() !== res.trim();
+          if (changed) issues.push("גרסת Suno שונה מהטקסט המקורי — כדאי לעבור על השינויים");
+          const status = issues.length === 0 ? "ready" : issues.length <= 2 ? "check" : "warn";
+          const icon = status==="ready" ? "🟢" : status==="check" ? "🟡" : "🔴";
+          const title = status==="ready" ? "מוכן לבדיקה ב־Suno" : status==="check" ? "כדאי לבדוק כמה דברים" : "נמצאו דברים שדורשים בדיקה";
+          return <div style={{ marginTop:12, padding:14, borderRadius:12, background: status==="ready" ? "#2e7d3212" : status==="check" ? "#f9a82512" : "#c6282812", border:`1px solid ${status==="ready"?"#2e7d3260":status==="check"?"#f9a82570":"#c6282860"}` }}>
+            <div style={{ fontWeight:800, fontSize:15, color:tx }}>{icon} בדיקה סופית לפני Suno — {title}</div>
+            <div style={{ fontSize:11, color:sb, marginTop:5 }}>הבדיקה לא משנה את המילים. היא רק מסמנת דברים שכדאי לעבור עליהם לפני ההעתקה.</div>
+            {issues.length ? <div style={{ marginTop:9, display:"grid", gap:5 }}>{issues.map((x,i)=><div key={i} style={{ fontSize:12, color:tx }}>⚠️ {x}</div>)}</div> : <div style={{ marginTop:9, fontSize:12, color:tx }}>✓ לא נמצאו תווים מעורבים, מתיחות חריגות או שורות ארוכות במיוחד.</div>}
+            <div style={{ marginTop:10, display:"flex", gap:6, flexWrap:"wrap" }}>
+              <B sm onClick={() => { const el=document.getElementById("lyrics-output"); if(el) el.scrollIntoView({behavior:"smooth",block:"center"}); }}>🔍 בדוק את גרסת Suno</B>
+              <B sm onClick={() => copy(res || src, "final")} dis={!(res||src)}>📋 העתק גרסה ל־Suno</B>
+            </div>
+          </div>
+        })()}
+
+        </>}
+      {activeTab === "styles" && <div style={{ display: "grid", gap: 14 }}>
+        {/* ═══ 🎼 סגנונות — כל מה שקשור לצליל של השיר במקום אחד ═══ */}
+        <div style={{ padding: "16px 14px", borderRadius: 16, background: `linear-gradient(160deg, ${c.a}1f, ${cd} 55%)`, border: `1px solid ${c.a}55` }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 42, height: 42, borderRadius: 12, display: "grid", placeItems: "center", fontSize: 22, background: `${c.a}26`, border: `1px solid ${c.a}66` }}>🎼</div>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: 18, color: tx }}>{rtl ? "סגנונות" : "Styles"}</div>
+              <div style={{ fontSize: 12, color: sb }}>{rtl ? "בונה הסגנון, הספרייה שלך וכרטיס הביצוע — הכל במקום אחד." : "Style builder, your library and the performance card — all in one place."}</div>
+            </div>
+          </div>
+          <div dir="ltr" style={{ marginTop: 10, padding: "9px 11px", borderRadius: 10, background: bg, border: `1px solid ${bd}`, fontSize: 12, fontFamily: "monospace", color: styTxt ? tx : sb, textAlign: "left", lineHeight: 1.5 }}>{styTxt || (rtl ? "עוד לא נבחר סגנון — בחר למטה או מהספרייה" : "No style yet — pick below or from your library")}</div>
+          <div style={{ display: "flex", gap: 6, marginTop: 9, flexWrap: "wrap" }}>
+            <B sm pri onClick={() => copy(styTxt, "sty")} dis={!styTxt}>{cpd === "sty" ? `✅ ${t.copied}` : `📋 ${t.cpSty}`}</B>
+            {[["sty-builder", rtl ? "🎛️ בונה הסגנון" : "🎛️ Builder"], ["sty-library", (rtl ? "📚 הספרייה" : "📚 Library") + ` (${styleLib.length})`], ["sty-perf", rtl ? "🎭 כרטיס ביצוע" : "🎭 Performance"]].map(([id, l]) => <Chip key={id} onClick={() => { try { document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {} }}>{l}</Chip>)}
+          </div>
+        </div>
+
         {/* ═══ STYLE ═══ */}
-        <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14 }}>
+        <div id="sty-builder" style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, scrollMarginTop: 12 }}>
           <div style={{ fontSize: 14, fontWeight: 600, color: ca, marginBottom: 8 }}>{t.styTitle}</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 8 }}>
             {STYLES.map(s => (
@@ -2888,7 +2964,7 @@ ${src}`;
 
           {rtl && <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
             <B sm onClick={() => openLibFromCurrent()} dis={!builtStyleNow()} sx={{ borderColor: `${c.a}80` }}>📚 שמור לספריית הסגנונות</B>
-            <B sm onClick={() => { setLibEdit(null); setLibMsg(""); setScr("styles"); }}>📚 הספרייה שלי ({styleLib.length})</B>
+            <B sm onClick={() => { try { document.getElementById("sty-library").scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {} }}>📚 לספרייה שלי ({styleLib.length}) ↓</B>
           </div>}
           {savedSty.length > 0 && (
             <div style={{ marginTop: 8 }}>
@@ -2947,101 +3023,21 @@ ${src}`;
           </div>
         </div>
 
+        <div id="sty-library" style={{ scrollMarginTop: 12 }}>{renderStyleLibrary()}</div>
 
-
-        {/* RHYTHM & LINE BALANCE */}
-        {src.trim() && (() => {
-          const lines = src.split(/\n/).map((x,i)=>({text:x.trim(),i})).filter(o=>o.text && !/^\[.*\]$/.test(o.text));
-          const count = x => (x.match(/[א-ת]+/g)||[]).reduce((n,w)=>n+Math.max(1,(w.replace(/[אהוי]/g," ").trim().match(/[א-ת]+/g)||[]).length),0);
-          const vals=lines.map(o=>count(o.text));
-          const avg=vals.reduce((a,b)=>a+b,0)/Math.max(1,vals.length);
-          const max=Math.max(...vals,1);
-          return <div style={{marginTop:12,padding:14,borderRadius:12,background:`${c.a}0d`,border:`1px solid ${c.a}35`}}>
-            <div style={{fontWeight:800,fontSize:15,color:tx}}>🎵 איזון קצב ועומס שורות</div>
-            <div style={{fontSize:11,color:sb,marginTop:4}}>הערכה גסה לפי אורך ומבנה המילים — לא מדד מוזיקלי מדויק.</div>
-            <div style={{marginTop:10,display:"grid",gap:7}}>
-              {lines.map((o,j)=>{const v=vals[j], ratio=v/Math.max(avg,1), flag=ratio>1.45?"🔴":ratio>1.2?"🟡":ratio<0.65?"🟡":"🟢"; return <div key={o.i} style={{padding:"8px 9px",borderRadius:8,background:bg,border:`1px solid ${bd}`}}>
-                <div style={{display:"flex",justifyContent:"space-between",gap:8,fontSize:11}}><span style={{color:tx,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{flag} {o.text}</span><b style={{color: ca,whiteSpace:"nowrap"}}>{v} יח׳</b></div>
-                <div style={{height:5,borderRadius:5,background:bd,marginTop:6,overflow:"hidden"}}><div style={{height:"100%",width:`${Math.min(100,(v/max)*100)}%`,background:c.a,borderRadius:5}}/></div>
-                {ratio>1.45 && <div style={{fontSize:10,color:sb,marginTop:5}}>השורה ארוכה משמעותית מהממוצע — Suno עלול לדחוס או לבלוע מילים.</div>}
-              </div>})}
-            </div>
-            <div style={{fontSize:10,color:sb,marginTop:8}}>ממוצע: {avg.toFixed(1)} יחידות לשורה. השווה בעיקר שורות בתוך אותו בית.</div>
+        <div id="sty-perf" style={{ scrollMarginTop: 12 }}>
+        {/* PERFORMANCE CARD → STYLE PROMPT */}
+        <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: ca }}>🎭 {rtl ? "כרטיס ביצוע → Style Prompt" : "Performance Card → Style Prompt"}</div>
+          <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 9 }}>{rtl ? "הגדר איך כל חלק אמור להתבצע. הכפתור יוסיף את התיאור ל־Style Prompt בלי לשנות את מילות השיר." : "Describe how each section should be performed. The button adds it to the Style Prompt without changing lyrics."}</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
+            {[['verse','🎵 בית'],['chorus','🎶 פזמון'],['bridge','🌉 גשר'],['outro','🌅 סיום']].map(([k,label])=><label key={k} style={{fontSize:11,color:sb}}>{label}<input dir="ltr" value={performanceCard[k]} onChange={e=>setPerformanceCard(x=>({...x,[k]:e.target.value}))} style={{width:"100%",boxSizing:"border-box",marginTop:4,padding:"8px 9px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}} /></label>)}
           </div>
-        })()}
-
-        {/* FINAL SUNO CHECK */}
-        {src.trim() && (() => {
-          const rawLines = src.split(/\n/).map(x=>x.trim()).filter(x=>x && !/^\[.*\]$/.test(x));
-          const issues = [];
-          const mixed = rawLines.filter(x => /[א-ת][A-Za-z]|[A-Za-z][א-ת]/.test(x));
-          if (mixed.length) issues.push(`נמצא ערבוב עברית/אנגלית ב־${mixed.length} שורות`);
-          const stretched = rawLines.filter(x => /(.)\1\1\1/.test(x));
-          if (stretched.length) issues.push(`נמצאו אותיות שחוזרות יותר מדי ב־${stretched.length} שורות`);
-          const longLines = rawLines.filter(x => (x.match(/[א-ת]+/g)||[]).length > 14);
-          if (longLines.length) issues.push(`${longLines.length} שורות ארוכות שעלולות להיות צפופות לשירה`);
-          const changed = res && src.trim() !== res.trim();
-          if (changed) issues.push("גרסת Suno שונה מהטקסט המקורי — כדאי לעבור על השינויים");
-          const status = issues.length === 0 ? "ready" : issues.length <= 2 ? "check" : "warn";
-          const icon = status==="ready" ? "🟢" : status==="check" ? "🟡" : "🔴";
-          const title = status==="ready" ? "מוכן לבדיקה ב־Suno" : status==="check" ? "כדאי לבדוק כמה דברים" : "נמצאו דברים שדורשים בדיקה";
-          return <div style={{ marginTop:12, padding:14, borderRadius:12, background: status==="ready" ? "#2e7d3212" : status==="check" ? "#f9a82512" : "#c6282812", border:`1px solid ${status==="ready"?"#2e7d3260":status==="check"?"#f9a82570":"#c6282860"}` }}>
-            <div style={{ fontWeight:800, fontSize:15, color:tx }}>{icon} בדיקה סופית לפני Suno — {title}</div>
-            <div style={{ fontSize:11, color:sb, marginTop:5 }}>הבדיקה לא משנה את המילים. היא רק מסמנת דברים שכדאי לעבור עליהם לפני ההעתקה.</div>
-            {issues.length ? <div style={{ marginTop:9, display:"grid", gap:5 }}>{issues.map((x,i)=><div key={i} style={{ fontSize:12, color:tx }}>⚠️ {x}</div>)}</div> : <div style={{ marginTop:9, fontSize:12, color:tx }}>✓ לא נמצאו תווים מעורבים, מתיחות חריגות או שורות ארוכות במיוחד.</div>}
-            <div style={{ marginTop:10, display:"flex", gap:6, flexWrap:"wrap" }}>
-              <B sm onClick={() => { const el=document.getElementById("lyrics-output"); if(el) el.scrollIntoView({behavior:"smooth",block:"center"}); }}>🔍 בדוק את גרסת Suno</B>
-              <B sm onClick={() => copy(res || src, "final")} dis={!(res||src)}>📋 העתק גרסה ל־Suno</B>
-            </div>
+          <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:9}}>
+            <B sm onClick={()=>{const x=`Performance: ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`; setCustSty(prev=>prev.trim()?prev.trim()+", "+x:x)}}>✨ {rtl ? "הוסף ל־Style Prompt" : "Add to Style Prompt"}</B>
+            <B sm onClick={()=>navigator.clipboard?.writeText(`Performance: ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`)}>📋 {rtl ? "העתק תיאור ביצוע" : "Copy performance"}</B>
           </div>
-        })()}
-
-        </>}
-      {activeTab === "voice" && <div>
-        <div style={{padding:"14px 12px"}}>
-          <div style={{fontSize:18,fontWeight:800,marginBottom:5}}>🎙️ ספריית קולות ודוגמאות</div>
-          <div style={{fontSize:12,color:sb,marginBottom:12}}>הקלט או העלה דוגמה כדי להשוות אופי קול וביצוע לשיר. הדוגמאות נשמרות במכשיר גם אחרי רענון. אפשר לבחור דוגמה פעילה ולהוסיף הערות.</div>
-          <div style={{padding:12,border:`1px solid ${bd}`,borderRadius:12,background:cd}}>
-            <input value={voiceName} onChange={e=>setVoiceName(e.target.value)} placeholder="שם הדוגמה, למשל: קול חם לפזמון" style={{width:"100%",boxSizing:"border-box",padding:"9px 10px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx,fontFamily:"inherit",marginBottom:8}}/>
-            <div style={{fontSize:11,fontWeight:700,margin:"4px 0 6px"}}>🎛️ מאפייני קול מהירים</div><div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:7}}>{["חם","עמוק","עדין","מחוספס","צלול","עוצמתי","אינטימי","אנרגטי","מתאים לפזמון"].map(tag=><button key={tag} type="button" onClick={()=>setVoiceNotes(n=>n.includes(tag)?n:(n?`${n}, ${tag}`:tag))} style={{padding:"5px 8px",borderRadius:999,border:`1px solid ${bd}`,background:bg,color:tx,cursor:"pointer",fontFamily:"inherit",fontSize:10}}>{tag}</button>)}</div><textarea value={voiceNotes} onChange={e=>setVoiceNotes(e.target.value)} placeholder="הערות: חם, עמוק, עדין, מתאים לפזמון..." style={{width:"100%",boxSizing:"border-box",padding:"8px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx,fontFamily:"inherit",minHeight:52,marginBottom:8}}/>
-            <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
-              <label style={{padding:"8px 11px",borderRadius:9,border:`1px solid ${bd}`,cursor:"pointer",fontSize:12}}>📁 העלה קובץ<input type="file" accept="audio/*" style={{display:"none"}} onChange={async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const s={id:Date.now(),name:voiceName.trim()||f.name,notes:voiceNotes.trim(),type:"קובץ",blob:f};await voiceDBPut(s);setVoiceSamples(v=>[...v,{...s,url:URL.createObjectURL(f)}]);setVoiceName("");setVoiceNotes("");e.target.value="";}}/></label>
-              <B sm act={recording} onClick={async()=>{if(recording){mediaRecorderRef.current&&mediaRecorderRef.current.stop();return;} try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});const mr=new MediaRecorder(stream);voiceChunksRef.current=[];mr.ondataavailable=e=>voiceChunksRef.current.push(e.data);mr.onstop=()=>{const blob=new Blob(voiceChunksRef.current,{type:mr.mimeType||"audio/webm"});const s={id:Date.now(),name:voiceName.trim()||`הקלטה ${new Date().toLocaleTimeString()}`,notes:voiceNotes.trim(),type:"הקלטה",blob};voiceDBPut(s).catch(()=>{});setVoiceSamples(v=>[...v,{...s,url:URL.createObjectURL(blob)}]);setVoiceName("");setVoiceNotes("");setRecording(false);stream.getTracks().forEach(t=>t.stop());};mediaRecorderRef.current=mr;mr.start();setRecording(true);}catch(err){alert("לא התקבלה הרשאה למיקרופון.");}}}>{recording?"⏹ עצור ושמור":"🎤 הקלט מהמיקרופון"}</B>
-            </div>
-          </div>
-          <div style={{marginTop:12,display:"grid",gap:8}}>
-            {voiceSamples.length===0 && <div style={{padding:18,textAlign:"center",color:sb,border:`1px dashed ${bd}`,borderRadius:12}}>עדיין אין דוגמאות קול. אפשר להעלות קובץ או להקליט מהמיקרופון.</div>}
-            {voiceSamples.map(s=><div key={s.id} style={{padding:10,border:`1px solid ${bd}`,borderRadius:10,background:cd}}>
-              <div style={{display:"flex",justifyContent:"space-between",gap:8,alignItems:"center"}}><b style={{fontSize:13}}>🎙️ {s.name}</b><B sm onClick={()=>{voiceDBDelete(s.id).catch(()=>{});URL.revokeObjectURL(s.url);setVoiceSamples(v=>v.filter(x=>x.id!==s.id));}}>🗑️ מחק</B></div>
-              <div style={{fontSize:10,color:sb,margin:"4px 0"}}>{s.type}{s.notes?` · ${s.notes}`:""}</div><div style={{marginBottom:7,display:"flex",gap:6,flexWrap:"wrap"}}><B sm onClick={()=>navigator.clipboard&&navigator.clipboard.writeText(s.notes||"")}>📋 העתק תיאור</B><B sm act={String(activeVoiceId)===String(s.id)} onClick={()=>{const id=String(s.id);setActiveVoiceId(id);localStorage.setItem("sunoprep_active_voice",id);}}>{String(activeVoiceId)===String(s.id)?"⭐ דוגמה פעילה":"☆ בחר כדוגמה פעילה"}</B></div><audio controls src={s.url} style={{width:"100%"}} />
-            </div>)}
-          </div>
-          <div style={{marginTop:12,padding:11,borderRadius:10,background:`${c.a}10`,border:`1px solid ${c.a}35`,fontSize:11,color:sb}}>
-<b>✨ המלצת אופי קול לפי השיר</b><div style={{marginTop:5}}>ההמלצה משתמשת במילות השיר ובסגנון הנוכחי כדי להציע כיוון התחלתי.</div>
-<B sm onClick={()=>setVoiceRecommendation(suggestVoiceProfile(src, style))}>✨ הצע אופי קול לשיר</B>
-{voiceRecommendation && (()=>{const rec=voiceRecommendation.split(",").map(x=>x.trim()).filter(Boolean);const active=voiceSamples.find(x=>String(x.id)===String(activeVoiceId));const notes=(active?.notes||"").toLowerCase();const hits=rec.filter(x=>notes.includes(x));const score=active?Math.round((hits.length/Math.max(1,rec.length))*100):0;const label=!active?"בחר דוגמה פעילה":score>=70?"התאמה גבוהה":score>=35?"התאמה בינונית":"כדאי לנסות כיוון אחר";return <div style={{marginTop:9,padding:9,borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
-<div><b>הכיוון המומלץ:</b> {voiceRecommendation}</div>
-<div style={{marginTop:5}}><b>התאמת הדוגמה הפעילה:</b> {label}{active&&` — ${score}%`}</div>
-{active&&<div style={{fontSize:10,color:sb,marginTop:3}}>הדוגמה: {active.name}{active.notes?` · ${active.notes}`:""}</div>}
-<div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:7}}><B sm onClick={()=>{const a=voiceSamples.find(x=>String(x.id)===String(activeVoiceId));if(a){const updated={...a,notes:[a.notes,voiceRecommendation].filter(Boolean).join(", ")};voiceDBPut({...updated,blob:a.blob}).catch(()=>{});setVoiceSamples(v=>v.map(x=>x.id===a.id?updated:x));}}} disabled={!active}>✅ החל את ההמלצה לדוגמה</B><B sm onClick={()=>setVoiceRecommendation(suggestVoiceProfile(src+" "+ideaMood, style+" "+ideaType))}>🔄 נסה שוב</B></div>
-</div>})()}
-</div>
-          <div style={{marginTop:12,padding:11,borderRadius:10,background:`${c.a}0d`,border:`1px solid ${c.a}35`,fontSize:11,color:sb}}>
-            <b>🎭 פרופילי ביצוע לשיר</b>
-            <div style={{marginTop:5}}>בחר כיוון ביצוע כדי לייצר כמה גרסאות לאותו שיר בלי לאבד את הבחירה הקודמת.</div>
-            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:8}}>
-              {["אינטימי","עוצמתי","קצבי","רגשי","דרמטי"].map(p=><B sm act={performanceProfile===p} onClick={()=>{setPerformanceProfile(p);localStorage.setItem("sunoprep_performance_profile",p);}} key={p}>{p}</B>)}
-            </div>
-            <div style={{marginTop:8,padding:8,borderRadius:8,background:bg,border:`1px solid ${bd}`}}>
-              <b>הפרופיל הפעיל:</b> {performanceProfile}
-              <div style={{marginTop:4}}>הוא ישמש כהכוונה לכרטיס הביצוע ול־Style Prompt, לצד אופי הקול שנבחר.</div>
-              <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:7}}>
-                <B sm onClick={()=>{const item={id:Date.now(),name:performanceProfile,voice:voiceRecommendation||"",notes:(voiceSamples.find(x=>String(x.id)===String(activeVoiceId))?.notes||""),created:new Date().toLocaleString()};const next=[item,...savedPerformanceProfiles].slice(0,12);setSavedPerformanceProfiles(next);localStorage.setItem("sunoprep_performance_profiles",JSON.stringify(next));}}>💾 שמור פרופיל</B>
-                <B sm onClick={()=>{const active=voiceSamples.find(x=>String(x.id)===String(activeVoiceId));const text=`Performance: ${performanceProfile}. Vocal character: ${voiceRecommendation||active?.notes||"בחר אופי קול"}.`;navigator.clipboard&&navigator.clipboard.writeText(text);}}>📋 העתק ל־Style Prompt</B>
-              </div>
-            </div>
-            {savedPerformanceProfiles.length>0&&<div style={{marginTop:8}}><b>פרופילים שמורים:</b>{savedPerformanceProfiles.map(p=><div key={p.id} style={{marginTop:5,padding:7,borderRadius:8,border:`1px solid ${bd}`,background:bg,display:"flex",justifyContent:"space-between",gap:6}}><span>{p.name}{p.voice?` · ${p.voice}`:""}</span><span><B sm onClick={()=>{setPerformanceProfile(p.name);localStorage.setItem("sunoprep_performance_profile",p.name);}}>טען</B> <B sm onClick={()=>{const next=savedPerformanceProfiles.filter(x=>x.id!==p.id);setSavedPerformanceProfiles(next);localStorage.setItem("sunoprep_performance_profiles",JSON.stringify(next));}}>🗑️</B></span></div>)}</div>}
-          </div>
+        </div>
         </div>
       </div>}
       {activeTab === "ideas" && <div>
@@ -3258,6 +3254,54 @@ ${src}`;
           </div>
         </div>
 
+          {/* 🎙️ ספריית הקולות — עברה לכאן מלשונית "קולות" */}
+        <div style={{marginTop:14,borderTop:`1px dashed ${bd}`}}>
+        <div style={{padding:"14px 12px"}}>
+          <div style={{fontSize:18,fontWeight:800,marginBottom:5}}>🎙️ ספריית קולות ודוגמאות</div>
+          <div style={{fontSize:12,color:sb,marginBottom:12}}>הקלט או העלה דוגמה כדי להשוות אופי קול וביצוע לשיר. הדוגמאות נשמרות במכשיר גם אחרי רענון. אפשר לבחור דוגמה פעילה ולהוסיף הערות.</div>
+          <div style={{padding:12,border:`1px solid ${bd}`,borderRadius:12,background:cd}}>
+            <input value={voiceName} onChange={e=>setVoiceName(e.target.value)} placeholder="שם הדוגמה, למשל: קול חם לפזמון" style={{width:"100%",boxSizing:"border-box",padding:"9px 10px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx,fontFamily:"inherit",marginBottom:8}}/>
+            <div style={{fontSize:11,fontWeight:700,margin:"4px 0 6px"}}>🎛️ מאפייני קול מהירים</div><div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:7}}>{["חם","עמוק","עדין","מחוספס","צלול","עוצמתי","אינטימי","אנרגטי","מתאים לפזמון"].map(tag=><button key={tag} type="button" onClick={()=>setVoiceNotes(n=>n.includes(tag)?n:(n?`${n}, ${tag}`:tag))} style={{padding:"5px 8px",borderRadius:999,border:`1px solid ${bd}`,background:bg,color:tx,cursor:"pointer",fontFamily:"inherit",fontSize:10}}>{tag}</button>)}</div><textarea value={voiceNotes} onChange={e=>setVoiceNotes(e.target.value)} placeholder="הערות: חם, עמוק, עדין, מתאים לפזמון..." style={{width:"100%",boxSizing:"border-box",padding:"8px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx,fontFamily:"inherit",minHeight:52,marginBottom:8}}/>
+            <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
+              <label style={{padding:"8px 11px",borderRadius:9,border:`1px solid ${bd}`,cursor:"pointer",fontSize:12}}>📁 העלה קובץ<input type="file" accept="audio/*" style={{display:"none"}} onChange={async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const s={id:Date.now(),name:voiceName.trim()||f.name,notes:voiceNotes.trim(),type:"קובץ",blob:f};await voiceDBPut(s);setVoiceSamples(v=>[...v,{...s,url:URL.createObjectURL(f)}]);setVoiceName("");setVoiceNotes("");e.target.value="";}}/></label>
+              <B sm act={recording} onClick={async()=>{if(recording){mediaRecorderRef.current&&mediaRecorderRef.current.stop();return;} try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});const mr=new MediaRecorder(stream);voiceChunksRef.current=[];mr.ondataavailable=e=>voiceChunksRef.current.push(e.data);mr.onstop=()=>{const blob=new Blob(voiceChunksRef.current,{type:mr.mimeType||"audio/webm"});const s={id:Date.now(),name:voiceName.trim()||`הקלטה ${new Date().toLocaleTimeString()}`,notes:voiceNotes.trim(),type:"הקלטה",blob};voiceDBPut(s).catch(()=>{});setVoiceSamples(v=>[...v,{...s,url:URL.createObjectURL(blob)}]);setVoiceName("");setVoiceNotes("");setRecording(false);stream.getTracks().forEach(t=>t.stop());};mediaRecorderRef.current=mr;mr.start();setRecording(true);}catch(err){alert("לא התקבלה הרשאה למיקרופון.");}}}>{recording?"⏹ עצור ושמור":"🎤 הקלט מהמיקרופון"}</B>
+            </div>
+          </div>
+          <div style={{marginTop:12,display:"grid",gap:8}}>
+            {voiceSamples.length===0 && <div style={{padding:18,textAlign:"center",color:sb,border:`1px dashed ${bd}`,borderRadius:12}}>עדיין אין דוגמאות קול. אפשר להעלות קובץ או להקליט מהמיקרופון.</div>}
+            {voiceSamples.map(s=><div key={s.id} style={{padding:10,border:`1px solid ${bd}`,borderRadius:10,background:cd}}>
+              <div style={{display:"flex",justifyContent:"space-between",gap:8,alignItems:"center"}}><b style={{fontSize:13}}>🎙️ {s.name}</b><B sm onClick={()=>{voiceDBDelete(s.id).catch(()=>{});URL.revokeObjectURL(s.url);setVoiceSamples(v=>v.filter(x=>x.id!==s.id));}}>🗑️ מחק</B></div>
+              <div style={{fontSize:10,color:sb,margin:"4px 0"}}>{s.type}{s.notes?` · ${s.notes}`:""}</div><div style={{marginBottom:7,display:"flex",gap:6,flexWrap:"wrap"}}><B sm onClick={()=>navigator.clipboard&&navigator.clipboard.writeText(s.notes||"")}>📋 העתק תיאור</B><B sm act={String(activeVoiceId)===String(s.id)} onClick={()=>{const id=String(s.id);setActiveVoiceId(id);localStorage.setItem("sunoprep_active_voice",id);}}>{String(activeVoiceId)===String(s.id)?"⭐ דוגמה פעילה":"☆ בחר כדוגמה פעילה"}</B></div><audio controls src={s.url} style={{width:"100%"}} />
+            </div>)}
+          </div>
+          <div style={{marginTop:12,padding:11,borderRadius:10,background:`${c.a}10`,border:`1px solid ${c.a}35`,fontSize:11,color:sb}}>
+<b>✨ המלצת אופי קול לפי השיר</b><div style={{marginTop:5}}>ההמלצה משתמשת במילות השיר ובסגנון הנוכחי כדי להציע כיוון התחלתי.</div>
+<B sm onClick={()=>setVoiceRecommendation(suggestVoiceProfile(src, style))}>✨ הצע אופי קול לשיר</B>
+{voiceRecommendation && (()=>{const rec=voiceRecommendation.split(",").map(x=>x.trim()).filter(Boolean);const active=voiceSamples.find(x=>String(x.id)===String(activeVoiceId));const notes=(active?.notes||"").toLowerCase();const hits=rec.filter(x=>notes.includes(x));const score=active?Math.round((hits.length/Math.max(1,rec.length))*100):0;const label=!active?"בחר דוגמה פעילה":score>=70?"התאמה גבוהה":score>=35?"התאמה בינונית":"כדאי לנסות כיוון אחר";return <div style={{marginTop:9,padding:9,borderRadius:9,background:bg,border:`1px solid ${bd}`}}>
+<div><b>הכיוון המומלץ:</b> {voiceRecommendation}</div>
+<div style={{marginTop:5}}><b>התאמת הדוגמה הפעילה:</b> {label}{active&&` — ${score}%`}</div>
+{active&&<div style={{fontSize:10,color:sb,marginTop:3}}>הדוגמה: {active.name}{active.notes?` · ${active.notes}`:""}</div>}
+<div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:7}}><B sm onClick={()=>{const a=voiceSamples.find(x=>String(x.id)===String(activeVoiceId));if(a){const updated={...a,notes:[a.notes,voiceRecommendation].filter(Boolean).join(", ")};voiceDBPut({...updated,blob:a.blob}).catch(()=>{});setVoiceSamples(v=>v.map(x=>x.id===a.id?updated:x));}}} disabled={!active}>✅ החל את ההמלצה לדוגמה</B><B sm onClick={()=>setVoiceRecommendation(suggestVoiceProfile(src+" "+ideaMood, style+" "+ideaType))}>🔄 נסה שוב</B></div>
+</div>})()}
+</div>
+          <div style={{marginTop:12,padding:11,borderRadius:10,background:`${c.a}0d`,border:`1px solid ${c.a}35`,fontSize:11,color:sb}}>
+            <b>🎭 פרופילי ביצוע לשיר</b>
+            <div style={{marginTop:5}}>בחר כיוון ביצוע כדי לייצר כמה גרסאות לאותו שיר בלי לאבד את הבחירה הקודמת.</div>
+            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:8}}>
+              {["אינטימי","עוצמתי","קצבי","רגשי","דרמטי"].map(p=><B sm act={performanceProfile===p} onClick={()=>{setPerformanceProfile(p);localStorage.setItem("sunoprep_performance_profile",p);}} key={p}>{p}</B>)}
+            </div>
+            <div style={{marginTop:8,padding:8,borderRadius:8,background:bg,border:`1px solid ${bd}`}}>
+              <b>הפרופיל הפעיל:</b> {performanceProfile}
+              <div style={{marginTop:4}}>הוא ישמש כהכוונה לכרטיס הביצוע ול־Style Prompt, לצד אופי הקול שנבחר.</div>
+              <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:7}}>
+                <B sm onClick={()=>{const item={id:Date.now(),name:performanceProfile,voice:voiceRecommendation||"",notes:(voiceSamples.find(x=>String(x.id)===String(activeVoiceId))?.notes||""),created:new Date().toLocaleString()};const next=[item,...savedPerformanceProfiles].slice(0,12);setSavedPerformanceProfiles(next);localStorage.setItem("sunoprep_performance_profiles",JSON.stringify(next));}}>💾 שמור פרופיל</B>
+                <B sm onClick={()=>{const active=voiceSamples.find(x=>String(x.id)===String(activeVoiceId));const text=`Performance: ${performanceProfile}. Vocal character: ${voiceRecommendation||active?.notes||"בחר אופי קול"}.`;navigator.clipboard&&navigator.clipboard.writeText(text);}}>📋 העתק ל־Style Prompt</B>
+              </div>
+            </div>
+            {savedPerformanceProfiles.length>0&&<div style={{marginTop:8}}><b>פרופילים שמורים:</b>{savedPerformanceProfiles.map(p=><div key={p.id} style={{marginTop:5,padding:7,borderRadius:8,border:`1px solid ${bd}`,background:bg,display:"flex",justifyContent:"space-between",gap:6}}><span>{p.name}{p.voice?` · ${p.voice}`:""}</span><span><B sm onClick={()=>{setPerformanceProfile(p.name);localStorage.setItem("sunoprep_performance_profile",p.name);}}>טען</B> <B sm onClick={()=>{const next=savedPerformanceProfiles.filter(x=>x.id!==p.id);setSavedPerformanceProfiles(next);localStorage.setItem("sunoprep_performance_profiles",JSON.stringify(next));}}>🗑️</B></span></div>)}</div>}
+          </div>
+        </div>
+        </div>
         </div>}
       {activeTab === "projects" && <div>
       {/* PROJECTS */}
@@ -3290,19 +3334,6 @@ ${src}`;
           <B sm onClick={() => print("both")} dis={!res && !styTxt}>🖨 {t.prtAll}</B>
         </div>
 
-
-        {/* PERFORMANCE CARD → STYLE PROMPT */}
-        <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: ca }}>🎭 {rtl ? "כרטיס ביצוע → Style Prompt" : "Performance Card → Style Prompt"}</div>
-          <div style={{ fontSize: 11, color: sb, marginTop: 4, marginBottom: 9 }}>{rtl ? "הגדר איך כל חלק אמור להתבצע. הכפתור יוסיף את התיאור ל־Style Prompt בלי לשנות את מילות השיר." : "Describe how each section should be performed. The button adds it to the Style Prompt without changing lyrics."}</div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
-            {[['verse','🎵 בית'],['chorus','🎶 פזמון'],['bridge','🌉 גשר'],['outro','🌅 סיום']].map(([k,label])=><label key={k} style={{fontSize:11,color:sb}}>{label}<input dir="ltr" value={performanceCard[k]} onChange={e=>setPerformanceCard(x=>({...x,[k]:e.target.value}))} style={{width:"100%",boxSizing:"border-box",marginTop:4,padding:"8px 9px",borderRadius:8,border:`1px solid ${bd}`,background:bg,color:tx}} /></label>)}
-          </div>
-          <div style={{display:"flex",gap:7,flexWrap:"wrap",marginTop:9}}>
-            <B sm onClick={()=>{const x=`Performance: ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`; setCustSty(prev=>prev.trim()?prev.trim()+", "+x:x)}}>✨ {rtl ? "הוסף ל־Style Prompt" : "Add to Style Prompt"}</B>
-            <B sm onClick={()=>navigator.clipboard?.writeText(`Performance: ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performanceCard.bridge} bridge, ${performanceCard.outro} outro.`)}>📋 {rtl ? "העתק תיאור ביצוע" : "Copy performance"}</B>
-          </div>
-        </div>
 
         {/* SUNO STYLE PROMPT */}
         <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
@@ -3375,7 +3406,7 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
         <span style={{ flex: 1 }}>⚠️ {err}</span><span style={{ opacity: .7 }}>✕</span>
       </div>}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
-          SunoPrep 10.0 by Barak Aflalo — © AppNest 2026
+          SunoPrep 10.1 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
