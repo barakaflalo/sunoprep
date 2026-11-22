@@ -31,8 +31,8 @@ const TR = {
       { i: "💾", t: "שמור להיסטוריה", d: "שמור שירים מוצלחים להיסטוריה (📜) כדי לזכור מה עבד. ייצא גיבוי בהגדרות." },
     ],
     skip: "דלג", next: "הבא", done: "סיום",
-    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 10.2", back: "← חזרה לדף הבית",
+    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 🎯 כתיבה לפי הטעם שלך, 🧪 יומן ניסיונות בסונו, 💡 בנק רעיונות\n• 🎯 תיקון מילים שסונו הרס — נשמר ומתוקן אוטומטית\n• 📱 קטע לשורטס וחבילת יוטיוב\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
+    ver: "גרסה 10.3", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• ✨ AI song studio, auto-refine with a critic, nikud reviewer\n• 5 UI languages, 9 source languages\n• 5 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 10.2", back: "← Back to home",
+    ver: "Version 10.3", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.2", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.3", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.2", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.3", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -721,6 +721,28 @@ function SunoPrep() {
   const [libEdit, setLibEdit] = useState(null);              // רשומה בעריכה (חדשה או קיימת)
   const [libVar, setLibVar] = useState(null);                // {id, loading, options}
   const [libMsg, setLibMsg] = useState("");
+  /* ═══ 10.3 — הטעם שלי · יומן ניסיונות · בנק רעיונות · מילים שסונו הרס · שורטס ויוטיוב ═══ */
+  const lsGet = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const [myTaste, setMyTaste] = useState(() => lsGet("sunoprep_my_taste", ""));
+  const [useTaste, setUseTaste] = useState(() => lsGet("sunoprep_use_taste", true));
+  const [tasteOpen, setTasteOpen] = useState(false);
+  const [songLog, setSongLog] = useState(() => { const v = lsGet("sunoprep_song_log", []); return Array.isArray(v) ? v : []; });
+  const [logForm, setLogForm] = useState(null);           // טופס ניסיון חדש
+  const [logScope, setLogScope] = useState("song");       // "song" = השיר הנוכחי, "all"
+  const [ideaBank, setIdeaBank] = useState(() => { const v = lsGet("sunoprep_idea_bank", []); return Array.isArray(v) ? v : []; });
+  const [bankOpen, setBankOpen] = useState(false);
+  const [autoDict, setAutoDict] = useState(() => lsGet("sunoprep_auto_dict", true));
+  const [dictNote, setDictNote] = useState("");
+  const [fixWord, setFixWord] = useState(null);           // {word, fix, loading, options, err}
+  const resRef = useRef(null);
+  const [shorts, setShorts] = useState(null);             // {loading, lines, why, style}
+  const [ytPack, setYtPack] = useState(null);             // {loading, title, description, tags, hashtags}
+  useEffect(() => lsSet("sunoprep_my_taste", myTaste), [myTaste]);
+  useEffect(() => lsSet("sunoprep_use_taste", useTaste), [useTaste]);
+  useEffect(() => lsSet("sunoprep_song_log", songLog), [songLog]);
+  useEffect(() => lsSet("sunoprep_idea_bank", ideaBank), [ideaBank]);
+  useEffect(() => lsSet("sunoprep_auto_dict", autoDict), [autoDict]);
   const [ideaLive, setIdeaLive] = useState("");              // טקסט שזורם בזמן הכתיבה
   const [ideaStart, setIdeaStart] = useState(0);
   const [, setTick] = useState(0);
@@ -1169,7 +1191,11 @@ ${src}`;
           if (!g.ok) setNikudWarn(g.changed.length ? `⚠️ הבינה שינתה ${g.changed.length} מילים (גם אחרי ניסיון חוזר): ${g.changed.slice(0, 6).map(x => `${x.from} ← ${x.to}`).join(" · ")}. כדאי לבדוק אותן.` : `⚠️ הבינה שינתה את הטקסט (${g.countDiff > 0 ? "נוספו" : "חסרות"} ${Math.abs(g.countDiff)} מילים). כדאי להשוות למקור.`);
         }
       }
-      if (out?.trim()) setRes(out.trim());
+      if (out?.trim()) {
+        let final = out.trim(); setDictNote("");
+        if (autoDict && Object.keys(wordDict || {}).length) { const d = applyDictTo(final); if (d.count) { final = d.out; setDictNote(`📖 תוקנו אוטומטית ${d.count} מילים לפי המילון שלך`); } }
+        setRes(final);
+      }
       else setErr(t.errCon);
     } catch (e) {
       let msg = String(e?.message || e);
@@ -1249,7 +1275,7 @@ ${src}`;
 - ז'אנר: ${ideaGenre} · מצב רוח: ${ideaMood}
 - מבנה: ${ideaStructure} · אורך: ${ideaLength} (${LENGTH_HINT[ideaLength] || ""})
 - נקודת מבט: ${ideaPerspective} · חריזה: ${ideaRhyme}
-- מי שר למי: ${ideaGenderMode}. ${genderInstruction}${ideaKeywords.trim() ? `\n- מילות מפתח לשלב אם זה טבעי: ${ideaKeywords.trim()}` : ""}
+- מי שר למי: ${ideaGenderMode}. ${genderInstruction}${ideaKeywords.trim() ? `\n- מילות מפתח לשלב אם זה טבעי: ${ideaKeywords.trim()}` : ""}${tasteContext()}
 
 כללי כתיבה:
 1. פזמון קליט: שורת מפתח (הוק) קצרה שחוזרת, והפזמון חוזר זהה בכל פעם שהוא מופיע.
@@ -1292,7 +1318,7 @@ ${src}`;
     if (!needAI("לקבל רעיונות")) return;
     setIdeaInspire({ loading: true, ideas: [] }); setErr("");
     try {
-      const j = await aiJSON(`הצע 5 רעיונות מקוריים לשירים בעברית בז'אנר ${ideaGenre}, במצב רוח ${ideaMood}${ideaPrompt.trim() ? `, בהשראת: "${ideaPrompt.trim()}"` : ""}. כל רעיון במשפט אחד קונקרטי ומפתיע (סיפור, רגע או דימוי — לא נושא כללי). החזר JSON בלבד: {"ideas":["...","...","...","...","..."]}`);
+      const j = await aiJSON(`הצע 5 רעיונות מקוריים לשירים בעברית בז'אנר ${ideaGenre}, במצב רוח ${ideaMood}${ideaPrompt.trim() ? `, בהשראת: "${ideaPrompt.trim()}"` : ""}. כל רעיון במשפט אחד קונקרטי ומפתיע (סיפור, רגע או דימוי — לא נושא כללי).${tasteContext()} החזר JSON בלבד: {"ideas":["...","...","...","...","..."]}`);
       setIdeaInspire({ loading: false, ideas: (j.ideas || []).map(String).filter(Boolean).slice(0, 6) });
     } catch (e) { setIdeaInspire(null); setErr(String(e?.message || e)); }
   };
@@ -1361,6 +1387,94 @@ ${x.notes ? `Their notes about what worked / what to change (Hebrew): ${x.notes}
       setLibVar({ id: x.id, loading: false, options: (j.variations || []).map(v => ({ style: String(v.style || "").replace(/["\n]/g, " ").trim(), why: String(v.why || "") })).filter(v => v.style).slice(0, 4) });
     } catch (e) { setLibVar(null); setErr(String(e?.message || e)); }
   };
+
+  /* 🎯 הטעם שלי: מה שאהבתי (ספרייה ≥4★, יומן ≥4★) + מה שלא עבד + המילים שלי */
+  const tasteParts = () => {
+    const lib = styleLib.filter(x => (x.rating || 0) >= 4).sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4);
+    const good = songLog.filter(x => (x.rating || 0) >= 4).slice(0, 4);
+    const bad = songLog.filter(x => (x.rating || 0) > 0 && x.rating <= 2 && (x.notes || x.problems)).slice(0, 3);
+    return { lib, good, bad };
+  };
+  const tasteContext = () => {
+    if (!useTaste) return "";
+    const { lib, good, bad } = tasteParts();
+    const lines = [
+      myTaste.trim() && `- במילים שלי: ${myTaste.trim()}`,
+      ...lib.map(x => `- סגנון שאהבתי (${x.rating}★): ${x.style}${x.notes ? ` — ${x.notes}` : ""}`),
+      ...good.map(x => `- שיר שיצא טוב (${x.rating}★) "${x.song}"${x.notes ? `: ${x.notes}` : ""}${x.problems ? ` (מה נשבר: ${x.problems})` : ""}`),
+      ...bad.map(x => `- לא עבד ב"${x.song}": ${[x.notes, x.problems].filter(Boolean).join(" · ")}`),
+    ].filter(Boolean);
+    return lines.length ? `\n\nהטעם של המשתמש (למד ממנו והתאם את השיר — אל תעתיק):\n${lines.join("\n")}` : "";
+  };
+
+  /* 💡 בנק רעיונות */
+  const saveIdeaToBank = (text) => { const tx0 = String(text || "").trim(); if (!tx0) return; setIdeaBank(prev => [{ id: Date.now() + Math.random(), text: tx0, genre: ideaGenre, date: Date.now() }, ...prev.filter(x => x.text !== tx0)].slice(0, 200)); };
+
+  /* 🧪 יומן ניסיונות */
+  const currentSongName = () => projectName.trim() || ((src || ideaOut).split("\n").map(x => x.trim()).find(x => x && !/^\[.*\]$/.test(x)) || "").slice(0, 40);
+  const openLogForm = () => setLogForm({ song: currentSongName(), style: styTxt, mode: tMode, link: "", rating: 0, notes: "", problems: "" });
+  const saveLog = () => {
+    const f = logForm; if (!f) return;
+    if (!f.song.trim()) { setErr("כתוב לאיזה שיר שייך הניסיון"); return; }
+    setSongLog(prev => [{ ...f, id: Date.now(), date: Date.now(), song: f.song.trim() }, ...prev].slice(0, 500));
+    setLogForm(null);
+  };
+
+  /* 🎯 מילה שסונו הרס */
+  const grabSelectedResWord = () => {
+    const el = resRef.current; if (!el) return;
+    let a = el.selectionStart, b = el.selectionEnd; const txt = res;
+    if (a === b) { const w = ch => ch && !/\s/.test(ch); while (a > 0 && w(txt[a - 1])) a--; while (b < txt.length && w(txt[b])) b++; }
+    const word = txt.slice(a, b).trim().replace(/^[,.!?;:"'()]+|[,.!?;:"'()]+$/g, "");
+    if (word) setFixWord({ word, fix: "", options: [] }); else setErr("סמן מילה בתוצאה (או שים עליה את הסמן) ואז לחץ שוב");
+  };
+  const suggestWordFixes = async () => {
+    if (!fixWord?.word || !needAI("להציע תיקון")) return;
+    setFixWord(f => ({ ...f, loading: true, options: [], err: "" }));
+    try {
+      const line = (res.split("\n").find(l => l.includes(fixWord.word)) || "").trim();
+      const j = await aiJSON(`Suno AI mispronounced the word "${fixWord.word}" in this lyric line: "${line}". The lyrics are prepared for Suno in mode "${tMode}" (Hebrew song). Suggest 4 alternative spellings of ONLY this word that make Suno sing it correctly with Israeli Hebrew pronunciation — e.g. full nikud, adding matres lectionis (ו/י), hyphenated syllables, or Latin transliteration with stress — matching the style of the rest of the text. For each give a short Hebrew reason. Return JSON only: {"options":[{"text":"...","why":"..."}]}`, 0.6);
+      setFixWord(f => ({ ...f, loading: false, options: (j.options || []).map(o => ({ text: String(o.text || "").trim(), why: String(o.why || "") })).filter(o => o.text).slice(0, 5) }));
+    } catch (e) { setFixWord(f => ({ ...f, loading: false, err: String(e?.message || e) })); }
+  };
+  const applyWordFix = (word, fix) => {
+    if (!word || !fix) return;
+    const esc = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const n = (res.match(new RegExp(esc, "g")) || []).length;
+    setRes(r => r.replace(new RegExp(esc, "g"), fix));
+    const nd = { ...wordDict, [word]: fix }; setWordDict(nd); try { localStorage.setItem("sunoprep_pron_dict", JSON.stringify(nd)); } catch (e) {}
+    setFixWord(null); setDictNote(`✅ "${word}" → "${fix}" (${n} מקומות) — נשמר במילון ויתוקן אוטומטית בפעם הבאה`);
+  };
+  const applyDictTo = (text) => {
+    let out = text, count = 0;
+    Object.entries(wordDict || {}).forEach(([w, f]) => { if (!w || !f || w === f) return; const re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"); const m = out.match(re); if (m) { count += m.length; out = out.replace(re, f); } });
+    return { out, count };
+  };
+
+  /* 📱 שורטס + ▶️ חבילת יוטיוב */
+  const makeShorts = async () => {
+    const lyr = (src || res || ideaOut).trim(); if (!lyr || !needAI("לבחור קטע לשורטס")) return;
+    setShorts({ loading: true });
+    try {
+      const j = await aiJSON(`בחר מתוך השיר הבא את הקטע הכי חזק לסרטון קצר (YouTube Shorts / TikTok) של 15–30 שניות: בדרך כלל ההוק או הפזמון, 4–8 שורות, שמתחיל חזק מהשנייה הראשונה. החזר את השורות בדיוק כמו בשיר (אפשר לשמור תגית מבנה בשורה הראשונה). הוסף הסבר קצר למה בחרת, ו-Style Prompt באנגלית לסונו שמתאים לגרסה קצרה ואנרגטית (עד 110 תווים). החזר JSON בלבד: {"lines":"...","why":"...","style":"..."}\n\nהשיר:\n${lyr}`, 0.6);
+      setShorts({ loading: false, lines: String(j.lines || "").trim(), why: String(j.why || ""), style: String(j.style || "").replace(/["\n]/g, " ").trim() });
+    } catch (e) { setShorts(null); setErr(String(e?.message || e)); }
+  };
+  const makeYtPack = async () => {
+    const lyr = (src || res || ideaOut).trim(); if (!lyr || !needAI("להכין חבילת יוטיוב")) return;
+    setYtPack({ loading: true });
+    try {
+      const j = await aiJSON(`הכן חבילת העלאה ליוטיוב לשיר מקורי בעברית שנוצר עם Suno AI${projectName.trim() ? ` בשם "${projectName.trim()}"` : ""}. סגנון: ${styTxt || "לא צוין"}.
+החזר JSON בלבד:
+{"title":"כותרת קליטה עד 70 תווים (עברית, אפשר אימוג'י אחד)","description":"תיאור של 3–5 שורות: על מה השיר, הזמנה להאזין ולהירשם, ושורה 'נוצר בעזרת Suno AI'","tags":["12 תגיות בעברית ובאנגלית"],"hashtags":["5 האשטגים"]}
+
+השיר:
+${lyr}`, 0.8);
+      setYtPack({ loading: false, title: String(j.title || ""), description: String(j.description || ""), tags: (j.tags || []).map(String).slice(0, 20), hashtags: (j.hashtags || []).map(x => String(x).startsWith("#") ? String(x) : "#" + String(x).replace(/\s+/g, "")).slice(0, 8) });
+    } catch (e) { setYtPack(null); setErr(String(e?.message || e)); }
+  };
+  const subtitleLines = () => (res || src).split("\n").map(x => x.trim()).filter(x => x && !/^\[.*\]$/.test(x) && !/^\(.*\)$/.test(x)).join("\n");
+  const copyTxt = (t0, msg) => { try { navigator.clipboard && navigator.clipboard.writeText(t0); } catch (e) {} if (msg) setDictNote(msg); };
 
   // ✍️ המשך את השיר (לשונית כתיבה): כותב את החלק הבא ומוסיף בסוף
   const continueSong = async () => {
@@ -1638,7 +1752,7 @@ ${text}`;
   const [showBackupReminder, setShowBackupReminder] = useState(false);
 
   const expBk = () => {
-    const d = JSON.stringify({ backupVersion: "9.0", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, styleLib, uname, sLang, uLang, theme, day, activeVoiceId }, null, 2);
+    const d = JSON.stringify({ backupVersion: "9.0", exportedAt: new Date().toISOString(), app: "SunoPrep", src, res, selSty, selVocal, custSty, bpmVal, savedSty, styleLib, songLog, ideaBank, myTaste, uname, sLang, uLang, theme, day, activeVoiceId }, null, 2);
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([d], { type: "application/json" }));
     a.download = `sunoprep-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click();
@@ -1653,7 +1767,7 @@ ${text}`;
       try {
         const d = JSON.parse(ev.target.result);
         if (d.src !== undefined) setSrc(d.src); if (d.res !== undefined) setRes(d.res);
-        if (d.selSty) setSelSty(d.selSty); if (d.selVocal) setSelVocal(d.selVocal); if (d.custSty !== undefined) setCustSty(d.custSty); if (d.bpmVal !== undefined) setBpmVal(d.bpmVal); if (d.savedSty) setSavedSty(d.savedSty); if (Array.isArray(d.styleLib)) setStyleLib(d.styleLib);
+        if (d.selSty) setSelSty(d.selSty); if (d.selVocal) setSelVocal(d.selVocal); if (d.custSty !== undefined) setCustSty(d.custSty); if (d.bpmVal !== undefined) setBpmVal(d.bpmVal); if (d.savedSty) setSavedSty(d.savedSty); if (Array.isArray(d.styleLib)) setStyleLib(d.styleLib); if (Array.isArray(d.songLog)) setSongLog(d.songLog); if (Array.isArray(d.ideaBank)) setIdeaBank(d.ideaBank); if (typeof d.myTaste === "string") setMyTaste(d.myTaste);
         if (d.uname) setUname(d.uname); if (d.sLang) setSLang(d.sLang);
         if (d.uLang) setULang(d.uLang); if (d.theme) setTheme(d.theme);
         if (d.day !== undefined) setDay(d.day); if (d.activeVoiceId !== undefined) setActiveVoiceId(d.activeVoiceId);
@@ -1899,6 +2013,8 @@ ${src}`;
   const stepNum = { width: 26, height: 26, borderRadius: "50%", display: "inline-grid", placeItems: "center", fontSize: 13, fontWeight: 800, background: c.a, color: onA, flexShrink: 0 };
   const chipLabel = { fontSize: 12, fontWeight: 700, color: sb, marginTop: 12, marginBottom: 6 };
   const chipRow = { display: "flex", gap: 6, flexWrap: "wrap" };
+  const starsUI = (n, onSet, size = 22) => <span style={{ display: "inline-flex", gap: 2, direction: "ltr" }}>{[1, 2, 3, 4, 5].map(k => <button key={k} onClick={onSet ? () => onSet(k === n ? 0 : k) : undefined} style={{ background: "transparent", border: "none", padding: 0, fontSize: size, cursor: onSet ? "pointer" : "default", color: k <= n ? "#F5B301" : bd, lineHeight: 1 }}>★</button>)}</span>;
+  const fieldSt = { width: "100%", marginTop: 4, padding: 10, borderRadius: 10, border: `1px solid ${bd}`, background: bg, color: tx, fontFamily: "inherit", fontSize: 14 };
 
   const renderLineTools = (idx) => {
     const lt = lineTool && lineTool.idx === idx ? lineTool : null;
@@ -2798,8 +2914,26 @@ ${src}`;
               <span style={{ fontSize: 11, color: ca, direction: "ltr", minWidth: 28 }}>×{rate.toFixed(1)}</span>
             </div>
           </div>
-          <textarea dir={tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? sl.d : "ltr"} value={res} onChange={e => setRes(e.target.value)} placeholder={t.resPh}
+          <textarea ref={resRef} dir={tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? sl.d : "ltr"} value={res} onChange={e => setRes(e.target.value)} placeholder={t.resPh}
             style={{ ...TA, fontFamily: tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? "inherit" : "'Courier New',monospace", direction: tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? sl.d : "ltr", textAlign: tMode === "hebrew" || tMode === "optimized" || tMode === "stripnikud" || tMode === "marknikud" || tMode === "gendernikud" ? (sl.d === "rtl" ? "right" : "left") : "left" }} />
+          {res && rtl && <div style={{ marginTop: 6, padding: "8px 10px", borderRadius: 8, border: `1px solid ${bd}`, background: `${c.a}08` }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+              <B sm onClick={grabSelectedResWord}>🎯 סונו הרס את המילה המסומנת</B>
+              <label style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: sb, cursor: "pointer" }}><input type="checkbox" checked={autoDict} onChange={e => setAutoDict(e.target.checked)} style={{ accentColor: c.a }} />📖 תקן אוטומטית לפי המילון ({Object.keys(wordDict || {}).length})</label>
+            </div>
+            {dictNote && <div style={{ marginTop: 6, fontSize: 12, color: ca }}>{dictNote}</div>}
+            {fixWord && <div style={{ marginTop: 8, padding: 9, borderRadius: 9, background: bg, border: `1px solid ${c.a}66` }}>
+              <div style={{ fontSize: 13, color: tx }}>המילה: <b style={{ fontSize: 15 }}>{fixWord.word}</b> <span style={{ fontSize: 11, color: sb }}>— איך לכתוב אותה כדי שסונו יגה נכון?</span></div>
+              <div style={{ display: "flex", gap: 6, marginTop: 7, flexWrap: "wrap" }}>
+                <input value={fixWord.fix} onChange={e => setFixWord(f => ({ ...f, fix: e.target.value }))} placeholder="תיקון ידני, למשל: אֲהֲבָה / a-ha-VA" style={{ flex: "1 1 160px", padding: 8, borderRadius: 8, border: `1px solid ${bd}`, background: cd, color: tx, fontFamily: "inherit" }} />
+                <B sm pri onClick={() => applyWordFix(fixWord.word, fixWord.fix.trim())} dis={!fixWord.fix.trim()}>💾 תקן ושמור</B>
+                <B sm onClick={suggestWordFixes} dis={fixWord.loading}>{fixWord.loading ? "⏳ חושב..." : "💡 הצע תיקונים (AI)"}</B>
+                <B sm onClick={() => setFixWord(null)}>✕</B>
+              </div>
+              {fixWord.err && <div style={{ fontSize: 12, color: "#e0a03a", marginTop: 6 }}>⚠️ {fixWord.err}</div>}
+              {fixWord.options?.length > 0 && <div style={{ display: "grid", gap: 5, marginTop: 7 }}>{fixWord.options.map((o, k) => <button key={k} onClick={() => applyWordFix(fixWord.word, o.text)} style={{ textAlign: "start", padding: "7px 9px", borderRadius: 8, border: `1px solid ${bd}`, background: cd, color: tx, fontFamily: "inherit", cursor: "pointer", display: "flex", justifyContent: "space-between", gap: 8 }}><span><b style={{ fontSize: 15 }}>{o.text}</b> <span style={{ fontSize: 11, color: sb }}>{o.why}</span></span><span style={{ fontSize: 11, color: ca, flexShrink: 0 }}>החל ↵</span></button>)}</div>}
+            </div>}
+          </div>}
           {nikudWarn && res && <div style={{ marginTop: 6, padding: "7px 10px", borderRadius: 7, border: "1px solid #e0a03a", background: "#e0a03a18", color: tx, fontSize: 12, lineHeight: 1.5 }}>{nikudWarn}</div>}
           {res && aiProvider && (tMode === "marknikud" || tMode === "gendernikud" || tMode === "optimized") && HAS_NIKUD.test(res) && <div style={{ marginTop: 6, padding: "8px 10px", borderRadius: 8, border: `1px solid ${bd}`, background: `${c.a}08` }}>
             <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
@@ -3075,9 +3209,27 @@ ${src}`;
           <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
             {IDEA_TOPICS.map(tp=><Chip key={tp} on={ideaPrompt===tp} onClick={()=>setIdeaPrompt(tp)}>{tp}</Chip>)}
           </div>
-          <div style={{marginTop:9}}><B sm onClick={inspireMe} dis={ideaInspire?.loading}>{ideaInspire?.loading?"⏳ חושב על רעיונות...":"🎲 תן לי 5 רעיונות מפתיעים"}</B></div>
+          <div style={{marginTop:9,display:"flex",gap:6,flexWrap:"wrap"}}>
+            <B sm onClick={inspireMe} dis={ideaInspire?.loading}>{ideaInspire?.loading?"⏳ חושב על רעיונות...":"🎲 תן לי 5 רעיונות מפתיעים"}</B>
+            <B sm onClick={()=>saveIdeaToBank(ideaPrompt)} dis={!ideaPrompt.trim()}>💾 שמור רעיון לבנק</B>
+            <B sm act={bankOpen} onClick={()=>setBankOpen(v=>!v)}>💡 בנק הרעיונות ({ideaBank.length})</B>
+          </div>
           {ideaInspire?.ideas?.length>0 && <div style={{marginTop:8,display:"grid",gap:6}}>
-            {ideaInspire.ideas.map((x,i)=><button key={i} onClick={()=>{setIdeaPrompt(x);setIdeaInspire(null);}} style={{textAlign:"start",padding:"9px 11px",borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,fontSize:13,fontFamily:"inherit",cursor:"pointer",lineHeight:1.45}}>💡 {x}</button>)}
+            {ideaInspire.ideas.map((x,i)=><div key={i} style={{display:"flex",gap:6,alignItems:"stretch"}}>
+              <button onClick={()=>{setIdeaPrompt(x);setIdeaInspire(null);}} style={{flex:1,textAlign:"start",padding:"9px 11px",borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,fontSize:13,fontFamily:"inherit",cursor:"pointer",lineHeight:1.45}}>💡 {x}</button>
+              <button title="שמור לבנק הרעיונות" onClick={()=>saveIdeaToBank(x)} style={{padding:"0 11px",borderRadius:10,border:`1px solid ${bd}`,background:ideaBank.some(b=>b.text===x)?c.a:bg,color:ideaBank.some(b=>b.text===x)?onA:tx,cursor:"pointer",fontSize:15}}>{ideaBank.some(b=>b.text===x)?"✓":"💾"}</button>
+            </div>)}
+            <B sm onClick={()=>ideaInspire.ideas.forEach(saveIdeaToBank)}>💾 שמור את כל 5 לבנק</B>
+          </div>}
+          {bankOpen && <div style={{marginTop:9,padding:10,borderRadius:12,background:bg,border:`1px solid ${c.a}55`}}>
+            <div style={{fontWeight:700,fontSize:13,color:tx}}>💡 בנק הרעיונות שלי</div>
+            <div style={{fontSize:11,color:sb,marginTop:2}}>רעיונות ששמרת לשירים עתידיים. לחיצה = משתמשים בו עכשיו.{phraseBank.length?` יש לך גם ${phraseBank.length} משפטים בבנק המשפטים (לשונית כתיבה).`:""}</div>
+            {ideaBank.length===0 ? <div style={{fontSize:12,color:sb,marginTop:8}}>עוד ריק. שמור רעיונות עם 💾.</div> :
+              <div style={{display:"grid",gap:6,marginTop:8,maxHeight:320,overflowY:"auto"}}>{ideaBank.map(b=><div key={b.id} style={{display:"flex",gap:6,alignItems:"center",padding:"7px 9px",borderRadius:9,border:`1px solid ${bd}`,background:cd}}>
+                <span style={{flex:1,fontSize:13,color:tx,lineHeight:1.4}}>{b.text}{b.genre?<span style={{fontSize:10,color:sb}}> · {b.genre}</span>:null}</span>
+                <B sm onClick={()=>{setIdeaPrompt(b.text);setBankOpen(false);}}>השתמש</B>
+                <button onClick={()=>setIdeaBank(prev=>prev.filter(x=>x.id!==b.id))} style={{background:"transparent",border:"none",color:"#E55",cursor:"pointer"}}>🗑️</button>
+              </div>)}</div>}
           </div>}
         </div>
 
@@ -3106,6 +3258,17 @@ ${src}`;
             <input value={ideaKeywords} onChange={e=>setIdeaKeywords(e.target.value)} placeholder="למשל: ים, תל אביב, שתיים בלילה" style={{width:"100%",marginTop:4,padding:10,borderRadius:10,border:`1px solid ${bd}`,background:bg,color:tx,fontFamily:"inherit",fontSize:14}} />
           </div>}
         </div>
+
+        {/* 🎯 הטעם שלי */}
+        {(()=>{const tp=tasteParts();const n=tp.lib.length+tp.good.length+tp.bad.length+(myTaste.trim()?1:0);return <div style={{...stepCard,border:`1px solid ${useTaste&&n?c.a+"77":bd}`}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8}}>
+            <div style={stepHead}><span style={{...stepNum,background:"transparent",border:`1px solid ${c.a}`,color:ca}}>🎯</span>לפי הטעם שלי</div>
+            <label style={{display:"flex",alignItems:"center",gap:6,fontSize:12,color:tx,cursor:"pointer"}}><input type="checkbox" checked={useTaste} onChange={e=>setUseTaste(e.target.checked)} style={{width:18,height:18,accentColor:c.a}} />פעיל</label>
+          </div>
+          <div style={{fontSize:12,color:sb,marginTop:5,lineHeight:1.5}}>{n ? `ה-AI כותב לפי ${tp.lib.length} סגנונות שאהבת (4★+), ${tp.good.length} שירים שיצאו טוב ו-${tp.bad.length} דברים שלא עבדו ביומן הניסיונות${myTaste.trim()?", ולפי מה שכתבת כאן":""}.` : "עוד אין מספיק מידע. דרג סגנונות בספרייה, רשום ניסיונות ביומן (לשונית Suno), או כתוב כאן מה אתה אוהב."}</div>
+          <button onClick={()=>setTasteOpen(v=>!v)} style={{marginTop:6,background:"transparent",border:"none",color:ca,fontFamily:"inherit",fontSize:13,fontWeight:700,cursor:"pointer",padding:0}}>{tasteOpen?"▴ סגור":"▾ מה אני אוהב בשירים"}</button>
+          {tasteOpen && <textarea value={myTaste} onChange={e=>setMyTaste(e.target.value)} placeholder="למשל: פזמונים קצרים שחוזרים, מזרחי חם עם עוד, בלי מילים גבוהות, סיפור אמיתי עם פרטים, הוק של 3 מילים..." style={{...fieldSt,minHeight:80,resize:"vertical",lineHeight:1.5}} />}
+        </div>})()}
 
         {/* שלב 3 — כתיבה */}
         <div style={stepCard}>
@@ -3389,13 +3552,84 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
           </div>
         </div>
 
+        {/* ═══ 🧪 יומן ניסיונות בסונו ═══ */}
+        {rtl && (()=>{const cur=currentSongName();const list=logScope==="song"&&cur?songLog.filter(x=>x.song===cur):songLog;return <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
+          <div style={{ fontSize: 16, fontWeight: 800, color: ca }}>🧪 יומן ניסיונות בסונו</div>
+          <div style={{ fontSize: 11, color: sb, marginTop: 4, lineHeight: 1.5 }}>אחרי כל יצירה בסונו — רשום איזה סגנון ניסית, קישור, דירוג ומה עבד או נשבר. שירים שדירגת גבוה (ומה שלא עבד) נכנסים ל"🎯 הטעם שלי" באולפן.</div>
+          <div style={{ display: "flex", gap: 6, marginTop: 9, flexWrap: "wrap", alignItems: "center" }}>
+            {!logForm && <B sm pri onClick={openLogForm}>➕ רשום ניסיון</B>}
+            <Chip on={logScope==="song"} onClick={()=>setLogScope("song")}>השיר הנוכחי{cur?` (${songLog.filter(x=>x.song===cur).length})`:""}</Chip>
+            <Chip on={logScope==="all"} onClick={()=>setLogScope("all")}>הכל ({songLog.length})</Chip>
+          </div>
+          {logForm && <div style={{ marginTop: 10, padding: 11, borderRadius: 12, background: bg, border: `2px solid ${c.a}` }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: sb }}>שם השיר</div>
+            <input value={logForm.song} onChange={e=>setLogForm({...logForm,song:e.target.value})} style={fieldSt} />
+            <div style={{ fontSize: 12, fontWeight: 700, color: sb, marginTop: 8 }}>הסגנון שניסיתי</div>
+            <textarea dir="ltr" value={logForm.style} onChange={e=>setLogForm({...logForm,style:e.target.value})} style={{ ...fieldSt, minHeight: 54, fontFamily: "monospace", fontSize: 12, textAlign: "left" }} />
+            <div style={{ fontSize: 12, fontWeight: 700, color: sb, marginTop: 8 }}>כמה יצא טוב</div>
+            <div style={{ marginTop: 3 }}>{starsUI(logForm.rating, n=>setLogForm({...logForm,rating:n}))}</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: sb, marginTop: 8 }}>מה עבד?</div>
+            <textarea value={logForm.notes} onChange={e=>setLogForm({...logForm,notes:e.target.value})} placeholder="למשל: הקול בפזמון מושלם, הקצב בדיוק נכון" style={{ ...fieldSt, minHeight: 50 }} />
+            <div style={{ fontSize: 12, fontWeight: 700, color: sb, marginTop: 8 }}>מה נשבר? (הגייה, קצב, מילים)</div>
+            <textarea value={logForm.problems} onChange={e=>setLogForm({...logForm,problems:e.target.value})} placeholder='למשל: "אהבה" יצא AHAVA במבטא אמריקאי, הגשר מהיר מדי' style={{ ...fieldSt, minHeight: 50 }} />
+            <div style={{ fontSize: 12, fontWeight: 700, color: sb, marginTop: 8 }}>קישור לשיר בסונו</div>
+            <input dir="ltr" value={logForm.link} onChange={e=>setLogForm({...logForm,link:e.target.value})} placeholder="https://suno.com/song/..." style={{ ...fieldSt, textAlign: "left" }} />
+            <div style={{ display: "flex", gap: 8, marginTop: 10 }}><B pri onClick={saveLog} sx={{ flex: 1 }}>💾 שמור ביומן</B><B onClick={()=>setLogForm(null)}>ביטול</B></div>
+          </div>}
+          {list.length===0 && !logForm && <div style={{ marginTop: 10, fontSize: 12, color: sb }}>{logScope==="song"&&cur?`עוד אין ניסיונות ל"${cur}".`:"היומן ריק."}</div>}
+          <div style={{ display: "grid", gap: 8, marginTop: 10 }}>{list.slice(0,40).map(x=><div key={x.id} style={{ padding: 10, borderRadius: 11, background: bg, border: `1px solid ${(x.rating||0)>=4?c.a+"88":bd}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "center" }}>
+              <b style={{ fontSize: 13, color: tx }}>🎵 {x.song}</b>{starsUI(x.rating||0, n=>setSongLog(prev=>prev.map(y=>y.id===x.id?{...y,rating:n}:y)), 16)}
+            </div>
+            <div style={{ fontSize: 10, color: sb, marginTop: 2 }}>{new Date(x.date).toLocaleDateString("he-IL")}{x.mode?` · ${x.mode}`:""}</div>
+            {x.style && <div dir="ltr" style={{ marginTop: 6, fontSize: 11, fontFamily: "monospace", color: tx, textAlign: "left" }}>{x.style}</div>}
+            {x.notes && <div style={{ marginTop: 5, fontSize: 12, color: tx }}>👍 {x.notes}</div>}
+            {x.problems && <div style={{ marginTop: 4, fontSize: 12, color: tx }}>⚠️ {x.problems}</div>}
+            {x.link && /^https?:\/\//.test(x.link) && <a href={x.link} target="_blank" rel="noopener noreferrer" style={{ display: "block", marginTop: 4, fontSize: 12, color: ca, wordBreak: "break-all" }}>🔗 {x.link.replace(/^https?:\/\/(www\.)?/,"").slice(0,50)}</a>}
+            <div style={{ display: "flex", gap: 6, marginTop: 7, flexWrap: "wrap" }}>
+              {x.style && <B sm onClick={()=>applyLibStyle({ id: "_log", style: x.style, name: x.song })}>▶️ השתמש בסגנון</B>}
+              {x.style && <B sm onClick={()=>openLibFromCurrent(x.style,{ name: x.song, rating: x.rating||0, notes: [x.notes, x.problems && "נשבר: "+x.problems].filter(Boolean).join(" · "), links: x.link||"", songs: [x.song] })}>📚 לספרייה</B>}
+              <button onClick={()=>{ if(window.confirm("למחוק את הניסיון?")) setSongLog(prev=>prev.filter(y=>y.id!==x.id)); }} style={{ background: "transparent", border: "none", color: "#E55", cursor: "pointer" }}>🗑️</button>
+            </div>
+          </div>)}</div>
+        </div>})()}
+
+        {/* ═══ 📱 שורטס + ▶️ יוטיוב ═══ */}
+        {rtl && <div style={{ background: cd, border: `1px solid ${bd}`, borderRadius: 14, padding: 14, marginTop: 12 }}>
+          <div style={{ fontSize: 16, fontWeight: 800, color: ca }}>📱 שורטס ויוטיוב</div>
+          <div style={{ fontSize: 11, color: sb, marginTop: 4 }}>אחרי שהשיר מוכן: קטע חזק לסרטון קצר, וכותרת, תיאור ותגיות להעלאה.</div>
+          <div style={{ display: "flex", gap: 6, marginTop: 9, flexWrap: "wrap" }}>
+            <B sm onClick={makeShorts} dis={shorts?.loading || !(src||res||ideaOut).trim()}>{shorts?.loading ? "⏳ בוחר קטע..." : "📱 בחר קטע לשורטס"}</B>
+            <B sm onClick={makeYtPack} dis={ytPack?.loading || !(src||res||ideaOut).trim()}>{ytPack?.loading ? "⏳ מכין..." : "▶️ חבילת יוטיוב"}</B>
+            <B sm onClick={()=>copyTxt(subtitleLines(), "📝 שורות הכתוביות הועתקו (שורה לכל כתובית)")} dis={!(res||src).trim()}>📝 העתק שורות לכתוביות</B>
+          </div>
+          {shorts && !shorts.loading && shorts.lines && <div style={{ marginTop: 10, padding: 10, borderRadius: 11, background: bg, border: `1px solid ${c.a}66` }}>
+            <div style={{ fontWeight: 700, fontSize: 13, color: tx }}>📱 הקטע לשורטס</div>
+            <div style={{ marginTop: 6, whiteSpace: "pre-wrap", fontSize: 14, lineHeight: 1.55, color: tx }}>{shorts.lines}</div>
+            {shorts.why && <div style={{ marginTop: 6, fontSize: 11, color: sb }}>💬 {shorts.why}</div>}
+            {shorts.style && <div dir="ltr" style={{ marginTop: 6, fontSize: 11, fontFamily: "monospace", color: tx, textAlign: "left" }}>{shorts.style}</div>}
+            <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
+              <B sm onClick={()=>copyTxt(shorts.lines, "📋 הקטע לשורטס הועתק")}>📋 העתק קטע</B>
+              {shorts.style && <B sm onClick={()=>copyTxt(shorts.style, "📋 הסגנון לשורטס הועתק")}>📋 העתק סגנון</B>}
+            </div>
+          </div>}
+          {ytPack && !ytPack.loading && ytPack.title && <div style={{ marginTop: 10, padding: 10, borderRadius: 11, background: bg, border: `1px solid ${c.a}66`, display: "grid", gap: 8 }}>
+            {[["🏷️ כותרת", ytPack.title], ["📝 תיאור", ytPack.description + (ytPack.hashtags.length ? "\n\n" + ytPack.hashtags.join(" ") : "")], ["🔖 תגיות", ytPack.tags.join(", ")]].map(([l, v]) => <div key={l}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><b style={{ fontSize: 12, color: sb }}>{l}</b><B sm onClick={()=>copyTxt(v, `📋 ${l.slice(3)} הועתק`)}>📋</B></div>
+              <div style={{ marginTop: 3, whiteSpace: "pre-wrap", fontSize: 13, color: tx, lineHeight: 1.5 }}>{v}</div>
+            </div>)}
+            <B sm pri onClick={()=>copyTxt(`${ytPack.title}\n\n${ytPack.description}\n\n${ytPack.hashtags.join(" ")}\n\nTags: ${ytPack.tags.join(", ")}`, "📋 כל חבילת היוטיוב הועתקה")}>📋 העתק הכל</B>
+          </div>}
+          {dictNote && activeTab==="suno" && <div style={{ marginTop: 8, fontSize: 12, color: ca }}>{dictNote}</div>}
+        </div>}
+
         </div>}
       {/* FOOTER */}
       {err && <div role="alert" onClick={() => setErr("")} style={{ position: "fixed", insetInline: 12, bottom: 84, zIndex: 9998, padding: "11px 14px", borderRadius: 12, background: day ? "#FFF1F1" : "#3A1515", border: `1px solid ${day ? "#E88" : "#7A2a2a"}`, color: day ? "#B42318" : "#FFB4B4", fontSize: 13, lineHeight: 1.5, boxShadow: "0 8px 24px rgba(0,0,0,.35)", display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer", direction: rtl ? "rtl" : "ltr" }}>
         <span style={{ flex: 1 }}>⚠️ {err}</span><span style={{ opacity: .7 }}>✕</span>
       </div>}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
-          SunoPrep 10.2 by Barak Aflalo — © AppNest 2026
+          SunoPrep 10.3 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
