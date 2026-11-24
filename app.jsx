@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 🎯 כתיבה לפי הטעם שלך, 🧪 יומן ניסיונות בסונו, 💡 בנק רעיונות\n• 🎯 תיקון מילים שסונו הרס — נשמר ומתוקן אוטומטית\n• 📱 קטע לשורטס וחבילת יוטיוב\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 10.4", back: "← חזרה לדף הבית",
+    ver: "גרסה 10.4.1", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• ✨ AI song studio, auto-refine with a critic, nikud reviewer\n• 5 UI languages, 9 source languages\n• 5 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 10.4", back: "← Back to home",
+    ver: "Version 10.4.1", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.4", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.4.1", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.4", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.4.1", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -335,7 +335,22 @@ const GEMINI_ALL_KNOWN = [...GEMINI_MODELS, ...GEMINI_PAID];
 const GEMINI_DEAD_KEY = "appnest_gemini_dead", GEMINI_PAID_KEY = "appnest_gemini_paid";
 const lsArr = (k) => { try { const v = JSON.parse(localStorage.getItem(k) || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } };
 try { const old = lsArr("sp_gemini_dead"); if (old.length) { localStorage.setItem(GEMINI_DEAD_KEY, JSON.stringify([...new Set([...lsArr(GEMINI_DEAD_KEY), ...old])])); localStorage.removeItem("sp_gemini_dead"); } } catch {}
+// 10.4 סימן בטעות דגמים כ"בתשלום" כשבעצם נגמרה המכסה היומית — מנקים פעם אחת
+try { if (!localStorage.getItem("appnest_gemini_paid_v2")) { localStorage.removeItem(GEMINI_PAID_KEY); localStorage.setItem("appnest_gemini_paid_v2", "1"); } } catch {}
 const geminiDead = () => lsArr(GEMINI_DEAD_KEY);
+/* ⏳ מכסה: דגם שנגמרה לו המכסה (יומית/לדקה) נח עד שהיא מתאפסת — לכל מפתח בנפרד */
+const GEMINI_COOL_KEY = "appnest_gemini_cooldown";
+const coolMap = () => { try { return JSON.parse(localStorage.getItem(GEMINI_COOL_KEY) || "{}") || {}; } catch { return {}; } };
+const coolId = (key, m) => `${String(key).slice(-6)}|${m}`;
+const geminiCoolUntil = (key, m) => { const t = coolMap()[coolId(key, m)] || 0; return t > Date.now() ? t : 0; };
+const setGeminiCool = (key, m, until) => { try { const c = coolMap(); Object.keys(c).forEach(k => { if (c[k] < Date.now()) delete c[k]; }); c[coolId(key, m)] = until; localStorage.setItem(GEMINI_COOL_KEY, JSON.stringify(c)); } catch {} };
+const clearGeminiCool = () => { try { localStorage.removeItem(GEMINI_COOL_KEY); } catch {} };
+// "Please retry in 17h52m9.8s" / "retry in 34s" → מילישניות
+const geminiRetryMs = (msg) => { const m = (msg || "").match(/retry in\s+(?:(\d+)h)?\s*(?:(\d+)m)?\s*(?:([\d.]+)s)?/i); if (!m || (!m[1] && !m[2] && !m[3])) return 0; return ((+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (parseFloat(m[3]) || 0)) * 1000; };
+const isDailyQuota = (msg) => /per ?day|perday|requests_per_day|daily/i.test(msg || "");
+const msToPacificMidnight = () => { try { const now = new Date(); const la = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" })); const nx = new Date(la); nx.setHours(24, 0, 0, 0); return nx - la; } catch { return 6 * 3600000; } };
+const quotaWaitMs = (msg) => geminiRetryMs(msg) || (isDailyQuota(msg) ? msToPacificMidnight() : 60000);
+const fmtWait = (ms) => { const h = Math.floor(ms / 3600000), mi = Math.round((ms % 3600000) / 60000); return h ? `${h} שעות${mi ? ` ו-${mi} דק׳` : ""}` : `${Math.max(1, mi)} דק׳`; };
 const geminiPaidOnly = () => lsArr(GEMINI_PAID_KEY);
 const addTo = (k, m) => { try { const d = lsArr(k); if (!d.includes(m)) localStorage.setItem(k, JSON.stringify([...d, m].slice(-40))); } catch {} };
 const removeFrom = (k, m) => { try { localStorage.setItem(k, JSON.stringify(lsArr(k).filter(x => x !== m))); } catch {} };
@@ -364,8 +379,10 @@ const classifyGeminiError = (status, msg) => {
   if (status === 401 || /api key not valid|api_key_invalid|invalid api key|api key expired|unauthenticated/i.test(m)) return "key";
   if (status === 404 || /no longer available|has been (shut ?down|discontinued|retired|deprecated)|is not found|not found for api version|model .{0,40}(retired|shut down)/i.test(m)) return "dead";
   if (/thinking/i.test(m) && status === 400) return "thinking";
-  if (/free.?tier|limit: ?0\b|requires? (a )?(paid|billing)|not available on the free|enable billing/i.test(m)) return "paid";
-  if (status === 429 || status >= 500) return "busy";
+  // "limit: 0" = הדגם לא כלול בחינם בכלל → בתשלום בלבד. "limit: 20" = נגמרה המכסה → זמני
+  if (/limit: ?0\b|not available on the free tier|only available (on|for) (the )?paid|requires? (a )?(paid|billing)|enable billing/i.test(m)) return "paid";
+  if (status === 429 || /quota|exceeded|rate.?limit|resource.?exhausted/i.test(m)) return "quota";
+  if (status >= 500 || /high demand|overloaded|unavailable|try again later/i.test(m)) return "busy";
   return "other";
 };
 /* Google לפעמים כותבת בהודעה לאיזה דגם לעבור ("use models/gemini-3.8-flash") — מנסים אותו מיד */
@@ -383,6 +400,7 @@ async function testGeminiModel(key, model) {
       const kind = classifyGeminiError(res.status, msg);
       if (kind === "dead") markGeminiDead(model);
       if (kind === "paid") markGeminiPaid(model);
+      if (kind === "quota") { const w = quotaWaitMs(msg); setGeminiCool(key, model, Date.now() + w); return { state: "quota", ms: Date.now() - t0, msg, wait: w, daily: isDailyQuota(msg) }; }
       return { state: kind === "thinking" ? "other" : kind, ms: Date.now() - t0, msg };
     }
     restoreGeminiModel(model);
@@ -399,12 +417,15 @@ async function callGemini(keys, prompt, modelList, opts = {}) {
   const cached = (typeof localStorage !== "undefined") ? localStorage.getItem("sp_gemini_model") : null;
   if (cached && !skip.has(cached) && !pinned) base = [cached, ...base.filter(m => m !== cached)];
   if (!base.includes("gemini-flash-latest") && !skip.has("gemini-flash-latest")) base.push("gemini-flash-latest");   // רשת ביטחון
-  let lastErr = null;
+  let lastErr = null, quotaWaits = [], anyTried = false;
   for (const key of keyList) {
     const queue = base.slice(), tried = new Set();
     while (queue.length) {
       const model = queue.shift();
       if (tried.has(model)) continue; tried.add(model);
+      const cu = geminiCoolUntil(key, model);
+      if (cu) { quotaWaits.push(cu - Date.now()); continue; }      // הדגם במנוחה — נגמרה לו המכסה
+      anyTried = true;
       let noThinking = geminiThinkingOff(model);
       for (let attempt = 0; attempt < 2; attempt++) {
         const genCfg = { temperature: opts.temperature ?? 0.3, maxOutputTokens: 6000 };
@@ -421,6 +442,7 @@ async function callGemini(keys, prompt, modelList, opts = {}) {
           if (cached === model || kind !== "other") { try { if (localStorage.getItem("sp_gemini_model") === model) localStorage.removeItem("sp_gemini_model"); } catch {} }
           if (kind === "dead") markGeminiDead(model);
           if (kind === "paid") markGeminiPaid(model);
+          if (kind === "quota") { const w = quotaWaitMs(msg); quotaWaits.push(w); setGeminiCool(key, model, Date.now() + w); }
           geminiSuggested(msg).reverse().forEach(m => { if (!tried.has(m) && !geminiDead().includes(m)) queue.unshift(m); });
           return "next";
         };
@@ -456,6 +478,11 @@ async function callGemini(keys, prompt, modelList, opts = {}) {
         }
       }
     }
+  }
+  if (quotaWaits.length && (!anyTried || /quota|exceeded|demand|overloaded/i.test(lastErr?.message || ""))) {
+    const w = Math.min(...quotaWaits);
+    const err = new Error(`נגמרה המכסה החינמית של Gemini למפתח שלך (בחינם יש רק כמה עשרות בקשות ביום לכל דגם). היא תתאפס בעוד ${fmtWait(w)} — בערך ב-10:00 בבוקר שעון ישראל. אפשר בינתיים: להוסיף מפתח נוסף מחשבון Google אחר (בהגדרות, שורה חדשה), להפעיל חיוב בחשבון Google (עולה אגורות לשיר), או לעבור ל-Claude.`);
+    err.quota = true; throw err;
   }
   throw lastErr || new Error("Gemini unavailable");
 }
@@ -835,9 +862,13 @@ function SunoPrep() {
   const runModelTest = async () => {
     const keys = (aiKeys.gemini || "").split(/[\n,;]+/).map(x => x.trim()).filter(Boolean);
     if (!keys.length) { setErr("הכנס קודם מפתח Gemini"); return; }
-    const list = [...new Set([...GEMINI_ALL_KNOWN, ...liveModels, ...geminiDead(), ...geminiPaidOnly()])];
+    const list = [...new Set([...GEMINI_ALL_KNOWN, ...(selModel ? [selModel] : [])])];   // רק הרשימה הידועה — כל בדיקה "עולה" בקשה מהמכסה
     const results = {}; setModelTest({ running: true, results: {} });
-    for (const m of list) { results[m] = await testGeminiModel(keys[0], m); setModelTest({ running: true, results: { ...results } }); if (results[m].state === "key") break; }
+    for (const m of list) {
+      const cu = geminiCoolUntil(keys[0], m);
+      results[m] = cu ? { state: "quota", ms: 0, msg: "", wait: cu - Date.now(), skipped: true } : await testGeminiModel(keys[0], m);
+      setModelTest({ running: true, results: { ...results } }); if (results[m].state === "key") break;
+    }
     setModelTest({ running: false, results }); setModelTick(x => x + 1);
   };
   const [refreshingModels, setRefreshingModels] = useState(false);
@@ -2270,7 +2301,8 @@ ${src}`;
                   </B>
                 </div>
                 {(() => { void modelTick; const dead = geminiDead(), paid = geminiPaidOnly(); const tag = m => dead.includes(m) ? " ⛔" : paid.includes(m) ? " 🔒" : ""; const extra = liveModels.filter(m => !GEMINI_ALL_KNOWN.includes(m)); const R = modelTest?.results || {};
-                  const stIcon = { ok: "✅", dead: "⛔", paid: "🔒", busy: "⏳", key: "🔑", other: "⚠️" }, stTxt = { ok: "עובד", dead: "מת — הוסר", paid: "בתשלום בלבד", busy: "עמוס / מכסה", key: "בעיה במפתח", other: "שגיאה" };
+                  const stIcon = { ok: "✅", dead: "⛔", paid: "🔒", busy: "🌊", quota: "⏳", key: "🔑", other: "⚠️" }, stTxt = { ok: "עובד", dead: "מת — הוסר", paid: "בתשלום בלבד", busy: "עמוס עכשיו — נסה שוב", quota: "נגמרה המכסה", key: "בעיה במפתח", other: "שגיאה" };
+                  const allQuota = Object.values(R).length > 0 && !Object.values(R).some(r => r.state === "ok") && Object.values(R).some(r => r.state === "quota");
                   return <>
                   <select value={selModel} onChange={e => setSelModel(e.target.value)}
                     style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "8px 10px", color: tx, fontSize: 12, fontFamily: "inherit", direction: "ltr" }}>
@@ -2285,9 +2317,12 @@ ${src}`;
                   </div>
                   {modelTest && Object.keys(R).length > 0 && <div style={{ marginTop: 8, padding: 8, borderRadius: 8, background: bg, border: `1px solid ${bd}`, display: "grid", gap: 3 }}>
                     {Object.entries(R).map(([m, r]) => <div key={m} title={r.msg} style={{ display: "flex", justifyContent: "space-between", gap: 8, fontSize: 11, color: tx }}>
-                      <span dir="ltr" style={{ fontFamily: "monospace" }}>{m}</span><span>{stIcon[r.state]} {stTxt[r.state]}{r.state === "ok" ? ` · ${(r.ms / 1000).toFixed(1)} שנ׳` : ""}</span>
+                      <span dir="ltr" style={{ fontFamily: "monospace" }}>{m}</span><span>{stIcon[r.state]} {stTxt[r.state]}{r.state === "ok" ? ` · ${(r.ms / 1000).toFixed(1)} שנ׳` : ""}{r.state === "quota" && r.wait ? ` · חוזר בעוד ${fmtWait(r.wait)}` : ""}</span>
                     </div>)}
-                    {!modelTest.running && <div style={{ fontSize: 10, color: sb, marginTop: 4 }}>הדגמים המתים הוסרו מהניסיונות, ואלה שעובדים הוחזרו. רחף/לחץ ארוך על שורה כדי לראות את הודעת השגיאה.</div>}
+                    {!modelTest.running && <div style={{ fontSize: 10, color: sb, marginTop: 4 }}>⛔ מתים הוסרו · ⏳ נגמרה מכסה = זמני, הדגם ינוח עד שהמכסה תתאפס ואז יחזור לבד · כל בדיקה עולה בקשה אחת מהמכסה, אז לא כדאי ללחוץ הרבה.</div>}
+                    {!modelTest.running && allQuota && <div style={{ marginTop: 6, padding: 8, borderRadius: 8, background: `${c.a}14`, border: `1px solid ${c.a}66`, fontSize: 12, color: tx, lineHeight: 1.6 }}>
+                      <b>⏳ נגמרה המכסה החינמית היומית של המפתח שלך.</b><br />זה לא תקלה — בחינם Google נותנת רק כמה עשרות בקשות ביום לכל דגם. המכסה מתאפסת כל יום בערך ב-10:00 בבוקר (שעון ישראל).<br />מה אפשר לעשות עכשיו:<br />• להוסיף מפתח נוסף מחשבון Google אחר — בשורה חדשה בתיבת המפתח למעלה<br />• להפעיל חיוב בחשבון ב-aistudio.google.com — המכסה עולה מאוד, ושיר עולה אגורות<br />• לעבור ל-Claude למעלה (בתשלום)
+                    </div>}
                   </div>}
                   {(dead.length > 0 || paid.length > 0) && <div style={{ marginTop: 8, padding: 8, borderRadius: 8, background: bg, border: `1px dashed ${bd}` }}>
                     <div style={{ fontSize: 11, fontWeight: 700, color: tx }}>{rtl ? "🚫 דגמים שלא מנסים יותר" : "🚫 Skipped models"}</div>
@@ -2295,7 +2330,7 @@ ${src}`;
                       <span><span dir="ltr" style={{ fontFamily: "monospace" }}>{m}</span> <span style={{ color: sb }}>· {why}</span></span>
                       <B sm onClick={() => { restoreGeminiModel(m); setModelTick(x => x + 1); }}>↩️ החזר לניסיון</B>
                     </div>)}
-                    <div style={{ marginTop: 6 }}><B sm onClick={() => { try { localStorage.removeItem(GEMINI_DEAD_KEY); localStorage.removeItem(GEMINI_PAID_KEY); } catch {} setModelTick(x => x + 1); }}>↩️ החזר את כולם</B></div>
+                    <div style={{ marginTop: 6 }}><B sm onClick={() => { try { localStorage.removeItem(GEMINI_DEAD_KEY); localStorage.removeItem(GEMINI_PAID_KEY); } catch {} clearGeminiCool(); setModelTick(x => x + 1); }}>↩️ החזר את כולם</B></div>
                   </div>}
                   </>; })()}
               </div>
@@ -3726,7 +3761,7 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
         <span style={{ flex: 1 }}>⚠️ {err}</span><span style={{ opacity: .7 }}>✕</span>
       </div>}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
-          SunoPrep 10.4 by Barak Aflalo — © AppNest 2026
+          SunoPrep 10.4.1 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>

@@ -172,6 +172,9 @@
     var skip = lsA('appnest_gemini_dead').concat(lsA('appnest_gemini_paid'));
     var models = (CFG.geminiModels || ['gemini-4-hydrogen', 'gemini-3.8-flash', 'gemini-flash-latest', 'gemini-3.5-flash-lite', 'gemini-3.6-flash']).filter(function (m) { return skip.indexOf(m) === -1; });
     try { var pin = localStorage.getItem('sp_gemini_model'); if (pin && skip.indexOf(pin) === -1) models = [pin].concat(models.filter(function (m) { return m !== pin; })); } catch (e) {}
+    try { var cmap = JSON.parse(localStorage.getItem('appnest_gemini_cooldown') || '{}') || {}, ks = String(firstKey(k.gemini)).slice(-6);
+      var cool = models.filter(function (m) { return (cmap[ks + '|' + m] || 0) > Date.now(); });
+      if (cool.length < models.length) models = models.filter(function (m) { return cool.indexOf(m) === -1; }); } catch (e) {}
     if (!models.length) models = ['gemini-flash-latest'];
     var markList = function (k, m) { try { var d = lsA(k); if (d.indexOf(m) === -1) { d.push(m); localStorage.setItem(k, JSON.stringify(d.slice(-40))); } } catch (e) {} };
     var isKeyErr = function (st, msg) { return st === 401 || /api key not valid|api_key_invalid|invalid api key|unauthenticated|permission denied|api key expired|billing/i.test(msg || ''); };
@@ -193,7 +196,12 @@
           // דגם שהוצא משימוש / עמוס / לא זמין → הבא בתור. אם Google הציעה דגם חלופי — מנסים אותו קודם
           var em = (lastErr && lastErr.message) || '';
           if (r.status === 404 || /no longer available|has been (shut ?down|discontinued|retired|deprecated)|is not found|not found for api version/i.test(em)) markList('appnest_gemini_dead', models[i]);
-          else if (/free.?tier|limit: ?0\b|requires? (a )?(paid|billing)|not available on the free|enable billing/i.test(em)) markList('appnest_gemini_paid', models[i]);
+          else if (/limit: ?0\b|not available on the free tier|requires? (a )?(paid|billing)|enable billing/i.test(em)) markList('appnest_gemini_paid', models[i]);
+          else if (r.status === 429 || /quota|exceeded/i.test(em)) {   // נגמרה המכסה → הדגם נח (משותף עם האפליקציה)
+            try { var mm = em.match(/retry in\s+(?:(\d+)h)?\s*(?:(\d+)m)?\s*(?:([\d.]+)s)?/i), w = mm ? (((+mm[1] || 0) * 3600 + (+mm[2] || 0) * 60 + (parseFloat(mm[3]) || 0)) * 1000) : 0;
+              if (!w) w = /per ?day|daily/i.test(em) ? 6 * 3600000 : 60000;
+              var cm = JSON.parse(localStorage.getItem('appnest_gemini_cooldown') || '{}') || {}; cm[String(key).slice(-6) + '|' + models[i]] = Date.now() + w; localStorage.setItem('appnest_gemini_cooldown', JSON.stringify(cm)); } catch (e2) {}
+          }
           var sug = ((lastErr && lastErr.message || '').match(/models\/(gemini-[\w.-]+)/g) || []).map(function (x) { return x.replace('models/', ''); });
           sug.forEach(function (m) { if (models.indexOf(m) === -1) models.splice(i + 1, 0, m); });
           continue;
