@@ -31,8 +31,8 @@ const TR = {
       { i: "💾", t: "שמור להיסטוריה", d: "שמור שירים מוצלחים להיסטוריה (📜) כדי לזכור מה עבד. ייצא גיבוי בהגדרות." },
     ],
     skip: "דלג", next: "הבא", done: "סיום",
-    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 🎯 כתיבה לפי הטעם שלך, 🧪 יומן ניסיונות בסונו, 💡 בנק רעיונות\n• 🎯 תיקון מילים שסונו הרס — נשמר ומתוקן אוטומטית\n• 📱 קטע לשורטס וחבילת יוטיוב\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 10.4.1", back: "← חזרה לדף הבית",
+    aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 🎯 כתיבה לפי הטעם שלך, 🧪 יומן ניסיונות בסונו, 💡 בנק רעיונות\n• 🎯 תיקון מילים שסונו הרס — נשמר ומתוקן אוטומטית\n• 📱 קטע לשורטס וחבילת יוטיוב\n• 🎲 שיר בלי AI — מיידי, בלי אינטרנט ובלי מכסה\n• 💻 AI מקומי (LM Studio + DictaLM עברי) וגיבוי חינמי (Groq, OpenRouter)\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
+    ver: "גרסה 10.5", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• ✨ AI song studio, auto-refine with a critic, nikud reviewer\n• 5 UI languages, 9 source languages\n• 5 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 10.4.1", back: "← Back to home",
+    ver: "Version 10.5", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.4.1", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.5", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.4.1", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.5", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -255,8 +255,8 @@ const SETUP_STEPS = {
     openai: { label: "מפתח OpenAI API", ph: "sk-proj-...",
       steps: ["היכנס ל־platform.openai.com", "לחץ על תמונת הפרופיל ← API Keys", "לחץ Create new secret key ← העתק מיד (מוצג פעם אחת!)", "עבור ל־Billing והוסף אמצעי תשלום"] },
     device: { title: "📱 AI מקומי במחשב שלך", info: "מתחבר ל-AI שרץ על המחשב שלך. פרטיות מלאה — שום מידע לא יוצא מהמכשיר.",
-      urlLabel: "כתובת API מקומית", urlHint: "Ollama: פורט 11434 · LM Studio: פורט 1234",
-      steps: ["התקן Ollama (ollama.ai) או LM Studio (lmstudio.ai)", "הורד מודל: הרץ ollama pull llama3 בטרמינל", "ודא שהשרת רץ לפני שאתה מתעתק"] },
+      urlLabel: "כתובת API מקומית", urlHint: "LM Studio: http://localhost:1234/v1 · Ollama: http://localhost:11434/v1",
+      steps: ["ב-LM Studio: לשונית החיפוש 🔍 ← חפש DictaLM 3.0 (עברית!) ← הורד", "לשונית Developer ← למעלה: Select a model to load ← בחר את המודל", "הגדרות השרת (Settings): סמן Enable CORS ✅", "הפעל את השרת: Status → Running", "כאן: לחץ 🔍 מצא מודלים ← 🔌 בדוק חיבור ← ✓ שמור והתחבר"] },
     custom: { label1: "כתובת API", ph1: "https://your-api.com/v1/chat/completions", label2: "מפתח API (אופציונלי)", ph2: "המפתח שלך...", hint: "חייב להיות תואם OpenAI (פורמט chat/completions)." },
     save: "✓ שמור והתחבר", test: "🔌 בדוק חיבור", testing: "בודק...", ok: "✓ החיבור תקין!", fail: "✗ נכשל: ", noSel: "בחר ספק AI קודם",
     title: "חיבור בינה מלאכותית", connected: "מחובר", notConnected: "לא מחובר", selectProvider: "בחר ספק AI",
@@ -481,7 +481,7 @@ async function callGemini(keys, prompt, modelList, opts = {}) {
   }
   if (quotaWaits.length && (!anyTried || /quota|exceeded|demand|overloaded/i.test(lastErr?.message || ""))) {
     const w = Math.min(...quotaWaits);
-    const err = new Error(`נגמרה המכסה החינמית של Gemini למפתח שלך (בחינם יש רק כמה עשרות בקשות ביום לכל דגם). היא תתאפס בעוד ${fmtWait(w)} — בערך ב-10:00 בבוקר שעון ישראל. אפשר בינתיים: להוסיף מפתח נוסף מחשבון Google אחר (בהגדרות, שורה חדשה), להפעיל חיוב בחשבון Google (עולה אגורות לשיר), או לעבור ל-Claude.`);
+    const err = new Error(`נגמרה המכסה החינמית של Gemini למפתח שלך (בחינם יש רק כמה עשרות בקשות ביום לכל דגם). היא תתאפס בעוד ${fmtWait(w)} — בערך ב-10:00 בבוקר שעון ישראל. אפשר בינתיים: להוסיף מפתח נוסף מחשבון Google אחר (בהגדרות, שורה חדשה), להפעיל חיוב בחשבון Google (עולה אגורות לשיר), לעבור ל-AI מקומי (LM Studio), או ללחוץ "🎲 שיר בלי AI" באולפן.`);
     err.quota = true; throw err;
   }
   throw lastErr || new Error("Gemini unavailable");
@@ -492,11 +492,56 @@ async function callOpenAICompat(url, key, prompt, model, opts = {}) {
   if (key) h["Authorization"] = "Bearer " + key;
   const res = await fetch(url, {
     method: "POST", headers: h,
-    body: JSON.stringify({ model: model || "gpt-4o-mini", max_tokens: 3000, ...(opts.temperature != null ? { temperature: opts.temperature } : {}), messages: [{ role: "user", content: prompt }] }),
+    body: JSON.stringify({ model: model || "gpt-4o-mini", max_tokens: opts.maxTokens || 3000, ...(opts.temperature != null ? { temperature: opts.temperature } : {}), messages: [{ role: "user", content: prompt }] }),
   });
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
   const d = await res.json();
-  return d?.choices?.[0]?.message?.content || "";
+  return stripThink(d?.choices?.[0]?.message?.content || "");
+}
+
+/* מנקה "מחשבות" של מודלים חושבים (DictaLM Thinking, DeepSeek, Qwen) — <think>…</think> */
+const stripThink = (t) => String(t || "").replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/^[\s\S]*?<\/think>/i, "").trim();
+
+/* ═══ AI מקומי (LM Studio / Ollama) — מוצא לבד איזה מודל טעון ═══ */
+async function listLocalModels(baseUrl) {
+  const r = await fetch(baseUrl.replace(/\/+$/, "") + "/models");
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const d = await r.json();
+  return (d.data || d.models || []).map(m => m.id || m.name).filter(Boolean).filter(id => !/embed|embedding|whisper|tts/i.test(id));
+}
+const pickLocalModel = (ids) => ids.find(x => /dicta/i.test(x)) || ids[0] || "";
+const localError = (e, url) => {
+  const m = String(e?.message || e);
+  if (/failed to fetch|networkerror|load failed|err_connection|refused/i.test(m)) return new Error(`אין חיבור ל-AI המקומי (${url}). ודא ש-LM Studio פתוח, שהשרת מופעל (Status: Running) ושסימנת "Enable CORS" בהגדרות השרת. אם הדפדפן שאל על גישה לרשת המקומית — אשר.`);
+  if (/no models? loaded|model.*not.*loaded|no model/i.test(m)) return new Error("השרת של LM Studio פועל, אבל לא טעון בו מודל. טען מודל (Select a model to load) ונסה שוב.");
+  return e instanceof Error ? e : new Error(m);
+};
+
+/* ═══ גיבוי חינמי בלי כרטיס אשראי: Groq ו-OpenRouter — בוחרים מודל לבד ═══ */
+const FREE_BACKUPS = {
+  groq: { name: "Groq", url: "https://api.groq.com/openai/v1", prefer: [/gpt-oss-120b/, /llama-4-maverick/, /llama-3\.3-70b/, /kimi/, /qwen/, /gpt-oss-20b/, /llama/], skip: /whisper|guard|tts|playai|compound|orpheus|prompt-guard/i },
+  openrouter: { name: "OpenRouter", url: "https://openrouter.ai/api/v1", prefer: [/gemma-3-27b/, /llama-3\.3-70b/, /deepseek-chat|deepseek-v3/, /qwen3.*(235|72|32)/, /mistral-small/, /gemma/, /llama/], skip: /vision|embed|guard/i },
+};
+async function backupModel(kind, key, force) {
+  const cfg = FREE_BACKUPS[kind], ck = `appnest_backup_model_${kind}`;
+  if (!force) { try { const c = JSON.parse(localStorage.getItem(ck) || "null"); if (c && c.t > Date.now() - 86400000 && c.m) return c.m; } catch {} }
+  const r = await fetch(cfg.url + "/models", { headers: kind === "groq" ? { Authorization: "Bearer " + key } : {} });
+  if (!r.ok) throw new Error(`${cfg.name}: HTTP ${r.status}`);
+  const d = await r.json();
+  let ids = (d.data || []).map(m => m.id).filter(id => id && !cfg.skip.test(id));
+  if (kind === "openrouter") ids = ids.filter(id => /:free$/.test(id));
+  const m = cfg.prefer.map(re => ids.find(id => re.test(id))).find(Boolean) || ids[0];
+  if (!m) throw new Error(`${cfg.name}: לא נמצא מודל חינמי`);
+  try { localStorage.setItem(ck, JSON.stringify({ m, t: Date.now() })); } catch {}
+  return m;
+}
+async function callBackup(kind, key, prompt, opts = {}) {
+  const cfg = FREE_BACKUPS[kind];
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const model = await backupModel(kind, key, attempt > 0);
+    try { return stripThink(await callOpenAICompat(cfg.url + "/chat/completions", key, prompt, model, opts)); }
+    catch (e) { if (attempt === 0 && /not found|decommission|no longer|does not exist|404|unavailable/i.test(String(e?.message))) continue; throw new Error(`${cfg.name}: ${e?.message || e}`); }
+  }
 }
 
 async function callClaude(key, prompt, opts = {}) {
@@ -792,6 +837,7 @@ function SunoPrep() {
   const [compareB, setCompareB] = useState("history-0");
   const [ideaVariants, setIdeaVariants] = useState(() => Array.isArray(IDEA_SAVED.ideaVariants) ? IDEA_SAVED.ideaVariants : []);
   const [ideaGenre, setIdeaGenre] = useState(() => IDEA_SAVED.ideaGenre || "פופ ישראלי");
+  const [variantKind, setVariantKind] = useState("ai");
   const [ideaAutoRefine, setIdeaAutoRefine] = useState(() => !!IDEA_SAVED.ideaAutoRefine);
   const [ideaMore, setIdeaMore] = useState(false);
   const [ideaEdit, setIdeaEdit] = useState(false);
@@ -853,7 +899,9 @@ function SunoPrep() {
   const [showVoiceTip, setShowVoiceTip] = useState(true);
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [aiProvider, setAiProvider] = useState(null);
-  const [aiKeys, setAiKeys] = useState({ gemini: "", claude: "", openai: "", deviceUrl: "http://localhost:11434/v1", customUrl: "", customKey: "" });
+  const [aiKeys, setAiKeys] = useState({ gemini: "", claude: "", openai: "", deviceUrl: "http://localhost:1234/v1", deviceModel: "", customUrl: "", customKey: "", groq: "", openrouter: "" });
+  const [localModels, setLocalModels] = useState(null);   // {loading, list, err}
+  const [backupNote, setBackupNote] = useState("");
   const [liveModels, setLiveModels] = useState([]);
   const [selModel, setSelModel] = useState(() => { try { return localStorage.getItem("sp_gemini_selmodel") || ""; } catch { return ""; } });
   useEffect(() => { try { localStorage.setItem("sp_gemini_selmodel", selModel); } catch {} }, [selModel]);
@@ -1313,6 +1361,21 @@ ${src}`;
 
   // opts: {temperature, onText} — יצירתי = טמפרטורה גבוהה, ביקורת/ניקוד = נמוכה; onText = זרימה (Gemini בלבד)
   const callAI = async (prompt, opts = {}) => {
+    try { return await callMainAI(prompt, opts); }
+    catch (e) {
+      // 🆓 גיבוי חינמי: כשה-AI הראשי נכשל (מכסה / עומס / אין חיבור) — Groq ואז OpenRouter
+      if (e?.name === "AbortError") throw e;
+      const backups = [["groq", (aiKeys.groq || "").trim()], ["openrouter", (aiKeys.openrouter || "").trim()]].filter(([, k]) => k);
+      if (!backups.length || (e?.keyError && aiProvider !== "gemini")) throw e;
+      let last = e;
+      for (const [kind, key] of backups) {
+        try { const out = await callBackup(kind, key, prompt, opts); setBackupNote(`🆓 נכתב עם הגיבוי החינמי ${FREE_BACKUPS[kind].name} (ה-AI הראשי לא זמין כרגע)`); setTimeout(() => setBackupNote(""), 8000); return out; }
+        catch (be) { last = be; }
+      }
+      throw new Error(`${String(e?.message || e)}\n\nגם הגיבוי לא הצליח: ${String(last?.message || last)}`);
+    }
+  };
+  const callMainAI = async (prompt, opts = {}) => {
     const p = aiProvider;
     if (p === "gemini") {
       const keys = aiKeys.gemini.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
@@ -1323,7 +1386,14 @@ ${src}`;
     if (p === "claude") return await callClaude(aiKeys.claude, prompt, opts);
     if (p === "builtin") return await callClaude("", prompt, opts);
     if (p === "openai") return await callOpenAICompat("https://api.openai.com/v1/chat/completions", aiKeys.openai, prompt, "gpt-4o-mini", opts);
-    if (p === "device") return await callOpenAICompat(aiKeys.deviceUrl.replace(/\/+$/, "") + "/chat/completions", "", prompt, "llama3", opts);
+    if (p === "device") {
+      const base = (aiKeys.deviceUrl || "http://localhost:1234/v1").replace(/\/+$/, "");
+      try {
+        let model = aiKeys.deviceModel;
+        if (!model) { model = pickLocalModel(await listLocalModels(base)); if (model) setAiKeys(k => ({ ...k, deviceModel: model })); }
+        return await callOpenAICompat(base + "/chat/completions", "", prompt, model || "local-model", { ...opts, maxTokens: 6000 });
+      } catch (e) { throw localError(e, base); }
+    }
     if (p === "custom") return await callOpenAICompat(aiKeys.customUrl, aiKeys.customKey, prompt, "gpt-4o-mini", opts);
     throw new Error("No provider");
   };
@@ -1403,7 +1473,7 @@ ${src}`;
       const outs = await Promise.all(Array.from({ length: count }, (_, i) => callAI(makeSongPrompt(i, count), { temperature: 0.95, ...(live ? { onText: (t) => setIdeaLive(t) } : {}) }).catch((e) => { if (count === 1) throw e; return ""; })));
       const clean = outs.map(x => songPostProcess((window.AppNestRefine ? window.AppNestRefine.cleanText(x) : (x || "")).trim(), "")).filter(Boolean);
       if (!clean.length) throw new Error("לא התקבלה טיוטה. בדוק את החיבור בהגדרות ונסה שוב.");
-      setIdeaVariants(clean); first = clean[0]; setDraft(first); setIdeaEdit(false);
+      setIdeaVariants(clean); setVariantKind("ai"); first = clean[0]; setDraft(first); setIdeaEdit(false);
     } catch (e) { setErr(String(e?.message || e)); }
     setIdeaLoading(false); setIdeaLive(""); setIdeaStart(0);
     if (first && count === 1 && ideaAutoRefine) runAutoRefine("idea", false, first, 1);
@@ -1419,6 +1489,22 @@ ${src}`;
       if (out) setDraft(songPostProcess(out, ideaOut));
     } catch (e) { setErr(String(e?.message || e)); }
     setIdeaLoading(false);
+  };
+
+  /* 🎲 שיר בלי AI — SongEngine (song-engine.js): מיידי, בלי אינטרנט ובלי מכסה */
+  const generateOffline = (count = 1) => {
+    if (!window.SongEngine) { setErr("מחולל השירים לא נטען — רענן את הדף"); return; }
+    const base = { mood: ideaMood, genre: ideaGenre, structure: ideaStructure, length: ideaLength, gender: ideaGenderMode, keywords: ideaKeywords, phrases: phraseBank.map(x => x.text) };
+    const outs = Array.from({ length: count }, (_, i) => window.SongEngine.generate({ ...base, seed: Date.now() + i * 7919 }));
+    setErr(""); setRefineResult(null); setIdeaTitles(null); setIdeaStyleMsg("");
+    setIdeaVariants(outs); setVariantKind("offline"); setDraft(outs[0]); setIdeaEdit(false);
+  };
+  const sectionOfLine = (idx) => { const ls = ideaOut.split("\n"); for (let i = idx; i >= 0; i--) { const m = (ls[i] || "").trim().match(/^\[(.+?)\]$/); if (m) return m[1]; } return "Verse"; };
+  const offlineLineTask = (idx, kind) => {
+    if (!window.SongEngine) return;
+    const line = (ideaOut.split("\n")[idx] || "").trim();
+    if (kind === "alt") setLineTool({ idx, kind: "alt", loading: false, options: window.SongEngine.altLine(line, { mood: ideaMood, gender: ideaGenderMode, section: sectionOfLine(idx) }), offline: true });
+    else { const words = line.replace(/[.,!?;:"'()…–—-]/g, " ").split(/\s+/).filter(Boolean); const last = words[words.length - 1] || ""; setLineTool({ idx, kind: "rhyme", loading: false, options: window.SongEngine.rhymes(last, phraseBank.map(x => x.text)), last, offline: true }); }
   };
 
   const inspireMe = async () => {
@@ -1764,7 +1850,9 @@ ${text}`;
         if (!aiKeys.openai.trim()) throw new Error("No key");
         await callOpenAICompat("https://api.openai.com/v1/chat/completions", aiKeys.openai.trim(), testPrompt, "gpt-4o-mini");
       } else if (selProvider === "device") {
-        await callOpenAICompat((aiKeys.deviceUrl || "http://localhost:11434/v1").replace(/\/+$/, "") + "/chat/completions", "", testPrompt, "llama3");
+        const base = (aiKeys.deviceUrl || "http://localhost:1234/v1").replace(/\/+$/, "");
+        try { let model = aiKeys.deviceModel; if (!model) { model = pickLocalModel(await listLocalModels(base)); if (model) setAiKeys(k => ({ ...k, deviceModel: model })); } await callOpenAICompat(base + "/chat/completions", "", testPrompt, model || "local-model"); }
+        catch (e) { throw localError(e, base); }
       } else if (selProvider === "custom") {
         if (!aiKeys.customUrl.trim()) throw new Error("No URL");
         await callOpenAICompat(aiKeys.customUrl.trim(), aiKeys.customKey.trim(), testPrompt, "gpt-4o-mini");
@@ -1772,7 +1860,7 @@ ${text}`;
       setTestState({ ok: true, msg: st.ok });
     } catch (e) {
       let m = String(e?.message || e);
-      if (m.length > 40) m = m.slice(0, 40) + "...";
+      if (m.length > 60) { setErr(m); m = m.slice(0, 60) + "..."; }
       setTestState({ ok: false, msg: st.fail + m });
     }
     setTimeout(() => setTestState(null), 5000);
@@ -1904,7 +1992,11 @@ ${text}`;
         if (a?.value) {
           const cfg = JSON.parse(a.value);
           if (cfg.provider) { setAiProvider(cfg.provider); setSelProvider(cfg.provider); }
-          if (cfg.keys) setAiKeys(k => ({ ...k, ...cfg.keys }));
+          if (cfg.keys) {
+            const ks = { ...cfg.keys };
+            if (cfg.provider !== "device" && (!ks.deviceUrl || /:11434\/v1\/?$/.test(ks.deviceUrl))) ks.deviceUrl = "http://localhost:1234/v1";   // ברירת מחדל: LM Studio
+            setAiKeys(k => ({ ...k, ...ks }));
+          }
         }
       } catch {}
       try {
@@ -2132,7 +2224,12 @@ ${src}`;
         <Chip dis={lt?.loading} on={lt?.kind === "rhyme"} onClick={() => lineTask(idx, "rhyme")}>🎯 חרוזים</Chip>
         <Chip onClick={() => { setIdeaEdit(true); setLineSel(null); }}>✏️ ערוך ידנית</Chip>
       </div>
+      <div style={{ ...chipRow, marginTop: 6 }}>
+        <Chip on={lt?.offline && lt?.kind === "alt"} onClick={() => offlineLineTask(idx, "alt")}>🎲 שורה אחרת בלי AI</Chip>
+        <Chip on={lt?.offline && lt?.kind === "rhyme"} onClick={() => offlineLineTask(idx, "rhyme")}>🎲 חרוזים בלי AI</Chip>
+      </div>
       {lt?.loading && <div style={{ fontSize: 12, color: ca, marginTop: 8 }}>⏳ חושב...</div>}
+      {lt && !lt.loading && lt.offline && lt.options.length === 0 && <div style={{ fontSize: 12, color: sb, marginTop: 8 }}>{lt.kind === "rhyme" ? "לא נמצאו חרוזים במאגר המקומי. שמור עוד משפטים לבנק — הם מרחיבים את המאגר." : "אין עוד חלופות במאגר."}</div>}
       {lt?.err && <div style={{ fontSize: 12, color: "#e0a03a", marginTop: 8 }}>⚠️ {lt.err}</div>}
       {lt && !lt.loading && lt.options.length > 0 && (lt.kind === "rhyme"
         ? <div style={{ marginTop: 8 }}><div style={{ fontSize: 11, color: sb, marginBottom: 5 }}>חרוזים ל"{lt.last}" — לחץ כדי להעתיק:</div><div style={chipRow}>{lt.options.map(o => <Chip key={o} onClick={() => { try { navigator.clipboard && navigator.clipboard.writeText(o); } catch (e) {} }}>{o}</Chip>)}</div></div>
@@ -2359,8 +2456,23 @@ ${src}`;
               <div style={{ fontSize: 12, color: sb, lineHeight: 1.65, marginBottom: 4 }}>{st.device.info}</div>
               <Steps items={st.device.steps} />
               <div style={{ marginTop: 13 }}>
-                <Field label={st.device.urlLabel} value={aiKeys.deviceUrl} onChange={v => setAiKeys(k => ({ ...k, deviceUrl: v }))} ph="http://localhost:11434/v1" />
+                <div style={{ display: "flex", gap: 6, marginBottom: 8, flexWrap: "wrap" }}>
+                  <B sm act={/:1234/.test(aiKeys.deviceUrl)} onClick={() => setAiKeys(k => ({ ...k, deviceUrl: "http://localhost:1234/v1", deviceModel: "" }))}>LM Studio</B>
+                  <B sm act={/:11434/.test(aiKeys.deviceUrl)} onClick={() => setAiKeys(k => ({ ...k, deviceUrl: "http://localhost:11434/v1", deviceModel: "" }))}>Ollama</B>
+                </div>
+                <Field label={st.device.urlLabel} value={aiKeys.deviceUrl} onChange={v => setAiKeys(k => ({ ...k, deviceUrl: v, deviceModel: "" }))} ph="http://localhost:1234/v1" />
                 <div style={{ fontSize: 10.5, color: sb, marginTop: -5 }}>{st.device.urlHint}</div>
+                <div style={{ display: "flex", gap: 6, marginTop: 10, alignItems: "center", flexWrap: "wrap" }}>
+                  <B sm onClick={async () => { const base = (aiKeys.deviceUrl || "").replace(/\/+$/, ""); setLocalModels({ loading: true, list: [] }); try { const list = await listLocalModels(base); setLocalModels({ loading: false, list }); if (list.length && !list.includes(aiKeys.deviceModel)) setAiKeys(k => ({ ...k, deviceModel: pickLocalModel(list) })); if (!list.length) setLocalModels({ loading: false, list: [], err: "השרת עונה, אבל אין בו מודלים. הורד מודל ב-LM Studio וטען אותו." }); } catch (e) { setLocalModels({ loading: false, list: [], err: localError(e, base).message }); } }} dis={localModels?.loading}>{localModels?.loading ? "⏳ מחפש..." : "🔍 מצא מודלים"}</B>
+                  {localModels?.list?.length > 0 && <select value={aiKeys.deviceModel} onChange={e => setAiKeys(k => ({ ...k, deviceModel: e.target.value }))} style={{ flex: "1 1 200px", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "7px 9px", color: tx, fontSize: 12, direction: "ltr" }}>
+                    {localModels.list.map(m => <option key={m} value={m}>{m}{/dicta/i.test(m) ? "  ★ עברית" : ""}</option>)}
+                  </select>}
+                </div>
+                {aiKeys.deviceModel && <div style={{ fontSize: 11, color: tx, marginTop: 6 }}>מודל נבחר: <b dir="ltr">{aiKeys.deviceModel}</b></div>}
+                {localModels?.err && <div style={{ fontSize: 12, color: "#e0a03a", marginTop: 6, lineHeight: 1.5 }}>⚠️ {localModels.err}</div>}
+                <div style={{ marginTop: 10, padding: "8px 10px", borderRadius: 8, background: `${c.a}10`, border: `1px solid ${c.a}44`, fontSize: 11.5, color: tx, lineHeight: 1.6 }}>
+                  💡 <b>איזה מודל להוריד?</b> חפש ב-LM Studio "DictaLM 3.0" — מודל עברי ישראלי של Dicta. עם כרטיס מסך של 16GB ומעלה: גרסת 24B (קובץ Q4_K_M). עם פחות: גרסת 1.7B. מודל "Thinking" חושב לפני שהוא עונה — איטי יותר אבל לפעמים טוב יותר; האפליקציה מסתירה את המחשבות שלו.<br />⏱️ מודל מקומי איטי יותר מ-Gemini — שיר יכול לקחת חצי דקה ויותר, תלוי בכרטיס המסך.
+                </div>
               </div>
             </>)}
 
@@ -2369,6 +2481,26 @@ ${src}`;
               <Field label={st.custom.label2} value={aiKeys.customKey} onChange={v => setAiKeys(k => ({ ...k, customKey: v }))} ph={st.custom.ph2} type="password" />
               <div style={{ fontSize: 11, color: sb }}>{st.custom.hint}</div>
             </>)}
+          </div>
+        )}
+
+        {selProvider && rtl && (
+          <div style={{ maxWidth: 620, marginBottom: 12, padding: 14, borderRadius: 12, background: cd, border: `1px solid ${bd}` }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: ca }}>🆓 גיבוי חינמי — בלי כרטיס אשראי (לא חובה)</div>
+            <div style={{ fontSize: 11.5, color: sb, marginTop: 4, lineHeight: 1.6 }}>כשה-AI הראשי לא זמין (נגמרה המכסה, עומס, המחשב כבוי) — האפליקציה תנסה לבד את הגיבויים האלה. ההרשמה בשניהם היא עם מייל או חשבון Google בלבד, בלי כרטיס אשראי. העברית שלהם טובה פחות מ-Gemini, ולכן הם רק גיבוי.</div>
+            <div style={{ marginTop: 10 }}>
+              <Field label="מפתח Groq (מתחיל ב-gsk_)" value={aiKeys.groq || ""} onChange={v => setAiKeys(k => ({ ...k, groq: v.trim() }))} ph="gsk_..." type="password" />
+              <div style={{ fontSize: 11, marginTop: -5 }}><a href="https://console.groq.com/keys" target="_blank" rel="noreferrer" style={{ color: ca }}>→ console.groq.com/keys</a> <span style={{ color: sb }}>· Create API Key</span></div>
+            </div>
+            <div style={{ marginTop: 10 }}>
+              <Field label="מפתח OpenRouter (מתחיל ב-sk-or-)" value={aiKeys.openrouter || ""} onChange={v => setAiKeys(k => ({ ...k, openrouter: v.trim() }))} ph="sk-or-..." type="password" />
+              <div style={{ fontSize: 11, marginTop: -5 }}><a href="https://openrouter.ai/keys" target="_blank" rel="noreferrer" style={{ color: ca }}>→ openrouter.ai/keys</a> <span style={{ color: sb }}>· משתמשים רק במודלים החינמיים (":free")</span></div>
+            </div>
+            {(aiKeys.groq || aiKeys.openrouter) && <div style={{ marginTop: 10, display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+              <B sm onClick={async () => { const res = []; for (const kind of ["groq", "openrouter"]) { const key = (aiKeys[kind] || "").trim(); if (!key) continue; try { await callBackup(kind, key, "Reply with exactly: OK", { maxTokens: 20 }); res.push(`✅ ${FREE_BACKUPS[kind].name} עובד`); } catch (e) { res.push(`⚠️ ${String(e?.message || e).slice(0, 140)}`); } } setBackupNote(res.join(" · ")); setTimeout(() => setBackupNote(""), 12000); }}>🧪 בדוק את הגיבוי</B>
+              <span style={{ fontSize: 11, color: sb }}>זכור ללחוץ "✓ שמור והתחבר" למטה</span>
+            </div>}
+            {backupNote && <div style={{ marginTop: 8, fontSize: 12, color: tx, lineHeight: 1.5 }}>{backupNote}</div>}
           </div>
         )}
 
@@ -3409,6 +3541,14 @@ ${src}`;
             <B pri onClick={()=>generateIdea(1)} dis={ideaLoading||refineBusy} sx={{width:"100%",fontSize:16,padding:"14px 18px"}}>{ideaLoading?`⏳ כותב...${ideaStart?` ${Math.max(0,Math.round((Date.now()-ideaStart)/1000))} שנ׳`:""}`:refineBusy?"🎻 מלטש...":"✨ כתוב לי שיר"}</B>
             <B onClick={()=>generateIdea(3)} dis={ideaLoading||refineBusy} sx={{width:"100%"}}>🎨 3 כיוונים שונים לבחירה</B>
           </div>
+          <div style={{marginTop:10,padding:10,borderRadius:12,border:`1px dashed ${c.a}88`,background:bg}}>
+            <div style={{fontSize:12,fontWeight:700,color:tx}}>🎲 בלי AI — מיידי, בלי אינטרנט ובלי מכסה</div>
+            <div style={{fontSize:11,color:sb,marginTop:2,lineHeight:1.5}}>מרכיב שיר מבנק שורות מחורזות לפי מצב הרוח, מי שר למי והמבנה שבחרת, ומשלב משפטים מבנק המשפטים שלך ואת מילות המפתח. טיוטה להשראה — לא שיר גמור.</div>
+            <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+              <B sm pri={!aiProvider} onClick={()=>generateOffline(1)} dis={ideaLoading||refineBusy}>🎲 שיר בלי AI</B>
+              <B sm onClick={()=>generateOffline(3)} dis={ideaLoading||refineBusy}>🎲 3 גרסאות בלי AI</B>
+            </div>
+          </div>
           <label style={{display:"flex",alignItems:"center",gap:8,marginTop:10,fontSize:12,color:tx,cursor:"pointer"}}>
             <input type="checkbox" checked={ideaAutoRefine} onChange={e=>setIdeaAutoRefine(e.target.checked)} style={{width:18,height:18,accentColor:c.a}} />
             <span>🎻 ללטש אוטומטית אחרי הכתיבה <span style={{color:sb}}>(עוד 3 קריאות AI — מוסיף בערך 20–40 שניות)</span></span>
@@ -3430,7 +3570,7 @@ ${src}`;
               <B sm act={ideaEdit} onClick={()=>{setIdeaEdit(v=>!v);setLineSel(null);}}>{ideaEdit?"👁️ תצוגה":"✏️ עריכה"}</B>
             </div>
           </div>
-          {ideaVariants.length>1 && <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>{ideaVariants.map((v,i)=><Chip key={i} on={ideaOut===v} onClick={()=>{setIdeaOut(v);setLineSel(null);setLineTool(null);}}>{["💖 כיוון 1 · רגשי","⚡ כיוון 2 · קצבי","🌙 כיוון 3 · מפתיע"][i]||`כיוון ${i+1}`}</Chip>)}</div>}
+          {ideaVariants.length>1 && <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>{ideaVariants.map((v,i)=><Chip key={i} on={ideaOut===v} onClick={()=>{setIdeaOut(v);setLineSel(null);setLineTool(null);}}>{variantKind==="offline"?`🎲 גרסה ${i+1}`:(["💖 כיוון 1 · רגשי","⚡ כיוון 2 · קצבי","🌙 כיוון 3 · מפתיע"][i]||`כיוון ${i+1}`)}</Chip>)}</div>}
           {ideaEdit
             ? <textarea value={ideaOut} onChange={e=>{const v=e.target.value; setIdeaVariants(prev=>prev.map(x=>x===ideaOut?v:x)); setIdeaOut(v);}} style={{width:"100%",minHeight:260,marginTop:10,padding:12,borderRadius:12,border:`1px solid ${bd}`,background:bg,color:tx,resize:"vertical",fontSize:15,lineHeight:1.6,fontFamily:"inherit"}} />
             : <div style={{marginTop:10,padding:"10px 8px",borderRadius:12,background:bg,border:`1px solid ${bd}`}}>
@@ -3757,11 +3897,12 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
 
         </div>}
       {/* FOOTER */}
+      {backupNote && !err && <div onClick={() => setBackupNote("")} style={{ position: "fixed", insetInline: 12, bottom: 84, zIndex: 9997, padding: "10px 14px", borderRadius: 12, background: day ? "#EEF8F2" : "#12291E", border: "1px solid #3DAA7D88", color: day ? "#1E6B47" : "#9FE3C0", fontSize: 13, boxShadow: "0 8px 24px rgba(0,0,0,.3)", direction: rtl ? "rtl" : "ltr", cursor: "pointer" }}>{backupNote}</div>}
       {err && <div role="alert" onClick={() => setErr("")} style={{ position: "fixed", insetInline: 12, bottom: 84, zIndex: 9998, padding: "11px 14px", borderRadius: 12, background: day ? "#FFF1F1" : "#3A1515", border: `1px solid ${day ? "#E88" : "#7A2a2a"}`, color: day ? "#B42318" : "#FFB4B4", fontSize: 13, lineHeight: 1.5, boxShadow: "0 8px 24px rgba(0,0,0,.35)", display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer", direction: rtl ? "rtl" : "ltr" }}>
         <span style={{ flex: 1 }}>⚠️ {err}</span><span style={{ opacity: .7 }}>✕</span>
       </div>}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
-          SunoPrep 10.4.1 by Barak Aflalo — © AppNest 2026
+          SunoPrep 10.5 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
