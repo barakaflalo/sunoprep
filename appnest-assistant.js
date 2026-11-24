@@ -167,12 +167,19 @@
 
   // ── Gemini ──
   async function callGemini(k, sys, msgs, tools, onDelta, signal, stream) {
-    var models = CFG.geminiModels || ['gemini-flash-latest', 'gemini-3.5-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+    // דגמים חינמיים עדכניים (נובמבר 2026). מדלגים על דגמים שהאפליקציה סימנה כמתים / בתשלום בלבד (רשימות משותפות ל-AppNest)
+    var lsA = function (k) { try { var v = JSON.parse(localStorage.getItem(k) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } };
+    var skip = lsA('appnest_gemini_dead').concat(lsA('appnest_gemini_paid'));
+    var models = (CFG.geminiModels || ['gemini-4-hydrogen', 'gemini-3.8-flash', 'gemini-flash-latest', 'gemini-3.5-flash-lite', 'gemini-3.6-flash']).filter(function (m) { return skip.indexOf(m) === -1; });
+    try { var pin = localStorage.getItem('sp_gemini_model'); if (pin && skip.indexOf(pin) === -1) models = [pin].concat(models.filter(function (m) { return m !== pin; })); } catch (e) {}
+    if (!models.length) models = ['gemini-flash-latest'];
+    var markList = function (k, m) { try { var d = lsA(k); if (d.indexOf(m) === -1) { d.push(m); localStorage.setItem(k, JSON.stringify(d.slice(-40))); } } catch (e) {} };
+    var isKeyErr = function (st, msg) { return st === 401 || /api key not valid|api_key_invalid|invalid api key|unauthenticated|permission denied|api key expired|billing/i.test(msg || ''); };
     var key = firstKey(k.gemini), lastErr = null;
     var contents = msgs.map(function (m) { return { role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.text }] }; });
     for (var i = 0; i < models.length; i++) {
       var genCfg = { temperature: 0.5, maxOutputTokens: 4000 };
-      if (models[i].indexOf('gemini-2.5') === 0 || models[i].indexOf('gemini-3') === 0) genCfg.thinkingConfig = { thinkingBudget: 0 };
+      if (models[i].indexOf('flash') !== -1) genCfg.thinkingConfig = { thinkingBudget: 0 };
       var body = { systemInstruction: { parts: [{ text: sys }] }, contents: contents, generationConfig: genCfg };
       if (tools) body.tools = [{ functionDeclarations: tools.map(function (t) { return { name: t.name, description: t.description, parameters: geminiSchema(t.parameters) }; }) }];
       var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + models[i] +
@@ -182,8 +189,14 @@
         var r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: signal });
         if (!r.ok) {
           lastErr = await errorFrom(r);
-          if ([404, 429, 500, 503].indexOf(r.status) === -1) throw lastErr;
-          continue;                                   // מודל לא זמין/עמוס → הבא בתור
+          if (isKeyErr(r.status, lastErr && lastErr.message)) throw lastErr;   // בעיה במפתח — אין טעם להחליף דגם
+          // דגם שהוצא משימוש / עמוס / לא זמין → הבא בתור. אם Google הציעה דגם חלופי — מנסים אותו קודם
+          var em = (lastErr && lastErr.message) || '';
+          if (r.status === 404 || /no longer available|has been (shut ?down|discontinued|retired|deprecated)|is not found|not found for api version/i.test(em)) markList('appnest_gemini_dead', models[i]);
+          else if (/free.?tier|limit: ?0\b|requires? (a )?(paid|billing)|not available on the free|enable billing/i.test(em)) markList('appnest_gemini_paid', models[i]);
+          var sug = ((lastErr && lastErr.message || '').match(/models\/(gemini-[\w.-]+)/g) || []).map(function (x) { return x.replace('models/', ''); });
+          sug.forEach(function (m) { if (models.indexOf(m) === -1) models.splice(i + 1, 0, m); });
+          continue;
         }
         var eat = function (d) {
           if (d.error) throw httpError(500, d.error.message || 'Gemini error');
@@ -199,7 +212,7 @@
       } catch (e) {
         if (e.name === 'AbortError' || started) throw e;  // כבר התחלנו להציג — לא מחליפים מודל באמצע
         lastErr = e;
-        if (e.status && [404, 429, 500, 503].indexOf(e.status) === -1) throw e;
+        if (e.status && isKeyErr(e.status, e.message)) throw e;
       }
     }
     throw lastErr || new Error('Gemini unavailable');

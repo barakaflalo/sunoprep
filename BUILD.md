@@ -70,3 +70,17 @@
 - 📱 שורטס ויוטיוב (לשונית Suno): קטע 15–30 שניות + סגנון קצר; כותרת/תיאור/תגיות/האשטגים; העתקת שורות לכתוביות (בלי AI).
 - הגיבוי כולל עכשיו גם songLog, ideaBank, myTaste.
 - CACHE: sunoprep-v12.0.
+
+## 10.3.1 — תיקון: "This model models/gemini-2.0-flash is no longer available"
+- הסיבה: האפליקציה זוכרת את הדגם האחרון שעבד (sp_gemini_model). Google הוציאה את gemini-2.0-flash משימוש והחזירה 400 — וקוד שגיאה 400 עצר הכל במקום לעבור לדגם הבא.
+- עכשיו: כל שגיאה של דגם → עוברים לדגם הבא; דגם ש"no longer available"/404 נרשם כמת (sp_gemini_dead) ולא מנסים אותו שוב; אם Google מציעה דגם חלופי בהודעה ("use models/X") מנסים אותו מיד; gemini-flash-latest תמיד ברשימה כרשת ביטחון. רק שגיאת מפתח (API key not valid וכו') עוצרת, עם הודעה ברורה בעברית.
+- GEMINI_MODELS: flash-latest, 3.8-flash, 3.6-flash, 3.5-flash, 2.5-flash (בלי 2.0).
+- אותו תיקון ב-appnest-assistant.js (העוזר) — כדאי להעתיק לטוטו ול-PlateAI.
+- CACHE: sunoprep-v12.1.
+
+## 10.4 — ניהול דגמי Gemini (נובמבר 2026)
+- רשימה חדשה (GEMINI_MODELS): gemini-4-hydrogen (Gemini 4 המהיר, יש לו Free tier), gemini-3.8-flash, gemini-flash-latest, gemini-3.5-flash-lite, gemini-3.6-flash. בתשלום בלבד (GEMINI_PAID, לבחירה ידנית): gemini-4-neon, gemini-4-carbon, gemini-4-argon. הוסרו: 2.0 (כבויים), 2.5 (מוגבלים), 3.5-flash ו-3.7-flash (מנותבים).
+- classifyGeminiError: key / dead / paid / thinking / busy. דגם מת → appnest_gemini_dead; דגם שדורש חיוב → appnest_gemini_paid; לא מנסים אותם שוב עד שמחזירים. שגיאת "thinking" → ניסיון חוזר באותו דגם בלי thinkingConfig. thinkingBudget:0 נשלח רק לדגמי flash.
+- הגדרות → Gemini: בחירת דגם בקבוצות (חינמיים / בתשלום / עוד מהחשבון), 🩺 "בדוק אילו דגמים עובדים" (בקשת ok קצרה לכל דגם + זמן), רשימת "דגמים שלא מנסים יותר" עם ↩️ החזר לניסיון / החזר את כולם. הבחירה הידנית נשמרת (sp_gemini_selmodel). מסך החיבור נפתח ישר על הספק הנוכחי.
+- העוזר (appnest-assistant.js) משתמש באותה רשימה ובאותן רשימות שחורות משותפות.
+- CACHE: sunoprep-v12.2.

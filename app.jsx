@@ -32,7 +32,7 @@ const TR = {
     ],
     skip: "דלג", next: "הבא", done: "סיום",
     aboutTxt: "SunoPrep הוא כלי מתקדם להכנת שירים לפלטפורמת Suno AI.\n\nהכלי פותר את הבעיה המרכזית של שירה בשפות שסונו מתקשה בהן (עברית, ערבית, רוסית ועוד) באמצעות 4 מצבי המרה: תעתיק מלא ללטינית, היברידי, עברית מנוקדת מותאמת, ועברית ישירה.\n\nתכונות עיקריות:\n• 4 מצבי המרה לבחירה\n• בניית סגנון מוזיקלי עם ז'אנרים, סוג קול, BPM\n• סגנונות מועדפים אישיים (⭐)\n• תגיות מבנה שיר + תגיות קול (דואט, מקהלה...)\n• תבניות שיר מוכנות (פופ, ראפ, בלדה)\n• השמעה (TTS) עם שליטת מהירות\n• השוואה A/B בין מקור לתוצאה\n• מונה הברות לכל שורה\n• מילון מילים בעייתיות\n• היסטוריית שירים\n• הנחיית מבטא ישראלי אוטומטית\n• הדפסה, שיתוף, ייצוא/ייבוא גיבוי\n• ✨ אולפן שירים עם AI: רעיונות, 3 כיוונים, כלי שורה (חלופות, קיצור, חרוזים), שם לשיר וסגנון לסונו\n• 🎻 סדנת שיפור: מבקר AI נותן ציון, ושינוי נשמר רק אם הציון עלה\n• 🧐 מבקר ניקוד ששומר על האותיות\n• 📚 ספריית סגנונות: דירוג, הערות, קישורים, ״לנסות שוב״ ווריאציות AI\n• 🎯 כתיבה לפי הטעם שלך, 🧪 יומן ניסיונות בסונו, 💡 בנק רעיונות\n• 🎯 תיקון מילים שסונו הרס — נשמר ומתוקן אוטומטית\n• 📱 קטע לשורטס וחבילת יוטיוב\n• 5 שפות ממשק, 9 שפות מקור\n• 5 ערכות צבע + מצב יום/לילה\n• עובד בדפדפן — בלי שרת, בלי התקנה",
-    ver: "גרסה 10.3", back: "← חזרה לדף הבית",
+    ver: "גרסה 10.4", back: "← חזרה לדף הבית",
     errCon: "שגיאה בחיבור. נסה שוב.", shareMsg: "נסו את SunoPrep — כלי מתקדם להכנת שירים לסונו AI! 🎤🎵",
     prevSty: "Style:", custLbl: "סגנון מותאם אישית:",
     delAll: "מחיקת כל הנתונים", delConf: "לחץ שוב לאישור", deleted: "נמחק",
@@ -68,7 +68,7 @@ const TR = {
     ],
     skip: "Skip", next: "Next", done: "Done",
     aboutTxt: "SunoPrep is an advanced tool for preparing songs for Suno AI.\n\nIt solves the core problem of singing in languages Suno struggles with (Hebrew, Arabic, Russian, etc.) through 4 conversion modes: full Latin transliteration, hybrid, optimized Hebrew with nikud, and direct Hebrew.\n\nKey features:\n• 4 conversion modes\n• Music style builder with genres, voice types, BPM\n• Personal favorite styles (⭐)\n• Song structure + voice tags (duet, choir...)\n• Ready-made song templates (Pop, Rap, Ballad)\n• TTS playback with speed control\n• A/B comparison between source and result\n• Syllable counter per line\n• Problem words dictionary\n• Song history\n• Auto Israeli accent hint\n• Print, share, export/import backup\n• ✨ AI song studio, auto-refine with a critic, nikud reviewer\n• 5 UI languages, 9 source languages\n• 5 color themes + day/night mode\n• Runs in browser — no server, no install",
-    ver: "Version 10.3", back: "← Back to home",
+    ver: "Version 10.4", back: "← Back to home",
     errCon: "Connection error. Try again.", shareMsg: "Try SunoPrep — advanced song prep for Suno AI! 🎤🎵",
     prevSty: "Style:", custLbl: "Custom style:",
     delAll: "Delete all data", delConf: "Click again to confirm", deleted: "Deleted",
@@ -120,7 +120,7 @@ const TR = {
       { i: "📋", t: "Copiar", d: "Lyrics y Style separados" },
     ],
     skip: "Saltar", next: "Siguiente", done: "Listo",
-    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.3", back: "← Volver",
+    aboutTxt: "Herramienta avanzada para preparar canciones para Suno AI. 4 modos de conversión, constructor de estilos, historial, diccionario de palabras problemáticas.", ver: "v10.4", back: "← Volver",
     errCon: "Error.", shareMsg: "¡Prueba SunoPrep!",
     prevSty: "Style:", custLbl: "Personalizado:",
     delAll: "Borrar todo", delConf: "Confirma", deleted: "Borrado",
@@ -146,7 +146,7 @@ const TR = {
       { i: "📋", t: "انسخ", d: "Lyrics و Style منفصلين" },
     ],
     skip: "تخطي", next: "التالي", done: "تم",
-    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.3", back: "← العودة",
+    aboutTxt: "أداة متقدمة لإعداد أغاني Suno AI. 4 أوضاع تحويل، منشئ أنماط، سجل الأغاني، قاموس الكلمات المشكلة.", ver: "v10.4", back: "← العودة",
     errCon: "خطأ.", shareMsg: "جرّب SunoPrep!",
     prevSty: "Style:", custLbl: "مخصص:",
     delAll: "حذف الكل", delConf: "مرة أخرى", deleted: "تم الحذف",
@@ -323,75 +323,138 @@ const SETUP_STEPS = {
   },
 };
 
-const GEMINI_MODELS = ["gemini-flash-latest", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-2.5-flash", "gemini-2.0-flash"];
+/* ═══ דגמי Gemini — מעודכן לנובמבר 2026 ═══
+   חינמיים (Free tier): gemini-4-hydrogen (Gemini 4 המהיר), gemini-3.8-flash, gemini-3.5-flash-lite.
+   gemini-flash-latest = כינוי ש-Google מעדכנת לבד. 3.6-flash עוד עובד ב-API אבל בדרך החוצה.
+   בתשלום בלבד: gemini-4-neon, gemini-4-carbon, gemini-4-argon (מופיעים לבחירה ידנית).
+   מתים / בדרך החוצה: 2.0 (כבויים), 2.5 (מוגבלים למשתמשים ותיקים), 3.5-flash ו-3.7-flash (מנותבים). */
+const GEMINI_MODELS = ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.5-flash-lite", "gemini-3.6-flash"];
+const GEMINI_PAID = ["gemini-4-neon", "gemini-4-carbon", "gemini-4-argon"];
+const GEMINI_ALL_KNOWN = [...GEMINI_MODELS, ...GEMINI_PAID];
+// רשימות משותפות לכל אפליקציות AppNest (אותו דומיין לא נדרש — כל אפליקציה שומרת לעצמה)
+const GEMINI_DEAD_KEY = "appnest_gemini_dead", GEMINI_PAID_KEY = "appnest_gemini_paid";
+const lsArr = (k) => { try { const v = JSON.parse(localStorage.getItem(k) || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } };
+try { const old = lsArr("sp_gemini_dead"); if (old.length) { localStorage.setItem(GEMINI_DEAD_KEY, JSON.stringify([...new Set([...lsArr(GEMINI_DEAD_KEY), ...old])])); localStorage.removeItem("sp_gemini_dead"); } } catch {}
+const geminiDead = () => lsArr(GEMINI_DEAD_KEY);
+const geminiPaidOnly = () => lsArr(GEMINI_PAID_KEY);
+const addTo = (k, m) => { try { const d = lsArr(k); if (!d.includes(m)) localStorage.setItem(k, JSON.stringify([...d, m].slice(-40))); } catch {} };
+const removeFrom = (k, m) => { try { localStorage.setItem(k, JSON.stringify(lsArr(k).filter(x => x !== m))); } catch {} };
+const markGeminiDead = (m) => addTo(GEMINI_DEAD_KEY, m);
+const markGeminiPaid = (m) => addTo(GEMINI_PAID_KEY, m);
+const restoreGeminiModel = (m) => { removeFrom(GEMINI_DEAD_KEY, m); removeFrom(GEMINI_PAID_KEY, m); };
+const geminiThinkingOff = (m) => m.includes("flash");   // ב-Flash מכבים "חשיבה" = מהיר. ב-Gemini 4 לא נוגעים (ייתכן שלא נתמך)
 
 async function fetchGeminiModels(key) {
   try {
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}&pageSize=200`);
     if (!r.ok) return null;
     const d = await r.json();
+    const dead = geminiDead();
     const models = (d.models || [])
       .filter(m => (m.supportedGenerationMethods || []).includes("generateContent"))
       .map(m => m.name.replace("models/", ""))
-      .filter(n => n.includes("flash") || n.includes("pro"));
+      .filter(n => /^gemini-/.test(n) && !/tts|live|audio|image|embedding|transcribe|robotics|computer-use/i.test(n) && !dead.includes(n));
     return models.length ? models : null;
   } catch { return null; }
 }
 
+/* סיווג שגיאה: key = המפתח עצמו · dead = הדגם הוצא משימוש · paid = רק בתשלום · thinking = הגדרת חשיבה לא נתמכת · busy = עומס/מכסה */
+const classifyGeminiError = (status, msg) => {
+  const m = msg || "";
+  if (status === 401 || /api key not valid|api_key_invalid|invalid api key|api key expired|unauthenticated/i.test(m)) return "key";
+  if (status === 404 || /no longer available|has been (shut ?down|discontinued|retired|deprecated)|is not found|not found for api version|model .{0,40}(retired|shut down)/i.test(m)) return "dead";
+  if (/thinking/i.test(m) && status === 400) return "thinking";
+  if (/free.?tier|limit: ?0\b|requires? (a )?(paid|billing)|not available on the free|enable billing/i.test(m)) return "paid";
+  if (status === 429 || status >= 500) return "busy";
+  return "other";
+};
+/* Google לפעמים כותבת בהודעה לאיזה דגם לעבור ("use models/gemini-3.8-flash") — מנסים אותו מיד */
+const geminiSuggested = (msg) => ((msg || "").match(/models\/(gemini-[\w.-]+)/g) || []).map(x => x.replace("models/", ""));
+
+/* 🩺 בדיקת דגם בודד: שולח "ok" קצר ומחזיר {state: ok|dead|paid|busy|key|other, ms, msg} */
+async function testGeminiModel(key, model) {
+  const t0 = Date.now();
+  const cfg = { maxOutputTokens: 8, temperature: 0 };
+  if (geminiThinkingOff(model)) cfg.thinkingConfig = { thinkingBudget: 0 };
+  try {
+    let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contents: [{ parts: [{ text: "Reply with: ok" }] }], generationConfig: cfg }) });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({})); const msg = e?.error?.message || `HTTP ${res.status}`;
+      const kind = classifyGeminiError(res.status, msg);
+      if (kind === "dead") markGeminiDead(model);
+      if (kind === "paid") markGeminiPaid(model);
+      return { state: kind === "thinking" ? "other" : kind, ms: Date.now() - t0, msg };
+    }
+    restoreGeminiModel(model);
+    return { state: "ok", ms: Date.now() - t0, msg: "" };
+  } catch (e) { return { state: "other", ms: Date.now() - t0, msg: String(e?.message || e) }; }
+}
+
 async function callGemini(keys, prompt, modelList, opts = {}) {
   const keyList = Array.isArray(keys) ? keys : [keys];
-  // Try a cached working model first, then the provided/default list
-  let models = modelList && modelList.length ? modelList : GEMINI_MODELS;
+  const skip = new Set([...geminiDead(), ...geminiPaidOnly()]);
+  const pinned = opts.pinned;                                   // דגם שהמשתמש בחר ידנית — תמיד מנסים אותו ראשון
+  let base = (modelList && modelList.length ? modelList : GEMINI_MODELS).filter(m => m === pinned || !skip.has(m));
+  if (!base.length) base = GEMINI_MODELS.slice();
   const cached = (typeof localStorage !== "undefined") ? localStorage.getItem("sp_gemini_model") : null;
-  if (cached) models = [cached, ...models.filter(m => m !== cached)];
+  if (cached && !skip.has(cached) && !pinned) base = [cached, ...base.filter(m => m !== cached)];
+  if (!base.includes("gemini-flash-latest") && !skip.has("gemini-flash-latest")) base.push("gemini-flash-latest");   // רשת ביטחון
   let lastErr = null;
   for (const key of keyList) {
-    for (const model of models) {
-      const genCfg = { temperature: opts.temperature ?? 0.3, maxOutputTokens: 6000 };
-      // בלי "חשיבה" בכל מודל Flash (כולל gemini-flash-latest) — זה מה שהאט את יצירת השירים
-      if (model.includes("flash") || model.startsWith("gemini-2.5") || model.startsWith("gemini-3")) genCfg.thinkingConfig = { thinkingBudget: 0 };
-      try {
-        if (opts.onText) {                                   // זרימה: הטקסט מופיע תוך כדי כתיבה
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse&key=${key}`, {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genCfg }),
-          });
-          if (res.ok && res.body) {
-            const reader = res.body.getReader(), dec = new TextDecoder(); let buf = "", full = "";
-            for (;;) {
-              const { value, done } = await reader.read(); if (done) break;
-              buf += dec.decode(value, { stream: true });
-              let nl; while ((nl = buf.indexOf("\n")) >= 0) {
-                const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
-                if (!line.startsWith("data:")) continue;
-                try { const d = JSON.parse(line.slice(5)); const piece = (d?.candidates?.[0]?.content?.parts || []).map(x => x.text || "").join(""); if (piece) { full += piece; opts.onText(full); } } catch (e) {}
+    const queue = base.slice(), tried = new Set();
+    while (queue.length) {
+      const model = queue.shift();
+      if (tried.has(model)) continue; tried.add(model);
+      let noThinking = geminiThinkingOff(model);
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const genCfg = { temperature: opts.temperature ?? 0.3, maxOutputTokens: 6000 };
+        if (noThinking) genCfg.thinkingConfig = { thinkingBudget: 0 };
+        const body = JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genCfg });
+        // מחזיר "retry" (אותו דגם בלי הגדרת חשיבה) או "next" (לדגם הבא); זורק אם המפתח פסול
+        const onFail = async (res) => {
+          const e = await res.json().catch(() => ({}));
+          const msg = e?.error?.message || `HTTP ${res.status}`;
+          lastErr = new Error(`${model}: ${msg}`);
+          const kind = classifyGeminiError(res.status, msg);
+          if (kind === "key") { const err = new Error(`המפתח של Gemini לא התקבל: ${msg}`); err.keyError = true; throw err; }
+          if (kind === "thinking" && noThinking) { noThinking = false; return "retry"; }
+          if (cached === model || kind !== "other") { try { if (localStorage.getItem("sp_gemini_model") === model) localStorage.removeItem("sp_gemini_model"); } catch {} }
+          if (kind === "dead") markGeminiDead(model);
+          if (kind === "paid") markGeminiPaid(model);
+          geminiSuggested(msg).reverse().forEach(m => { if (!tried.has(m) && !geminiDead().includes(m)) queue.unshift(m); });
+          return "next";
+        };
+        try {
+          if (opts.onText) {                                   // זרימה: הטקסט מופיע תוך כדי כתיבה
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse&key=${key}`, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+            if (!res.ok) { if ((await onFail(res)) === "retry") continue; break; }
+            if (res.body) {
+              const reader = res.body.getReader(), dec = new TextDecoder(); let buf = "", full = "";
+              for (;;) {
+                const { value, done } = await reader.read(); if (done) break;
+                buf += dec.decode(value, { stream: true });
+                let nl; while ((nl = buf.indexOf("\n")) >= 0) {
+                  const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+                  if (!line.startsWith("data:")) continue;
+                  try { const d = JSON.parse(line.slice(5)); const piece = (d?.candidates?.[0]?.content?.parts || []).filter(x => !x.thought).map(x => x.text || "").join(""); if (piece) { full += piece; opts.onText(full); } } catch (e) {}
+                }
               }
+              if (full.trim()) { try { localStorage.setItem("sp_gemini_model", model); } catch {} return full; }
             }
-            if (full.trim()) { try { localStorage.setItem("sp_gemini_model", model); } catch {} return full; }
-            // הזרימה לא החזירה טקסט — ממשיכים לבקשה רגילה באותו מודל
           }
-          if (!res.ok) {
-            const e = await res.json().catch(() => ({}));
-            lastErr = new Error(e?.error?.message || `HTTP ${res.status}`);
-            if (res.status === 429) { try { localStorage.removeItem("sp_gemini_model"); } catch {} }
-            if (![404, 429, 500, 503].includes(res.status)) throw lastErr;
-            continue;
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+          if (res.ok) {
+            const d = await res.json();
+            try { localStorage.setItem("sp_gemini_model", model); } catch {}
+            return (d?.candidates?.[0]?.content?.parts || []).filter(x => !x.thought).map(x => x.text || "").join("");
           }
+          if ((await onFail(res)) === "retry") continue;
+          break;
+        } catch (e) {
+          if (e.keyError) { lastErr = e; if (keyList.length > 1) { queue.length = 0; break; } throw e; }   // מפתח פסול → המפתח הבא
+          lastErr = e; break;
         }
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genCfg }),
-        });
-        if (res.ok) {
-          const d = await res.json();
-          try { localStorage.setItem("sp_gemini_model", model); } catch {}
-          return d?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-        }
-        const e = await res.json().catch(() => ({}));
-        lastErr = new Error(e?.error?.message || `HTTP ${res.status}`);
-        if (res.status === 429) { try { localStorage.removeItem("sp_gemini_model"); } catch {} }
-        if (![404, 429, 500, 503].includes(res.status)) throw lastErr;
-      } catch (e) { lastErr = e; }
+      }
     }
   }
   throw lastErr || new Error("Gemini unavailable");
@@ -765,9 +828,21 @@ function SunoPrep() {
   const [aiProvider, setAiProvider] = useState(null);
   const [aiKeys, setAiKeys] = useState({ gemini: "", claude: "", openai: "", deviceUrl: "http://localhost:11434/v1", customUrl: "", customKey: "" });
   const [liveModels, setLiveModels] = useState([]);
-  const [selModel, setSelModel] = useState("");
+  const [selModel, setSelModel] = useState(() => { try { return localStorage.getItem("sp_gemini_selmodel") || ""; } catch { return ""; } });
+  useEffect(() => { try { localStorage.setItem("sp_gemini_selmodel", selModel); } catch {} }, [selModel]);
+  const [modelTick, setModelTick] = useState(0);          // רענון תצוגת הרשימה השחורה
+  const [modelTest, setModelTest] = useState(null);       // {running, results:{model:{state,ms,msg}}}
+  const runModelTest = async () => {
+    const keys = (aiKeys.gemini || "").split(/[\n,;]+/).map(x => x.trim()).filter(Boolean);
+    if (!keys.length) { setErr("הכנס קודם מפתח Gemini"); return; }
+    const list = [...new Set([...GEMINI_ALL_KNOWN, ...liveModels, ...geminiDead(), ...geminiPaidOnly()])];
+    const results = {}; setModelTest({ running: true, results: {} });
+    for (const m of list) { results[m] = await testGeminiModel(keys[0], m); setModelTest({ running: true, results: { ...results } }); if (results[m].state === "key") break; }
+    setModelTest({ running: false, results }); setModelTick(x => x + 1);
+  };
   const [refreshingModels, setRefreshingModels] = useState(false);
   const [selProvider, setSelProvider] = useState(null);
+  useEffect(() => { if (scr === "aisetup" && !selProvider && aiProvider && aiProvider !== "builtin") setSelProvider(aiProvider); }, [scr]);   // פותח ישר את הספק הנוכחי
   const [testState, setTestState] = useState(null);
   const [selSty, setSelSty] = useState([]);
   const [selVocal, setSelVocal] = useState([]);
@@ -1210,8 +1285,9 @@ ${src}`;
     const p = aiProvider;
     if (p === "gemini") {
       const keys = aiKeys.gemini.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
-      const models = selModel ? [selModel, ...GEMINI_MODELS.filter(m => m !== selModel)] : (liveModels.length ? liveModels : null);
-      return await callGemini(keys, prompt, models, opts);
+      const auto = liveModels.length ? [...GEMINI_MODELS.filter(m => liveModels.includes(m)), ...liveModels.filter(m => !GEMINI_MODELS.includes(m) && !GEMINI_PAID.includes(m))] : GEMINI_MODELS;
+      const models = selModel ? [selModel, ...auto.filter(m => m !== selModel)] : auto;
+      return await callGemini(keys, prompt, models, { ...opts, pinned: selModel || undefined });
     }
     if (p === "claude") return await callClaude(aiKeys.claude, prompt, opts);
     if (p === "builtin") return await callClaude("", prompt, opts);
@@ -2193,14 +2269,35 @@ ${src}`;
                     {refreshingModels ? (rtl ? "מרענן..." : "Refreshing...") : (rtl ? "🔄 רענן מודלים" : "🔄 Refresh models")}
                   </B>
                 </div>
-                <select value={selModel} onChange={e => setSelModel(e.target.value)}
-                  style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "8px 10px", color: tx, fontSize: 12, fontFamily: "inherit", direction: "ltr" }}>
-                  <option value="">{rtl ? "אוטומטי (מומלץ)" : "Automatic (recommended)"}</option>
-                  {(liveModels.length ? liveModels : GEMINI_MODELS).map(m => <option key={m} value={m}>{m}</option>)}
-                </select>
-                <div style={{ fontSize: 10, color: sb, marginTop: 4 }}>
-                  {rtl ? "שמות מודלים מתיישנים. אם מתקבלת שגיאת 404 — לחץ רענן מודלים." : "Model names go stale. If you get a 404 error, click Refresh models."}
-                </div>
+                {(() => { void modelTick; const dead = geminiDead(), paid = geminiPaidOnly(); const tag = m => dead.includes(m) ? " ⛔" : paid.includes(m) ? " 🔒" : ""; const extra = liveModels.filter(m => !GEMINI_ALL_KNOWN.includes(m)); const R = modelTest?.results || {};
+                  const stIcon = { ok: "✅", dead: "⛔", paid: "🔒", busy: "⏳", key: "🔑", other: "⚠️" }, stTxt = { ok: "עובד", dead: "מת — הוסר", paid: "בתשלום בלבד", busy: "עמוס / מכסה", key: "בעיה במפתח", other: "שגיאה" };
+                  return <>
+                  <select value={selModel} onChange={e => setSelModel(e.target.value)}
+                    style={{ width: "100%", background: bg, border: `1px solid ${bd}`, borderRadius: 8, padding: "8px 10px", color: tx, fontSize: 12, fontFamily: "inherit", direction: "ltr" }}>
+                    <option value="">{rtl ? "אוטומטי (מומלץ) — הכי חדש שעובד" : "Automatic (recommended)"}</option>
+                    <optgroup label={rtl ? "חינמיים" : "Free tier"}>{GEMINI_MODELS.map(m => <option key={m} value={m}>{m}{m === "gemini-4-hydrogen" ? "  ★ Gemini 4" : ""}{tag(m)}</option>)}</optgroup>
+                    <optgroup label={rtl ? "בתשלום (חשבון עם חיוב)" : "Paid only"}>{GEMINI_PAID.map(m => <option key={m} value={m}>{m}{tag(m)}</option>)}</optgroup>
+                    {extra.length > 0 && <optgroup label={rtl ? "עוד מהחשבון שלך" : "More from your account"}>{extra.map(m => <option key={m} value={m}>{m}{tag(m)}</option>)}</optgroup>}
+                  </select>
+                  <div style={{ fontSize: 10, color: sb, marginTop: 4, lineHeight: 1.5 }}>{rtl ? "באוטומטי האפליקציה מנסה קודם את Gemini 4 Hydrogen ואחריו 3.8 Flash. דגם ש-Google כיבתה מוסר לבד (⛔), ודגם שדורש חשבון בתשלום מסומן 🔒 ולא ינוסה שוב — עד שתחזיר אותו." : "Dead models are removed automatically (⛔); paid-only models are marked 🔒."}</div>
+                  <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
+                    <B sm onClick={runModelTest} dis={modelTest?.running}>{modelTest?.running ? `⏳ בודק... (${Object.keys(R).length})` : "🩺 בדוק אילו דגמים עובדים"}</B>
+                  </div>
+                  {modelTest && Object.keys(R).length > 0 && <div style={{ marginTop: 8, padding: 8, borderRadius: 8, background: bg, border: `1px solid ${bd}`, display: "grid", gap: 3 }}>
+                    {Object.entries(R).map(([m, r]) => <div key={m} title={r.msg} style={{ display: "flex", justifyContent: "space-between", gap: 8, fontSize: 11, color: tx }}>
+                      <span dir="ltr" style={{ fontFamily: "monospace" }}>{m}</span><span>{stIcon[r.state]} {stTxt[r.state]}{r.state === "ok" ? ` · ${(r.ms / 1000).toFixed(1)} שנ׳` : ""}</span>
+                    </div>)}
+                    {!modelTest.running && <div style={{ fontSize: 10, color: sb, marginTop: 4 }}>הדגמים המתים הוסרו מהניסיונות, ואלה שעובדים הוחזרו. רחף/לחץ ארוך על שורה כדי לראות את הודעת השגיאה.</div>}
+                  </div>}
+                  {(dead.length > 0 || paid.length > 0) && <div style={{ marginTop: 8, padding: 8, borderRadius: 8, background: bg, border: `1px dashed ${bd}` }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: tx }}>{rtl ? "🚫 דגמים שלא מנסים יותר" : "🚫 Skipped models"}</div>
+                    {[...dead.map(m => [m, "⛔ מת"]), ...paid.map(m => [m, "🔒 בתשלום"])].map(([m, why]) => <div key={m + why} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6, marginTop: 5, fontSize: 11, color: tx }}>
+                      <span><span dir="ltr" style={{ fontFamily: "monospace" }}>{m}</span> <span style={{ color: sb }}>· {why}</span></span>
+                      <B sm onClick={() => { restoreGeminiModel(m); setModelTick(x => x + 1); }}>↩️ החזר לניסיון</B>
+                    </div>)}
+                    <div style={{ marginTop: 6 }}><B sm onClick={() => { try { localStorage.removeItem(GEMINI_DEAD_KEY); localStorage.removeItem(GEMINI_PAID_KEY); } catch {} setModelTick(x => x + 1); }}>↩️ החזר את כולם</B></div>
+                  </div>}
+                  </>; })()}
               </div>
               <Steps items={st.gemini.steps} />
               <div style={{ marginTop: 11, padding: "9px 12px", background: "#0F6E5615", border: "1px solid #0F6E5635", borderRadius: 8, fontSize: 11.5, color: "#3DAA7D", lineHeight: 1.55 }}>{st.gemini.note}</div>
@@ -3629,7 +3726,7 @@ ${performanceCard.verse} verses, ${performanceCard.chorus} chorus, ${performance
         <span style={{ flex: 1 }}>⚠️ {err}</span><span style={{ opacity: .7 }}>✕</span>
       </div>}
         <div style={{ textAlign: "center", padding: "14px 0 6px", borderTop: `1px solid ${bd}`, fontSize: 10, color: sb }}>
-          SunoPrep 10.3 by Barak Aflalo — © AppNest 2026
+          SunoPrep 10.4 by Barak Aflalo — © AppNest 2026
         </div>
       </div>
     </div>
