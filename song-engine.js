@@ -272,5 +272,50 @@
     return [...strong, ...weak].slice(0, 16);
   }
 
-  window.SongEngine = { generate, altLine, rhymes, moods: Object.keys(MOOD_MAP), version: "1.0" };
+  /* ═══ רמיקס מהשירים של המשתמש (בלי AI) ═══
+     מפרק כל שיר לחלקים לפי התגיות ([Verse]/[Chorus]/[Bridge]…), אוסף צמדי שורות מהבתים (מעדיף צמדים מחורזים),
+     פזמונים שלמים וגשרים — ומרכיב שיר חדש משירים שונים. הפזמון נלקח שלם משיר אחד כדי שיישאר קוהרנטי. */
+  function parseSong(text) {
+    const secs = []; let cur = { tag: "verse", lines: [] };
+    String(text || "").split(/\r?\n/).forEach(raw => {
+      const l = raw.trim();
+      const m = l.match(/^\[([^\]]+)\]$/) || l.match(/^\(?(פזמון|בית|גשר|פתיחה|סיום)[^)]*\)?:?$/);
+      if (m) { if (cur.lines.length) secs.push(cur); const t = m[1].toLowerCase(); cur = { tag: /chorus|פזמון|hook/.test(t) ? (/pre/.test(t) ? "pre" : "chorus") : /bridge|גשר/.test(t) ? "bridge" : /outro|סיום/.test(t) ? "outro" : /intro|פתיחה/.test(t) ? "intro" : /pre/.test(t) ? "pre" : "verse", lines: [] }; return; }
+      if (!l || /^(style|סגנון)\s*:/i.test(l)) return;
+      cur.lines.push(l);
+    });
+    if (cur.lines.length) secs.push(cur);
+    return secs;
+  }
+  const endsRhyme = (a, b) => { const x = norm(a.split(/\s+/).pop()), y = norm(b.split(/\s+/).pop()); return x.length >= 2 && y.length >= 2 && x.slice(-2) === y.slice(-2); };
+  function fromCorpus(songs, opts) {
+    const o = opts || {}; const r = rng(o.seed || Date.now());
+    const pool = { couplets: [], choruses: [], bridges: [], pres: [] };
+    (songs || []).forEach((sg, si) => {
+      parseSong(sg.lyrics || sg.text || "").forEach(sec => {
+        const L = sec.lines.filter(x => x.length <= 90);
+        if (sec.tag === "chorus" && L.length >= 2) pool.choruses.push({ si, lines: L.slice(0, 6) });
+        else if (sec.tag === "bridge" && L.length) pool.bridges.push({ si, lines: L.slice(0, 4) });
+        else if (sec.tag === "pre" && L.length) pool.pres.push({ si, lines: L.slice(0, 2) });
+        else if (sec.tag === "verse") for (let i = 0; i + 1 < L.length; i += 2) pool.couplets.push({ si, lines: [L[i], L[i + 1]], rh: endsRhyme(L[i], L[i + 1]) });
+      });
+    });
+    if (pool.couplets.length < 2 && !pool.choruses.length) return "";
+    // מעדיפים צמדים מחורזים (פי 3)
+    const weighted = pool.couplets.flatMap(c => c.rh ? [c, c, c] : [c]);
+    const used = new Set();
+    const coup = () => { for (let k = 0; k < 40; k++) { const c = weighted[Math.floor(r() * weighted.length)]; if (c && !used.has(c)) { used.add(c); return c.lines; } } return (weighted[0] || { lines: [] }).lines; };
+    const verse = () => [...coup(), ...coup()];
+    const ch = pool.choruses.length ? pool.choruses[Math.floor(r() * pool.choruses.length)].lines : [...coup()];
+    const pre = pool.pres.length && r() < 0.6 ? pool.pres[Math.floor(r() * pool.pres.length)].lines : null;
+    const br = pool.bridges.length ? pool.bridges[Math.floor(r() * pool.bridges.length)].lines : null;
+    const length = String(o.length || "רגילה"), short = length === "קצרה";
+    const out = []; const add = (t, ls) => { out.push(`[${t}]`); ls.forEach(l => out.push(l)); out.push(""); };
+    add("Verse 1", verse()); if (pre && !short) add("Pre-Chorus", pre); add("Chorus", ch);
+    if (!short) { add("Verse 2", verse()); if (pre) add("Pre-Chorus", pre); add("Chorus", ch); if (br) add("Bridge", br); if (length === "מלאה") add("Verse 3", verse()); add("Chorus", ch); }
+    return out.join("\n").trim();
+  }
+  function corpusStats(songs) { const p = { couplets: 0, choruses: 0 }; (songs || []).forEach(sg => parseSong(sg.lyrics || "").forEach(sec => { if (sec.tag === "chorus") p.choruses++; else if (sec.tag === "verse") p.couplets += Math.floor(sec.lines.length / 2); })); return p; }
+
+  window.SongEngine = { generate, altLine, rhymes, fromCorpus, parseSong, corpusStats, moods: Object.keys(MOOD_MAP), version: "1.1" };
 })();
